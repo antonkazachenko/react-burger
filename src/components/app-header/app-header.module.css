@@ -1,0 +1,17 @@
+.flexCentered {
+    display: flex;
+    align-items: center;
+}
+
+.navBar {
+    composes: flexCentered;
+    justify-content: space-between;
+}
+
+.navTab {
+    flex: 1;
+}
+
+.navRight {
+    justify-content: end;
+}
