@@ -2,3 +2,12 @@
   margin: 0 auto;
   max-width: 1440px;
 }
+
+main {
+  display: flex;
+  flex-direction: row;
+}
+
+.tabWidth {
+  width: 50%;
+}

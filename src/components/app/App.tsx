@@ -1,12 +1,21 @@
 import React from 'react';
 import './App.module.css';
 import AppHeader from '../app-header/app-header';
+import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import styles from './App.module.css';
 
 function App() {
   return (
     <div className={styles.App}>
       <AppHeader />
+      <main>
+        <div className={styles.tabWidth} >
+          <BurgerIngredients />
+        </div>
+        {/*<div className={styles.tabWidth} >*/}
+        {/*  <BurgerIngredients />*/}
+        {/*</div>*/}
+      </main>
     </div>
   );
 }

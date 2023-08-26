@@ -1,0 +1,39 @@
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.justifyCenter {
+    justify-content: center;
+}
+
+.relative {
+        position: relative;
+}
+
+.overflow {
+    overflow-y: auto;
+    height: 70vh;
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+    scrollbar-width: auto;
+    scrollbar-color: #8585ad #2f2f37;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #2f2f37;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #8585ad;
+    border-radius: 0px;
+    border: 0px solid #ffffff;
+}
