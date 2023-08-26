@@ -1,5 +1,5 @@
 import React from "react";
-import {Counter, Tab,} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import ConstructorCard from "../constructor-card/constructor-card";
 import data from "../../utils/data";
 import styles from "./burger-ingredients.module.css"
