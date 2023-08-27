@@ -13,7 +13,7 @@
 
 .overflow {
     overflow-y: auto;
-    height: 70vh;
+    height: 67vh;
 }
 
 /* ===== Scrollbar CSS ===== */
@@ -34,6 +34,6 @@
 
 *::-webkit-scrollbar-thumb {
     background-color: #8585ad;
-    border-radius: 0px;
-    border: 0px solid #ffffff;
+    border-radius: 0;
+    border: 0 solid #ffffff;
 }

@@ -11,7 +11,7 @@ function BurgerIngredients() {
       <p className="text text_type_main-large mt-10">
         Соберите бургер
       </p>
-      <nav style={{display: 'flex'}} className={`${styles.justifyCenter} mt-5`}>
+      <nav style={{display: 'flex'}} className={`${styles.justifyCenter} mt-5 mb-10`}>
         <Tab value="one" active={current === 'one'} onClick={setCurrent}>
           Булки
         </Tab>
@@ -22,8 +22,8 @@ function BurgerIngredients() {
           Начинки
         </Tab>
       </nav>
-      <div className={styles.overflow}>
-        <p className="text text_type_main-medium mt-10">
+      <div className={`${styles.overflow}`}>
+        <p className="text text_type_main-medium ">
           Булки
         </p>
         <article className={`${styles.flex} mt-6`}>

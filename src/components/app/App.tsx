@@ -3,6 +3,8 @@ import './App.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import styles from './App.module.css';
+import BurgerConstructor from "../burger-constructor/burger-constructor";
+import data from "../../utils/data";
 
 function App() {
   return (
@@ -12,9 +14,9 @@ function App() {
         <div className={styles.tabWidth} >
           <BurgerIngredients />
         </div>
-        {/*<div className={styles.tabWidth} >*/}
-        {/*  <BurgerIngredients />*/}
-        {/*</div>*/}
+        <div className={styles.tabWidth} >
+          <BurgerConstructor className="mt-25 ml-10" ingredients={data}/>
+        </div>
       </main>
     </div>
   );
