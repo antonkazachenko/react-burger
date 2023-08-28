@@ -4,18 +4,21 @@ import AppHeader from '../app-header/app-header';
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import styles from './App.module.css';
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import data from "../../utils/data";
+import ingredients from "../../utils/ingredients";
+
+
+
 
 function App() {
   return (
-    <div className={styles.App}>
+    <div className={styles.app}>
       <AppHeader />
       <main>
         <div className={styles.tabWidth} >
-          <BurgerIngredients />
+          <BurgerIngredients/>
         </div>
-        <div className={styles.tabWidth} >
-          <BurgerConstructor className="mt-25 ml-10" ingredients={data}/>
+        <div className={styles.tabWidth}>
+          <BurgerConstructor ingredientsDisplay={ingredients} className={`mt-25 ml-10 ${styles.flexColumn}`}/>
         </div>
       </main>
     </div>

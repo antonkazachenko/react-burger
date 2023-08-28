@@ -3,12 +3,8 @@
     flex-wrap: wrap;
 }
 
-.justifyCenter {
-    justify-content: center;
-}
-
 .relative {
-        position: relative;
+    position: relative;
 }
 
 .overflow {

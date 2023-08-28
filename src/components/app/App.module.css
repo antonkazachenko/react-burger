@@ -1,4 +1,4 @@
-.App {
+.app {
   margin: 0 auto;
   max-width: 1240px;
 }
@@ -6,6 +6,11 @@
 main {
   display: flex;
   flex-direction: row;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
 }
 
 .tabWidth {
