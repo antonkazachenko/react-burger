@@ -16,3 +16,7 @@ main {
 .tabWidth {
   width: 50%;
 }
+
+.relative {
+  composes: relative from "../burger-ingredients/burger-ingredients.module.css";
+}

@@ -6,25 +6,12 @@ import bread from "../../utils/bread";
 import sauces from "../../utils/sauces";
 
 function BurgerIngredients() {
-
   return (
     <article>
       <p className="text text_type_main-large mt-10">
         Соберите бургер
       </p>
-      <IngredientTabs
-        tabs={[{
-          name: "Булки",
-          index: "one"
-        },
-        {
-          name: "Соусы",
-          index: "two"
-        }, {
-          name: "Начинки",
-          index: "three"
-        }]}
-      />
+      <IngredientTabs />
       <div className={`${styles.overflow}`}>
         <p className="text text_type_main-medium ">
           Булки
