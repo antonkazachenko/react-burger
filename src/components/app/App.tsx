@@ -40,7 +40,8 @@ function App() {
   })
 
   const [isLoading, setIsLoading] = React.useState(true);
-  const [isVisible, setVisible] = React.useState(true);
+  const [isVisible, setVisible] = React.useState(false);
+  const [isCheckout, setCheckout] = React.useState(false);
 
   useEffect(() => {
     const getProductData = async () => {
@@ -94,15 +95,18 @@ function App() {
   }, [])
 
   const handleModal = (item?: any) => {
-    if (item) {
-      if (!item.isCheckout) {
-        setVisible(!isVisible);
-        data.modalData = item.data;
-      } else {
-      }
+    if (item.data) {
+      setVisible(!isVisible);
+      data.modalData = item.data;
+      setCheckout(false);
+    } else if (item.isCheckout) {
+      setVisible(!isVisible);
+      setCheckout(true);
+      console.log(isVisible);
     } else {
       setVisible(!isVisible);
       data.modalData = null;
+      setCheckout(false);
     }
   }
 
@@ -116,12 +120,12 @@ function App() {
               <BurgerIngredients modalClick={handleModal} bread={data.bread} sauces={data.sauces}/>
             </div>
             <div className={styles.tabWidth}>
-              <BurgerConstructor ingredientsDisplay={data.main} className={`mt-25 ml-10 ${styles.flexColumn}`}/>
+              <BurgerConstructor modalClick={handleModal} ingredientsDisplay={data.main} className={`mt-25 ml-10 ${styles.flexColumn}`}/>
             </div>
           </main>
         </div>
         <div className={styles.modal}>
-          {isVisible && data.modalData && <Modal onClose={handleModal} data={data.modalData} /> }
+          {isVisible  && <Modal onClose={handleModal} data={data.modalData} isCheckout={isCheckout}/> }
         </div>
       </>
     );

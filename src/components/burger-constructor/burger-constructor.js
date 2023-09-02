@@ -2,7 +2,12 @@ import React from "react";
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css"
 
-function BurgerConstructor({ ingredientsDisplay, className }) {
+function BurgerConstructor({ ingredientsDisplay, className, modalClick }) {
+
+  function customClick() {
+    modalClick({data: null, isCheckout: true});
+  }
+
   return (<div className={className}>
         <div className={`${styles.dragElement} ml-8 mb-4`}>
           <ConstructorElement
@@ -41,9 +46,11 @@ function BurgerConstructor({ ingredientsDisplay, className }) {
           <div className="mr-10">
             <CurrencyIcon type="primary"/>
           </div>
-          <Button htmlType="button" type="primary" size="large">
-            Оформить заказ
-          </Button>
+          <div onClick={customClick}>
+            <Button htmlType="button" type="primary" size="large">
+              Оформить заказ
+            </Button>
+          </div>
         </div>
       </div>
   )

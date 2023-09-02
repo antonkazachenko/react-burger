@@ -1,0 +1,13 @@
+.modal {
+    composes: modal from "../modal/modal.module.css";
+}
+
+.orderDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.exitCross {
+    align-self: flex-end;
+}
