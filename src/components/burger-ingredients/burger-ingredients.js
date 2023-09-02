@@ -5,7 +5,7 @@ import IngredientTabs from "../ingredient-tabs/ingredient-tabs";
 import bread from "../../utils/bread";
 import sauces from "../../utils/sauces";
 
-function BurgerIngredients() {
+function BurgerIngredients({ bread, sauces }) {
   return (
     <article>
       <p className="text text_type_main-large mt-10">

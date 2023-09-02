@@ -2,8 +2,7 @@ import React from "react";
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css"
 
-function BurgerConstructor(props) {
-  const {ingredientsDisplay, className} = props;
+function BurgerConstructor({ ingredientsDisplay, className }) {
   return (<div className={className}>
         <div className={`${styles.dragElement} ml-8 mb-4`}>
           <ConstructorElement
@@ -11,7 +10,7 @@ function BurgerConstructor(props) {
             isLocked={true}
             text="Краторная булка N-200i (верх)"
             price={20}
-            thumbnail={ingredientsDisplay[0].ingredient.image}
+            thumbnail={ingredientsDisplay[0].image}
           />
         </div>
         <div className={styles.overflow}>
@@ -21,9 +20,9 @@ function BurgerConstructor(props) {
                   <DragIcon type="primary"/>
                 </div>
                 <ConstructorElement
-                  text={el.ingredient.name}
+                  text={el.name}
                   price={el.price}
-                  thumbnail={el.ingredient.image}
+                  thumbnail={el.image}
                 />
               </div>);
           })}
@@ -34,7 +33,7 @@ function BurgerConstructor(props) {
             isLocked={true}
             text="Краторная булка N-200i (низ)"
             price={20}
-            thumbnail={ingredientsDisplay[0].ingredient.image}
+            thumbnail={ingredientsDisplay[0].image}
           />
         </div>
         <div className={`${styles.dragElement} mr-4 mt-6 mt-10`}>
