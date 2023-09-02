@@ -6,7 +6,7 @@ function ConstructorCard(props) {
   const {item, className, counterCheck, price, onClick} = props;
 
   function customClick() {
-    onClick(item);
+    onClick({data: item, isCheckout: false});
   }
 
   return (

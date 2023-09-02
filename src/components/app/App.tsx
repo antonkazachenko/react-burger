@@ -95,8 +95,11 @@ function App() {
 
   const handleModal = (item?: any) => {
     if (item) {
-      setVisible(!isVisible);
-      data.modalData = item;
+      if (!item.isCheckout) {
+        setVisible(!isVisible);
+        data.modalData = item.data;
+      } else {
+      }
     } else {
       setVisible(!isVisible);
       data.modalData = null;
@@ -118,7 +121,7 @@ function App() {
           </main>
         </div>
         <div className={styles.modal}>
-          {isVisible && data.modalData && <Modal name={data.modalData.name} onClose={handleModal} children={data.modalData} /> }
+          {isVisible && data.modalData && <Modal onClose={handleModal} data={data.modalData} /> }
         </div>
       </>
     );
