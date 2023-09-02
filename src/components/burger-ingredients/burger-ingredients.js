@@ -2,10 +2,7 @@ import React from "react";
 import ConstructorCard from "../constructor-card/constructor-card";
 import styles from "./burger-ingredients.module.css"
 import IngredientTabs from "../ingredient-tabs/ingredient-tabs";
-import bread from "../../utils/bread";
-import sauces from "../../utils/sauces";
-
-function BurgerIngredients({ bread, sauces }) {
+function  BurgerIngredients({ bread, sauces, modalClick }) {
   return (
     <article>
       <p className="text text_type_main-large mt-10">
@@ -16,11 +13,11 @@ function BurgerIngredients({ bread, sauces }) {
         <p className="text text_type_main-medium ">
           Булки
         </p>
-        <article className={`${styles.flex} mt-6`}>
+        <article className={`${styles.flex} mt-6`} >
           {
             bread.map(el => {
               return (
-                <ConstructorCard className={el.class} counterCheck={el.counterCheck} item={el.item} price={el.price} />
+                <ConstructorCard onClick={modalClick} className={el.class} counterCheck={el.counterCheck} item={el.item} price={el.price} />
               )
             })
           }
@@ -32,7 +29,7 @@ function BurgerIngredients({ bread, sauces }) {
           {
             sauces.map(el => {
               return (
-                <ConstructorCard className={el.class} counterCheck={el.counterCheck} item={el.item} price={el.price} />
+                <ConstructorCard onClick={modalClick} className={el.class} counterCheck={el.counterCheck} item={el.item} price={el.price} />
               )
             })
           }

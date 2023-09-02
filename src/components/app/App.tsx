@@ -5,7 +5,7 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import styles from './App.module.css';
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import apiLink from "../../utils/api";
-
+import Modal from "../modal/modal";
 
 type DataType = {
   bread: {
@@ -21,16 +21,26 @@ type DataType = {
     price: number;
   }[];
   main: any[];
+  modalData: {
+    name: string,
+    image: string,
+    proteins: number,
+    fat: number,
+    carbohydrates: number,
+    calories: number,
+  } | null
 };
 
 function App() {
   const [data, setData] = React.useState<DataType>({
     bread: [],
     sauces: [],
-    main: []
+    main: [],
+    modalData: null
   })
 
   const [isLoading, setIsLoading] = React.useState(true);
+  const [isVisible, setVisible] = React.useState(true);
 
   useEffect(() => {
     const getProductData = async () => {
@@ -73,7 +83,8 @@ function App() {
             item: dataResp.data[9],
             price: 30
           }],
-        main: dataResp.data
+        main: dataResp.data,
+        modalData: null
       });
       setIsLoading(false);
     }
@@ -81,19 +92,35 @@ function App() {
     getProductData()
       .catch((e) => console.log(e));
   }, [])
+
+  const handleModal = (item?: any) => {
+    if (item) {
+      setVisible(!isVisible);
+      data.modalData = item;
+    } else {
+      setVisible(!isVisible);
+      data.modalData = null;
+    }
+  }
+
   if (!isLoading) {
     return (
-      <div className={styles.app}>
-        <AppHeader/>
-        <main>
-          <div className={styles.tabWidth}>
-            <BurgerIngredients bread={data.bread} sauces={data.sauces}/>
-          </div>
-          <div className={styles.tabWidth}>
-            <BurgerConstructor ingredientsDisplay={data.main} className={`mt-25 ml-10 ${styles.flexColumn}`}/>
-          </div>
-        </main>
-      </div>
+      <>
+        <div className={styles.app}>
+          <AppHeader/>
+          <main>
+            <div className={styles.tabWidth}>
+              <BurgerIngredients modalClick={handleModal} bread={data.bread} sauces={data.sauces}/>
+            </div>
+            <div className={styles.tabWidth}>
+              <BurgerConstructor ingredientsDisplay={data.main} className={`mt-25 ml-10 ${styles.flexColumn}`}/>
+            </div>
+          </main>
+        </div>
+        <div className={styles.modal}>
+          {isVisible && data.modalData && <Modal name={data.modalData.name} onClose={handleModal} children={data.modalData} /> }
+        </div>
+      </>
     );
   } else {
     return (
@@ -105,18 +132,3 @@ function App() {
 }
 
 export default App;
-
-// <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.tsx</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>

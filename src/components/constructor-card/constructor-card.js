@@ -3,9 +3,14 @@ import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-com
 import styles from "./constructor-card.module.css";
 
 function ConstructorCard(props) {
-  const {item, className, counterCheck, price} = props;
+  const {item, className, counterCheck, price, onClick} = props;
+
+  function customClick() {
+    onClick(item);
+  }
+
   return (
-    <div className={`${styles.card} ${className}`}>
+    <div className={`${styles.card} ${className}`} onClick={customClick}>
       <img className="pl-4 pr-4" src={item.image} alt={item.name}/>
       <div className={`${styles.flex} mt-1`}>
         <p className="text text_type_digits-default mr-1">
