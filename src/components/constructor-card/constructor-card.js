@@ -1,6 +1,7 @@
 import React from "react";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./constructor-card.module.css";
+import PropTypes from "prop-types";
 
 function ConstructorCard(props) {
   const {item, className, counterCheck, price, onClick} = props;
@@ -29,5 +30,16 @@ function ConstructorCard(props) {
 ConstructorCard.defaultProps = {
   counterCheck: false,
 }
+
+ConstructorCard.propTypes = {
+  item: PropTypes.shape({
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+  className: PropTypes.string.isRequired,
+  counterCheck: PropTypes.bool,
+  price: PropTypes.number.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 
 export default ConstructorCard;

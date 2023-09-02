@@ -25,10 +25,11 @@ type DataType = {
     name: string,
     image: string,
     proteins: number,
+    price: number,
     fat: number,
     carbohydrates: number,
     calories: number,
-  } | null
+  } | null | undefined
 };
 
 function App() {
@@ -111,6 +112,9 @@ function App() {
   }
 
   if (!isLoading) {
+    // @ts-ignore
+    // @ts-ignore
+    // @ts-ignore
     return (
       <>
         <div className={styles.app}>

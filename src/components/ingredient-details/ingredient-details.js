@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../modal/modal.module.css";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
 
 
 const IngredientDetails = ({data, onClose}) => {
@@ -27,6 +28,19 @@ const IngredientDetails = ({data, onClose}) => {
       </div>
     </div>
   )
+}
+
+IngredientDetails.propTypes = {
+  data: PropTypes.shape({
+    image_large: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    calories: PropTypes.number.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+  }),
+  onClose: PropTypes.func.isRequired,
 }
 
 export default IngredientDetails;

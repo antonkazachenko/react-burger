@@ -2,6 +2,7 @@ import React from "react";
 import ConstructorCard from "../constructor-card/constructor-card";
 import styles from "./burger-ingredients.module.css"
 import IngredientTabs from "../ingredient-tabs/ingredient-tabs";
+import PropTypes from "prop-types";
 function  BurgerIngredients({ bread, sauces, modalClick }) {
   return (
     <article>
@@ -38,5 +39,21 @@ function  BurgerIngredients({ bread, sauces, modalClick }) {
     </article>
   )
 }
+
+BurgerIngredients.propTypes = {
+  bread: PropTypes.arrayOf(PropTypes.shape({
+      class: PropTypes.string.isRequired,
+      counterCheck: PropTypes.bool.isRequired,
+      item: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+    })).isRequired,
+  sauces: PropTypes.arrayOf(PropTypes.shape({
+      class: PropTypes.string.isRequired,
+      counterCheck: PropTypes.bool.isRequired,
+      item: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+    })).isRequired,
+  modalClick: PropTypes.func.isRequired,
+  };
 
 export default BurgerIngredients;
