@@ -2,10 +2,11 @@ import React from "react";
 import styles from "./order-details.module.css";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import Modal from "../modal/modal";
 
 const OrderDetails = ({onClose}) => {
   return (
-    <>
+    <Modal onClose={onClose} >
       <div className={`${styles.orderDetails}`}>
         <div className={`${styles.exitCross} mr-10 mt-15`}>
           <a onClick={onClose}><CloseIcon type="primary"/></a>
@@ -37,7 +38,7 @@ const OrderDetails = ({onClose}) => {
           <p className="text text_type_main-medium">Дождитесь готовности на орбитальной станции</p>
         </div>
       </div>
-    </>
+    </Modal>
   )
 }
 

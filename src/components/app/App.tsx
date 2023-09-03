@@ -5,29 +5,11 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import styles from './App.module.css';
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import getIngredients from "../../utils/api";
-import Modal from "../modal/modal";
-import OrderDetails from '../order-details/order-details';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 
 type DataType = {
-  bread: {
-    item: any;
-  }[];
-  sauces: {
-    item: any;
-  }[];
+  bread: any[];
+  sauces: any[];
   main: any[];
-  modalData: {
-    name: string,
-    image_mobile: string,
-    image_large: string,
-    image: string,
-    proteins: number,
-    price: number,
-    fat: number,
-    carbohydrates: number,
-    calories: number,
-  } | null | undefined
 };
 
 function App() {
@@ -35,12 +17,9 @@ function App() {
     bread: [],
     sauces: [],
     main: [],
-    modalData: null
-  })
+  });
 
   const [isLoading, setIsLoading] = React.useState(true);
-  const [isVisible, setVisible] = React.useState(false);
-  const [isCheckout, setCheckout] = React.useState(false);
 
   useEffect(() => {
     getIngredients()
@@ -49,62 +28,36 @@ function App() {
           bread: [res.data[0], res.data[7]],
           sauces: [res.data[3], res.data[4], res.data[8], res.data[9]],
           main: res.data,
-          modalData: null
         });
         setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
         setIsLoading(false);
-      })
-  }, [])
+      });
+  }, []);
 
-  const handleModal = (item?: any) => {
-    if (item.data) {
-      setVisible(!isVisible);
-      data.modalData = item.data;
-      setCheckout(false);
-    } else if (item.isCheckout) {
-      setVisible(!isVisible);
-      setCheckout(true);
-      console.log(isVisible);
-    } else {
-      setVisible(!isVisible);
-      data.modalData = null;
-      setCheckout(false);
-    }
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
-  if (!isLoading) {
-    return (
-      <>
-        <div className={styles.app}>
-          <AppHeader/>
-          <main>
-            <div className={styles.tabWidth}>
-              <BurgerIngredients modalClick={handleModal} bread={data.bread} sauces={data.sauces}/>
-            </div>
-            <div className={styles.tabWidth}>
-              <BurgerConstructor modalClick={handleModal} ingredientsDisplay={data.main} className={`mt-25 ml-10 ${styles.flexColumn}`}/>
-            </div>
-          </main>
+  return (
+    <div className={styles.app}>
+      <AppHeader />
+      <main>
+        <div className={styles.tabWidth}>
+          <BurgerIngredients bread={data.bread} sauces={data.sauces} />
         </div>
-        <div className={styles.modal}>
-          {isVisible &&
-            <Modal onClose={handleModal} >
-              {!isCheckout ? <IngredientDetails data={data.modalData} onClose={handleModal}/> :
-                <OrderDetails onClose={handleModal}/>}
-            </Modal> }
+        <div className={styles.tabWidth}>
+          <BurgerConstructor
+            ingredientsDisplay={data.main}
+            className={`mt-25 ml-10 ${styles.flexColumn}`}
+          />
         </div>
-      </>
-    );
-  } else {
-    return (
-      <div>
-        Loading...
-      </div>
-    )
-  }
+      </main>
+    </div>
+  );
 }
+
 
 export default App;

@@ -3,8 +3,22 @@ import ConstructorCard from "../constructor-card/constructor-card";
 import styles from "./burger-ingredients.module.css"
 import IngredientTabs from "../ingredient-tabs/ingredient-tabs";
 import PropTypes from "prop-types";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
-function  BurgerIngredients({ bread, sauces, modalClick }) {
+function  BurgerIngredients({ bread, sauces }) {
+  const [isVisible, setIsVisible] = React.useState(false);
+  const [modalData, setModalData] = React.useState(null);
+
+  const handleModal = (item) => {
+    setIsVisible(true);
+    setModalData(item.data);
+  };
+
+  const handleCloseModal = () => {
+    setIsVisible(false);
+    setModalData(null);
+  };
+
   const breadClasses = [`ml-4 ${styles.relative}`, "ml-6"]
   const saucesClasses = ["ml-4", "ml-6", `ml-4 mt-8 ${styles.relative}`, "ml-6 mt-8"]
   return (
@@ -21,7 +35,7 @@ function  BurgerIngredients({ bread, sauces, modalClick }) {
           {
             bread.map((el, index) => {
               return (
-                <ConstructorCard onClick={modalClick} className={breadClasses[index]} item={el}
+                <ConstructorCard onClick={handleModal} className={breadClasses[index]} item={el}
                                  price={el.price}/>
               )
             })
@@ -34,12 +48,16 @@ function  BurgerIngredients({ bread, sauces, modalClick }) {
           {
             sauces.map((el, index) => {
               return (
-                <ConstructorCard onClick={modalClick} className={saucesClasses[index]} item={el}
+                <ConstructorCard onClick={handleModal} className={saucesClasses[index]} item={el}
                                  price={el.price}/>
               )
             })
           }
         </article>
+        {
+          isVisible &&
+          <IngredientDetails data={modalData}  onClose={handleCloseModal} />
+        }
       </div>
     </article>
   )
@@ -52,7 +70,6 @@ BurgerIngredients.propTypes = {
   sauces: PropTypes.arrayOf(PropTypes.shape({
       item: PropTypes.string.isRequired,
     })).isRequired,
-  modalClick: PropTypes.func.isRequired,
   };
 
 export default BurgerIngredients;

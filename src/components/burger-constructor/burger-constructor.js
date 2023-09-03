@@ -2,12 +2,18 @@ import React from "react";
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css"
 import PropTypes from "prop-types";
+import OrderDetails from "../order-details/order-details";
 
-function BurgerConstructor({ ingredientsDisplay, className, modalClick }) {
+function BurgerConstructor({ ingredientsDisplay, className }) {
+  const [isVisible, setIsVisible] = React.useState(false);
 
-  function customClick() {
-    modalClick({data: null, isCheckout: true});
-  }
+  const handleModal = () => {
+    setIsVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsVisible(false);
+  };
 
   return (<div className={className}>
         <div className={`${styles.dragElement} ml-8 mb-4`}>
@@ -47,11 +53,15 @@ function BurgerConstructor({ ingredientsDisplay, className, modalClick }) {
           <div className="mr-10">
             <CurrencyIcon type="primary"/>
           </div>
-          <div onClick={customClick}>
+          <div onClick={handleModal}>
             <Button htmlType="button" type="primary" size="large">
               Оформить заказ
             </Button>
           </div>
+          {
+            isVisible &&
+            <OrderDetails onClose={handleCloseModal} />
+          }
         </div>
       </div>
   )
@@ -64,7 +74,6 @@ BurgerConstructor.propTypes = {
       price: PropTypes.number.isRequired,
     })).isRequired,
   className: PropTypes.string.isRequired,
-  modalClick: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;

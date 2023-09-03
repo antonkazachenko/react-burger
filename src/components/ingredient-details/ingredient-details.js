@@ -2,11 +2,12 @@ import React from "react";
 import styles from "../modal/modal.module.css";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import Modal from "../modal/modal";
 
 
 const IngredientDetails = ({data, onClose}) => {
   return (
-    <>
+    <Modal onClose={onClose} >
       <div className={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
         <h2 className="text text_type_main-large">Детали ингредиента</h2>
         <a onClick={onClose}><CloseIcon type="primary"/></a>
@@ -26,7 +27,7 @@ const IngredientDetails = ({data, onClose}) => {
         <div className={`${styles.textData} text text_type_main-default`}>Углеводы, г<br/><span
           className="text text_type_digits-default">{data.carbohydrates}</span></div>
       </div>
-    </>
+    </Modal>
   )
 }
 
