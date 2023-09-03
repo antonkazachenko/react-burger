@@ -4,7 +4,7 @@ import AppHeader from '../app-header/app-header';
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import styles from './App.module.css';
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import apiLink from "../../utils/api";
+import getIngredients from "../../utils/api";
 import Modal from "../modal/modal";
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -49,54 +49,14 @@ function App() {
   const [isCheckout, setCheckout] = React.useState(false);
 
   useEffect(() => {
-    const getProductData = async () => {
-      const res = await fetch(apiLink);
-      const dataResp = await res.json();
-      setData({
-        bread: [{
-          class: `ml-4 ${styles.relative}`,
-          counterCheck: true,
-          item: dataResp.data[0],
-          price: 20
-        },
-          {
-            class: "ml-6",
-            counterCheck: false,
-            item: dataResp.data[7],
-            price: 20
-          }],
-        sauces: [{
-          class: "ml-4",
-          counterCheck: false,
-          item: dataResp.data[3],
-          price: 30
-        },
-          {
-            class: "ml-6",
-            counterCheck: false,
-            item: dataResp.data[4],
-            price: 30
-          },
-          {
-            class: `ml-4 mt-8 ${styles.relative}`,
-            counterCheck: true,
-            item: dataResp.data[8],
-            price: 30
-          },
-          {
-            class: "ml-6 mt-8",
-            counterCheck: false,
-            item: dataResp.data[9],
-            price: 30
-          }],
-        main: dataResp.data,
-        modalData: null
-      });
-      setIsLoading(false);
-    }
-
-    getProductData()
-      .catch((e) => console.log(e));
+    getIngredients()
+      .then((res) => {
+        setData(res);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }, [])
 
   const handleModal = (item?: any) => {
