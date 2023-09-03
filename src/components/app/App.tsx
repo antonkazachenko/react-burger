@@ -11,16 +11,10 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 
 type DataType = {
   bread: {
-    class: string;
-    counterCheck: boolean;
     item: any;
-    price: number;
   }[];
   sauces: {
-    class: string;
-    counterCheck: boolean;
     item: any;
-    price: number;
   }[];
   main: any[];
   modalData: {
@@ -51,11 +45,17 @@ function App() {
   useEffect(() => {
     getIngredients()
       .then((res) => {
-        setData(res);
+        setData({
+          bread: [res.data[0], res.data[7]],
+          sauces: [res.data[3], res.data[4], res.data[8], res.data[9]],
+          main: res.data,
+          modalData: null
+        });
         setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
       })
   }, [])
 

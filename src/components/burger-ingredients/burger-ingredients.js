@@ -3,7 +3,10 @@ import ConstructorCard from "../constructor-card/constructor-card";
 import styles from "./burger-ingredients.module.css"
 import IngredientTabs from "../ingredient-tabs/ingredient-tabs";
 import PropTypes from "prop-types";
+
 function  BurgerIngredients({ bread, sauces, modalClick }) {
+  const breadClasses = [`ml-4 ${styles.relative}`, "ml-6"]
+  const saucesClasses = ["ml-4", "ml-6", `ml-4 mt-8 ${styles.relative}`, "ml-6 mt-8"]
   return (
     <article>
       <p className="text text_type_main-large mt-10">
@@ -16,9 +19,10 @@ function  BurgerIngredients({ bread, sauces, modalClick }) {
         </p>
         <article className={`${styles.flex} mt-6`} >
           {
-            bread.map(el => {
+            bread.map((el, index) => {
               return (
-                <ConstructorCard onClick={modalClick} className={el.class} counterCheck={el.counterCheck} item={el.item} price={el.price} />
+                <ConstructorCard onClick={modalClick} className={breadClasses[index]} item={el}
+                                 price={el.price}/>
               )
             })
           }
@@ -28,9 +32,10 @@ function  BurgerIngredients({ bread, sauces, modalClick }) {
         </p>
         <article className={`${styles.flex} mt-6 mb-4`}>
           {
-            sauces.map(el => {
+            sauces.map((el, index) => {
               return (
-                <ConstructorCard onClick={modalClick} className={el.class} counterCheck={el.counterCheck} item={el.item} price={el.price} />
+                <ConstructorCard onClick={modalClick} className={saucesClasses[index]} item={el}
+                                 price={el.price}/>
               )
             })
           }
@@ -42,16 +47,10 @@ function  BurgerIngredients({ bread, sauces, modalClick }) {
 
 BurgerIngredients.propTypes = {
   bread: PropTypes.arrayOf(PropTypes.shape({
-      class: PropTypes.string.isRequired,
-      counterCheck: PropTypes.bool.isRequired,
       item: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
     })).isRequired,
   sauces: PropTypes.arrayOf(PropTypes.shape({
-      class: PropTypes.string.isRequired,
-      counterCheck: PropTypes.bool.isRequired,
       item: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
     })).isRequired,
   modalClick: PropTypes.func.isRequired,
   };
