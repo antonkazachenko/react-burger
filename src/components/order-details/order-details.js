@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 const OrderDetails = ({onClose}) => {
   return (
     <>
-      <div className={`${styles.modal} ${styles.orderDetails}`}>
+      <div className={`${styles.orderDetails}`}>
         <div className={`${styles.exitCross} mr-10 mt-15`}>
           <a onClick={onClose}><CloseIcon type="primary"/></a>
         </div>

@@ -6,6 +6,8 @@ import styles from './App.module.css';
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import apiLink from "../../utils/api";
 import Modal from "../modal/modal";
+import OrderDetails from '../order-details/order-details';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 
 type DataType = {
   bread: {
@@ -23,6 +25,8 @@ type DataType = {
   main: any[];
   modalData: {
     name: string,
+    image_mobile: string,
+    image_large: string,
     image: string,
     proteins: number,
     price: number,
@@ -129,7 +133,11 @@ function App() {
           </main>
         </div>
         <div className={styles.modal}>
-          {isVisible  && <Modal onClose={handleModal} data={data.modalData} isCheckout={isCheckout}/> }
+          {isVisible &&
+            <Modal onClose={handleModal} >
+              {!isCheckout ? <IngredientDetails data={data.modalData} onClose={handleModal}/> :
+                <OrderDetails onClose={handleModal}/>}
+            </Modal> }
         </div>
       </>
     );
