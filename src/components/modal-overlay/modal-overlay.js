@@ -2,11 +2,10 @@ import React from "react";
 import styles from "./modal-overlay.module.css";
 import PropTypes from "prop-types";
 
-const ModalOverlay = ({children, onClose}) => {
+const ModalOverlay = ({ onClose }) => {
   return (
-    <div className={`${styles.overlay}`} onClick={onClose}>
-      {children}
-    </div>
+      <div className={`${styles.overlay}`} onClick={onClose}>
+      </div>
   );
 }
 

@@ -6,29 +6,15 @@ import styles from './App.module.css';
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import getIngredients from "../../utils/api";
 
-type DataType = {
-  bread: any[];
-  sauces: any[];
-  main: any[];
-};
-
 function App() {
-  const [data, setData] = React.useState<DataType>({
-    bread: [],
-    sauces: [],
-    main: [],
-  });
+  const [data, setData] = React.useState([]);
 
   const [isLoading, setIsLoading] = React.useState(true);
 
   useEffect(() => {
     getIngredients()
       .then((res) => {
-        setData({
-          bread: [res.data[0], res.data[7]],
-          sauces: [res.data[3], res.data[4], res.data[8], res.data[9]],
-          main: res.data,
-        });
+        setData(res.data.filter((item: any) => (item.type === "bun" || item.type === "sauce")));
         setIsLoading(false);
       })
       .catch((err) => {
@@ -46,11 +32,11 @@ function App() {
       <AppHeader />
       <main>
         <div className={styles.tabWidth}>
-          <BurgerIngredients bread={data.bread} sauces={data.sauces} />
+          <BurgerIngredients data={data} />
         </div>
         <div className={styles.tabWidth}>
           <BurgerConstructor
-            ingredientsDisplay={data.main}
+            ingredientsDisplay={data}
             className={`mt-25 ml-10 ${styles.flexColumn}`}
           />
         </div>

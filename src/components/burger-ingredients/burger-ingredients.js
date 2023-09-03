@@ -4,8 +4,11 @@ import styles from "./burger-ingredients.module.css"
 import IngredientTabs from "../ingredient-tabs/ingredient-tabs";
 import PropTypes from "prop-types";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import IngredientSection from "../ingredient-section/ingredient-section";
 
-function  BurgerIngredients({ bread, sauces }) {
+function  BurgerIngredients({ data }) {
+  const bread = data.filter((el) => el.type === "bun");
+  const sauces = data.filter((el) => el.type === "sauce");
   const [isVisible, setIsVisible] = React.useState(false);
   const [modalData, setModalData] = React.useState(null);
 
@@ -28,32 +31,10 @@ function  BurgerIngredients({ bread, sauces }) {
       </p>
       <IngredientTabs />
       <div className={`${styles.overflow}`}>
-        <p className="text text_type_main-medium ">
-          Булки
-        </p>
-        <article className={`${styles.flex} mt-6`} >
-          {
-            bread.map((el, index) => {
-              return (
-                <ConstructorCard onClick={handleModal} className={breadClasses[index]} item={el}
-                                 price={el.price}/>
-              )
-            })
-          }
-        </article>
-        <p className="text text_type_main-medium mt-10">
-          Соусы
-        </p>
-        <article className={`${styles.flex} mt-6 mb-4`}>
-          {
-            sauces.map((el, index) => {
-              return (
-                <ConstructorCard onClick={handleModal} className={saucesClasses[index]} item={el}
-                                 price={el.price}/>
-              )
-            })
-          }
-        </article>
+        <IngredientSection items={bread} title="Булки" classes={breadClasses} handleModal={handleModal}/>
+        <div className="mt-10">
+          <IngredientSection items={sauces} title="Соусы" classes={saucesClasses} handleModal={handleModal}/>
+        </div>
         {
           isVisible &&
           <IngredientDetails data={modalData}  onClose={handleCloseModal} />
@@ -64,12 +45,20 @@ function  BurgerIngredients({ bread, sauces }) {
 }
 
 BurgerIngredients.propTypes = {
-  bread: PropTypes.arrayOf(PropTypes.shape({
-      item: PropTypes.string.isRequired,
-    })).isRequired,
-  sauces: PropTypes.arrayOf(PropTypes.shape({
-      item: PropTypes.string.isRequired,
-    })).isRequired,
-  };
+  data: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+    calories: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    image_mobile: PropTypes.string.isRequired,
+    image_large: PropTypes.string.isRequired,
+    __v: PropTypes.number.isRequired,
+  })).isRequired,
+};
 
 export default BurgerIngredients;

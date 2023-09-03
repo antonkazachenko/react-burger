@@ -26,7 +26,8 @@ function BurgerConstructor({ ingredientsDisplay, className }) {
           />
         </div>
         <div className={styles.overflow}>
-          {ingredientsDisplay.slice(1).map(el => {
+          {
+            ingredientsDisplay.slice(1).map(el => {
             return (<div className={`${styles.dragElement} mb-4`}>
                 <div className="mr-2">
                   <DragIcon type="primary"/>
