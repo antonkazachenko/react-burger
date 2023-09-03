@@ -116,9 +116,6 @@ function App() {
   }
 
   if (!isLoading) {
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
     return (
       <>
         <div className={styles.app}>
