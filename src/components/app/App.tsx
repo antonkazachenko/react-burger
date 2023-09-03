@@ -5,6 +5,10 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import styles from './App.module.css';
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import getIngredients from "../../utils/api";
+import withModalControl from "../../hocs/with-modal-control";
+
+const BurgerIngredientsWithModal = withModalControl(BurgerIngredients);
+const BurgerConstructorWithModal = withModalControl(BurgerConstructor);
 
 function App() {
   const [data, setData] = React.useState([]);
@@ -32,10 +36,10 @@ function App() {
       <AppHeader />
       <main>
         <div className={styles.tabWidth}>
-          <BurgerIngredients data={data} />
+          <BurgerIngredientsWithModal data={data} />
         </div>
         <div className={styles.tabWidth}>
-          <BurgerConstructor
+          <BurgerConstructorWithModal
             ingredientsDisplay={data}
             className={`mt-25 ml-10 ${styles.flexColumn}`}
           />

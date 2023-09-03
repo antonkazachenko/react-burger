@@ -1,26 +1,13 @@
 import React from "react";
-import ConstructorCard from "../constructor-card/constructor-card";
 import styles from "./burger-ingredients.module.css"
 import IngredientTabs from "../ingredient-tabs/ingredient-tabs";
 import PropTypes from "prop-types";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import IngredientSection from "../ingredient-section/ingredient-section";
 
-function  BurgerIngredients({ data }) {
+function  BurgerIngredients({ data, isVisible, modalData, handleModal, handleCloseModal }) {
   const bread = data.filter((el) => el.type === "bun");
   const sauces = data.filter((el) => el.type === "sauce");
-  const [isVisible, setIsVisible] = React.useState(false);
-  const [modalData, setModalData] = React.useState(null);
-
-  const handleModal = (item) => {
-    setIsVisible(true);
-    setModalData(item.data);
-  };
-
-  const handleCloseModal = () => {
-    setIsVisible(false);
-    setModalData(null);
-  };
 
   const breadClasses = [`ml-4 ${styles.relative}`, "ml-6"]
   const saucesClasses = ["ml-4", "ml-6", `ml-4 mt-8 ${styles.relative}`, "ml-6 mt-8"]

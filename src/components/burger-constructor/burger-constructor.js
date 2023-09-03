@@ -4,17 +4,7 @@ import styles from "./burger-constructor.module.css"
 import PropTypes from "prop-types";
 import OrderDetails from "../order-details/order-details";
 
-function BurgerConstructor({ ingredientsDisplay, className }) {
-  const [isVisible, setIsVisible] = React.useState(false);
-
-  const handleModal = () => {
-    setIsVisible(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsVisible(false);
-  };
-
+function BurgerConstructor({ ingredientsDisplay, className, isVisible, handleModal, handleCloseModal }) {
   return (<div className={className}>
         <div className={`${styles.dragElement} ml-8 mb-4`}>
           <ConstructorElement
