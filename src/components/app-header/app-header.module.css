@@ -1,0 +1,34 @@
+.flexCentered {
+    display: flex;
+    align-items: center;
+}
+
+.navLink {
+    display: flex;
+    color: inherit;
+    text-decoration: none;
+}
+
+.secondary {
+    color: rgb(133, 133, 173);
+}
+
+.navLink:hover .secondary,
+.navLink:hover svg {
+    transition: color 0.3s ease-out, fill 0.3s ease-out;
+    color: rgb(242, 242, 243);
+    fill: rgb(242, 242, 243);
+}
+
+.navBar {
+    composes: flexCentered;
+    justify-content: space-between;
+}
+
+.navTab {
+    flex: 1;
+}
+
+.navRight {
+    justify-content: end;
+}

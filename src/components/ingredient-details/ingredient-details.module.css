@@ -1,0 +1,33 @@
+.modal {
+    composes: modal from '../modal/modal.module.css';
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.image {
+    display: flex;
+    justify-content: center;
+
+    & img {
+        width: 66%;
+        padding: 0 20px;
+    }
+}
+
+.modalContent {
+    display: flex;
+    justify-content: center;
+}
+
+.bottomContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.textData {
+    color: rgba(133, 133, 173, 1);
+}

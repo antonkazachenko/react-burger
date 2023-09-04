@@ -1,0 +1,34 @@
+.dragElement {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.overflow {
+    overflow-y: auto;
+    height: 40.3vh;
+    padding-right: 15px;
+    margin-right: -20px;
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+    scrollbar-width: auto;
+    scrollbar-color: #8585ad #2f2f37;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #2f2f37;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #8585ad;
+    border-radius: 0;
+    border: 0 solid #ffffff;
+}
