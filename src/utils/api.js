@@ -1,13 +1,13 @@
-const api = "https://norma.nomoreparties.space/api/ingredients";
+const PATH = "https://norma.nomoreparties.space/api";
+const apiIngredients = `${PATH}/ingredients`;
 
-const getIngredients = () => {
-  return fetch(api)
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+const getIngredients = async () => {
+  const res = await fetch(apiIngredients);
+  return checkResponse(res);
 }
+
+const checkResponse = (res) => {
+  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+};
 
 export default getIngredients;
