@@ -105,6 +105,9 @@ function BurgerConstructor({className, isVisible, handleModal, handleCloseModal}
 
 BurgerConstructor.propTypes = {
   className: PropTypes.string.isRequired,
+  isVisible: PropTypes.bool.isRequired,
+  handleModal: PropTypes.func.isRequired,
+  handleCloseModal: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;

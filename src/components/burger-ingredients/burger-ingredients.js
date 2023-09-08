@@ -3,6 +3,7 @@ import styles from "./burger-ingredients.module.css"
 import IngredientTabs from "../ingredient-tabs/ingredient-tabs";
 import { IngredientsContext } from "../../services/ingredientsContext";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import PropTypes from "prop-types";
 import IngredientSection from "../ingredient-section/ingredient-section";
 
 function  BurgerIngredients({ isVisible, modalData, handleModal, handleCloseModal }) {
@@ -30,6 +31,13 @@ function  BurgerIngredients({ isVisible, modalData, handleModal, handleCloseModa
       </div>
     </article>
   )
+}
+
+BurgerIngredients.propTypes = {
+  isVisible: PropTypes.bool.isRequired,
+  modalData: PropTypes.object,
+  handleModal: PropTypes.func.isRequired,
+  handleCloseModal: PropTypes.func.isRequired,
 }
 
 export default BurgerIngredients;
