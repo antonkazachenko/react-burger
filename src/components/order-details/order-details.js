@@ -4,7 +4,7 @@ import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import Modal from "../modal/modal";
 
-const OrderDetails = ({onClose}) => {
+const OrderDetails = ({modalData, onClose}) => {
   return (
     <Modal onClose={onClose} >
       <div className={`${styles.orderDetails}`}>
@@ -12,7 +12,7 @@ const OrderDetails = ({onClose}) => {
           <a onClick={onClose}><CloseIcon type="primary"/></a>
         </div>
         <div>
-          <p className="text text_type_digits-large mt-15">034536</p>
+          <p className="text text_type_digits-large mt-15">{modalData.order.number}</p>
         </div>
         <div>
           <p className="text text_type_main-medium mt-8">идентификатор заказа</p>
