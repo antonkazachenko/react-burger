@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useReducer} from 'react';
 import './App.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -11,9 +11,22 @@ import { IngredientsContext } from "../../services/ingredientsContext";
 const BurgerIngredientsWithModal = withModalControl(BurgerIngredients);
 const BurgerConstructorWithModal = withModalControl(BurgerConstructor);
 
+const TotalInitialState = { price: 0 };
+function reducer(state: any, action: any) {
+  switch (action.type) {
+    case "set":
+      return { price: action.payload  };
+    case "reset":
+      return TotalInitialState;
+    default:
+      throw new Error(`Wrong type of action: ${action.type}`);
+  }
+}
+
 function App() {
   const [data, setData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [totalPrice, totalPriceDispatcher] = useReducer(reducer, TotalInitialState, undefined);
 
   useEffect(() => {
     getIngredients()
@@ -34,7 +47,7 @@ function App() {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <IngredientsContext.Provider value={data}>
+      <IngredientsContext.Provider value={{data, totalPriceDispatcher, totalPrice}}>
         <main>
           <div className={styles.tabWidth}>
             <BurgerIngredientsWithModal />

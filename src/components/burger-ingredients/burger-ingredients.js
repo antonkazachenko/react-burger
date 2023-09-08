@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
 import styles from "./burger-ingredients.module.css"
 import IngredientTabs from "../ingredient-tabs/ingredient-tabs";
-import PropTypes from "prop-types";
 import { IngredientsContext } from "../../services/ingredientsContext";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import IngredientSection from "../ingredient-section/ingredient-section";
 
 function  BurgerIngredients({ isVisible, modalData, handleModal, handleCloseModal }) {
-  const data = useContext(IngredientsContext);
+  const { data } = useContext(IngredientsContext);
   const bread = data.filter((el) => el.type === "bun");
   const sauces = data.filter((el) => el.type === "sauce");
 
