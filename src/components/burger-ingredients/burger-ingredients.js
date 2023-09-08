@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./burger-ingredients.module.css"
 import IngredientTabs from "../ingredient-tabs/ingredient-tabs";
 import PropTypes from "prop-types";
+import { IngredientsContext } from "../../services/ingredientsContext";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import IngredientSection from "../ingredient-section/ingredient-section";
 
-function  BurgerIngredients({ data, isVisible, modalData, handleModal, handleCloseModal }) {
+function  BurgerIngredients({ isVisible, modalData, handleModal, handleCloseModal }) {
+  const data = useContext(IngredientsContext);
   const bread = data.filter((el) => el.type === "bun");
   const sauces = data.filter((el) => el.type === "sauce");
 
@@ -30,22 +32,5 @@ function  BurgerIngredients({ data, isVisible, modalData, handleModal, handleClo
     </article>
   )
 }
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired,
-  })).isRequired,
-};
 
 export default BurgerIngredients;

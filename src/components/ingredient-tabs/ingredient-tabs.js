@@ -22,7 +22,7 @@ function IngredientTabs() {
       {
         tabs.map((el) => {
           return (
-            <Tab value={el.index} active={current === el.index} onClick={setCurrent}>
+            <Tab value={el.index} active={current === el.index} key={el.index} onClick={setCurrent}>
               {el.name}
             </Tab>
           )

@@ -14,7 +14,7 @@ const IngredientSection = ({items, title, classes, handleModal}) => {
           items.map((el, index) => {
             return (
               <ConstructorCard onClick={handleModal} className={classes[index]} item={el}
-                               price={el.price}/>
+                               price={el.price} key={index}/>
             )
           })
         }

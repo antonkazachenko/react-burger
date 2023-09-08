@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css"
+import { IngredientsContext } from "../../services/ingredientsContext";
 import PropTypes from "prop-types";
 import OrderDetails from "../order-details/order-details";
 
-function BurgerConstructor({ ingredientsDisplay, className, isVisible, handleModal, handleCloseModal }) {
+function BurgerConstructor({ className, isVisible, handleModal, handleCloseModal }) {
+  const ingredientsDisplay = useContext(IngredientsContext);
   return (<div className={className}>
         <div className={`${styles.dragElement} ml-8 mb-4`}>
           <ConstructorElement
@@ -17,17 +19,21 @@ function BurgerConstructor({ ingredientsDisplay, className, isVisible, handleMod
         </div>
         <div className={styles.overflow}>
           {
-            ingredientsDisplay.slice(1).map(el => {
-            return (<div className={`${styles.dragElement} mb-4`}>
-                <div className="mr-2">
-                  <DragIcon type="primary"/>
-                </div>
-                <ConstructorElement
-                  text={el.name}
-                  price={el.price}
-                  thumbnail={el.image}
-                />
-              </div>);
+            ingredientsDisplay.slice(1).map((el, index) => {
+              if (el.type !== "bun" ){
+                return (
+                  <div className={`${styles.dragElement} mb-4`} key={index}>
+                    <div className="mr-2">
+                      <DragIcon type="primary"/>
+                    </div>
+                    <ConstructorElement
+                      text={el.name}
+                      price={el.price}
+                      thumbnail={el.image}
+                    />
+                  </div>
+                );
+              }
           })}
         </div>
         <div className={`${styles.dragElement} ml-8`}>
@@ -59,11 +65,6 @@ function BurgerConstructor({ ingredientsDisplay, className, isVisible, handleMod
 }
 
 BurgerConstructor.propTypes = {
-  ingredientsDisplay: PropTypes.arrayOf(PropTypes.shape({
-      image: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-    })).isRequired,
   className: PropTypes.string.isRequired,
 };
 
