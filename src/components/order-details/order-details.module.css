@@ -8,11 +8,14 @@
     align-items: center;
 }
 
-.modalSize {
-    width: 45%;
-    height: 90vh;
-}
 
 .exitCross {
     align-self: flex-end;
+}
+
+@media screen and (max-width: 1440px) {
+    .modalSize {
+        width: 45%;
+        height: 90vh;
+    }
 }
