@@ -25,7 +25,7 @@ const Modal = (props) => {
     (
       <>
         <ModalOverlay onClose={props.onClose}/>
-        <div className={styles.modal}>
+        <div className={`${styles.modal} ${props.className}`}>
           {props.children}
         </div>
       </>
