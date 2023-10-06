@@ -4,7 +4,7 @@ import AppHeader from '../app-header/app-header';
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import styles from './App.module.css';
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import getIngredients from "../../utils/api";
+import {getIngredients} from "../../utils/api";
 import withModalControl from "../../hocs/with-modal-control";
 import {IngredientsContext} from "../../services/ingredientsContext";
 import {OrderContext} from "../../services/orderContext";

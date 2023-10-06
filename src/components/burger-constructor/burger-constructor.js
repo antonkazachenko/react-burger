@@ -5,6 +5,7 @@ import {IngredientsContext} from "../../services/ingredientsContext";
 import PropTypes from "prop-types";
 import OrderDetails from "../order-details/order-details";
 import {OrderContext} from "../../services/orderContext";
+import {BASE_URL} from "../../utils/api";
 
 function BurgerConstructor({className, isVisible, handleModal, handleCloseModal}) {
   const {data, totalPriceDispatcher, totalPrice} = useContext(IngredientsContext);
@@ -17,14 +18,14 @@ function BurgerConstructor({className, isVisible, handleModal, handleCloseModal}
     }, 0);
     accumulatedPrice += data[0].price * 2;
     totalPriceDispatcher({type: "set", payload: accumulatedPrice});
-  });
+  }, []);
 
   const createOrder = () => {
     let ingredientsArray = [];
     data.forEach((el) => {
       ingredientsArray.push(el._id);
     });
-    fetch("https://norma.nomoreparties.space/api/orders", {
+    fetch(`${BASE_URL}/orders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
