@@ -12,7 +12,7 @@ const OrderDetails = ({modalData, onClose}) => {
             <a onClick={onClose}><CloseIcon type="primary"/></a>
           </div>
           <div>
-            <p className="text text_type_digits-large mt-15">{modalData.order.number}</p>
+            <p className={`${styles.orderNumber} text text_type_digits-large mt-15`}>{modalData.order.number}</p>
           </div>
           <div>
             <p className="text text_type_main-medium mt-8">идентификатор заказа</p>
