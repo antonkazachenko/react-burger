@@ -39,7 +39,6 @@ function BurgerConstructor({className, isVisible, handleModal, handleCloseModal}
         r.ok ? r.json() : Promise.reject(r)
       )
       .then((res) => {
-        console.log(res);
         setModalData(res);
         handleModal();
       })

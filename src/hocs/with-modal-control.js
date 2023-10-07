@@ -7,9 +7,10 @@ const withModalControl = (Component) => {
 
     const handleModal = (item) => {
       setIsVisible(true);
-      setModalData(item.data);
+      if (item && item.data) {
+        setModalData(item.data);
+      }
     };
-
     const handleCloseModal = () => {
       setIsVisible(false);
       setModalData(null);
