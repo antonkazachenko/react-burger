@@ -18,7 +18,7 @@ function BurgerConstructor({className, isVisible, handleModal, handleCloseModal}
     }, 0);
     accumulatedPrice += data[0].price * 2;
     totalPriceDispatcher({type: "set", payload: accumulatedPrice});
-  }, []);
+  }, [data, totalPriceDispatcher]);
 
   const createOrder = () => {
     let ingredientsArray = [];
