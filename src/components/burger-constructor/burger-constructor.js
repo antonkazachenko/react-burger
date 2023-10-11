@@ -15,13 +15,30 @@ function BurgerConstructor({
 }) {
   const { data, totalPriceDispatcher, totalPrice } = useContext(IngredientsContext);
   const [modalData, setModalData] = React.useState(null);
-  const { bunData, orderData } = useContext(OrderContext);
+  const { bunData, orderData, setOrderData } = useContext(OrderContext);
+
+  const handleIngredientRemoval = (id) => {
+    // eslint-disable-next-line no-underscore-dangle
+    const newOrderData = orderData.filter((el) => el._id !== id);
+    setOrderData(newOrderData);
+  };
 
   useEffect(() => {
-    let accumulatedPrice = data.reduce((acc, el) => ((el.type !== 'bun') ? acc + el.price : acc), 0);
-    accumulatedPrice += data[0].price * 2;
-    totalPriceDispatcher({ type: 'set', payload: accumulatedPrice });
-  }, [data, totalPriceDispatcher]);
+    let totalPriceValue = 0;
+    if (bunData) {
+      totalPriceValue += bunData.price * 2;
+    }
+    if (orderData) {
+      orderData.forEach((el) => {
+        totalPriceValue += el.price;
+      });
+    }
+    if (totalPriceValue === 0) {
+      totalPriceDispatcher({ type: 'reset' });
+    } else {
+      totalPriceDispatcher({ type: 'set', payload: totalPriceValue });
+    }
+  }, [totalPriceDispatcher, bunData, orderData]);
 
   const createOrder = () => {
     const ingredientsArray = [];
@@ -66,7 +83,6 @@ function BurgerConstructor({
             {
             orderData.map((el) => {
               if (el.type !== 'bun') {
-                console.log(el);
                 return (
                   // eslint-disable-next-line no-underscore-dangle
                   <div className={`${styles.dragElement} mb-4`} key={el._id}>
@@ -77,6 +93,8 @@ function BurgerConstructor({
                       text={el.name}
                       price={el.price}
                       thumbnail={el.image}
+                      /* eslint-disable-next-line no-underscore-dangle */
+                      handleClose={() => handleIngredientRemoval(el._id)}
                     />
                   </div>
                 );
@@ -112,7 +130,7 @@ function BurgerConstructor({
           isVisible
           && (
           <Modal onClose={handleCloseModal}>
-            <OrderDetails modalData={modalData} />
+            <OrderDetails data={modalData} />
           </Modal>
           )
           // <OrderDetails modalData={modalData} onClose={handleCloseModal}/>

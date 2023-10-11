@@ -15,7 +15,8 @@ function ConstructorCard(props) {
     onClick({ data: item, isCheckout: false });
     if (item && item.type === 'bun') {
       setBunData(item);
-    } else {
+      // eslint-disable-next-line no-underscore-dangle
+    } else if ((orderData.length === 0) || (orderData.every((el) => el._id !== item._id))) {
       setOrderData([...orderData, item]);
     }
   }

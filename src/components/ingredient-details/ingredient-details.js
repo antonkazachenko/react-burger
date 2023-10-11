@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from '../modal/modal.module.css';
+import ingredientType from '../../utils/types';
 
 function IngredientDetails({ data }) {
   return (
@@ -52,16 +52,7 @@ function IngredientDetails({ data }) {
 }
 
 IngredientDetails.propTypes = {
-  // eslint-disable-next-line react/require-default-props
-  data: PropTypes.shape({
-    image_large: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    calories: PropTypes.number.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-  }),
+  data: ingredientType.isRequired,
 };
 
 export default IngredientDetails;
