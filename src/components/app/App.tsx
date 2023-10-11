@@ -1,13 +1,12 @@
-import React, {useEffect, useReducer} from 'react';
-import './App.module.css';
-import AppHeader from '../app-header/app-header';
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import React, { useEffect, useReducer } from 'react';
 import styles from './App.module.css';
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import {getIngredients} from "../../utils/api";
-import withModalControl from "../../hocs/with-modal-control";
-import {IngredientsContext} from "../../services/ingredientsContext";
-import {OrderContext} from "../../services/orderContext";
+import AppHeader from '../app-header/app-header';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
+import { getIngredients } from '../../utils/api';
+import withModalControl from '../../hocs/with-modal-control';
+import IngredientsContext from '../../services/ingredientsContext';
+import OrderContext from '../../services/orderContext';
 
 const BurgerIngredientsWithModal = withModalControl(BurgerIngredients);
 const BurgerConstructorWithModal = withModalControl(BurgerConstructor);
@@ -15,9 +14,9 @@ const BurgerConstructorWithModal = withModalControl(BurgerConstructor);
 const TotalInitialState = { price: 0 };
 function reducer(state: any, action: any) {
   switch (action.type) {
-    case "set":
+    case 'set':
       return { price: action.payload };
-    case "reset":
+    case 'reset':
       return TotalInitialState;
     default:
       throw new Error(`Wrong type of action: ${action.type}`);
@@ -34,12 +33,13 @@ function App() {
   useEffect(() => {
     getIngredients()
       .then((res) => {
-        setData(res.data.filter((item: any) => (item.type === "bun" || item.type === "sauce")));
+        setData(res.data.filter((item: any) => (item.type === 'bun' || item.type === 'sauce')));
         setBunData(res.data[0]);
-        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
         setIsLoading(false);
       });
   }, []);
@@ -51,15 +51,20 @@ function App() {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <IngredientsContext.Provider value={{data, totalPriceDispatcher, totalPrice}}>
-        <OrderContext.Provider value={{bunData, orderData, setBunData, setOrderData}}>
+      {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
+      <IngredientsContext.Provider value={{ data, totalPriceDispatcher, totalPrice }}>
+        {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
+        <OrderContext.Provider value={{
+          bunData, orderData, setBunData, setOrderData,
+        }}
+        >
           <main>
             <div className={styles.tabWidth}>
-              <BurgerIngredientsWithModal/>
+              <BurgerIngredientsWithModal />
             </div>
             <div className={styles.tabWidth}>
               <BurgerConstructorWithModal
-                  className={`mt-25 ml-10 ${styles.flexColumn}`}
+                className={`mt-25 ml-10 ${styles.flexColumn}`}
               />
             </div>
           </main>
@@ -68,6 +73,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;

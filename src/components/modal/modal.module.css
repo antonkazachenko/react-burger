@@ -41,3 +41,9 @@
 .textData {
     color: rgba(133, 133, 173, 1);
 }
+
+
+.exitCross {
+    display: flex;
+    justify-content: flex-end;
+}

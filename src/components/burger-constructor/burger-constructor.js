@@ -1,43 +1,45 @@
-import React, {useContext, useEffect} from "react";
-import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./burger-constructor.module.css"
-import {IngredientsContext} from "../../services/ingredientsContext";
-import PropTypes from "prop-types";
-import OrderDetails from "../order-details/order-details";
-import {OrderContext} from "../../services/orderContext";
-import {BASE_URL} from "../../utils/api";
+import React, { useContext, useEffect } from 'react';
+import {
+  Button, ConstructorElement, CurrencyIcon, DragIcon,
+} from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
+import styles from './burger-constructor.module.css';
+import IngredientsContext from '../../services/ingredientsContext';
+import OrderDetails from '../order-details/order-details';
+import OrderContext from '../../services/orderContext';
+import { BASE_URL, checkResponse } from '../../utils/api';
+import Modal from '../modal/modal';
 
-function BurgerConstructor({className, isVisible, handleModal, handleCloseModal}) {
-  const {data, totalPriceDispatcher, totalPrice} = useContext(IngredientsContext);
+function BurgerConstructor({
+  className, isVisible, handleModal, handleCloseModal,
+}) {
+  const { data, totalPriceDispatcher, totalPrice } = useContext(IngredientsContext);
   const [modalData, setModalData] = React.useState(null);
-  const {bunData, orderData} = useContext(OrderContext);
+  const { bunData, orderData } = useContext(OrderContext);
 
   useEffect(() => {
-    let accumulatedPrice = data.reduce((acc, el) => {
-      return (el.type !== "bun") ? acc + el.price : acc;
-    }, 0);
+    let accumulatedPrice = data.reduce((acc, el) => ((el.type !== 'bun') ? acc + el.price : acc), 0);
     accumulatedPrice += data[0].price * 2;
-    totalPriceDispatcher({type: "set", payload: accumulatedPrice});
+    totalPriceDispatcher({ type: 'set', payload: accumulatedPrice });
   }, [data, totalPriceDispatcher]);
 
   const createOrder = () => {
-    let ingredientsArray = [];
+    const ingredientsArray = [];
     data.forEach((el) => {
+      // eslint-disable-next-line no-underscore-dangle
       ingredientsArray.push(el._id);
     });
     fetch(`${BASE_URL}/orders`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("token"),
+        'Content-Type': 'application/json',
+        authorization: localStorage.getItem('token'),
       },
       body: JSON.stringify({
         ingredients: ingredientsArray,
       }),
     })
-      .then(r =>
-        r.ok ? r.json() : Promise.reject(r)
-      )
+      .then((res) => checkResponse(res))
       .then((res) => {
         setModalData(res);
         handleModal();
@@ -45,27 +47,31 @@ function BurgerConstructor({className, isVisible, handleModal, handleCloseModal}
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
   // TODO: What is the initial state of bunData?
-  return (<div className={className}>
+  return (
+    <div className={className}>
       <div className={`${styles.dragElement} ml-8 mb-4`}>
         <ConstructorElement
           type="top"
-          isLocked={true}
+          isLocked
           text={`${bunData.name} (верх)`}
           price={bunData.price}
           thumbnail={bunData.image}
         />
       </div>
       {
-        orderData && orderData.length ? (<div className={styles.overflow}>
-          {
-            orderData.map((el, index) => {
-              if (el.type !== "bun") {
+        orderData && orderData.length ? (
+          <div className={styles.overflow}>
+            {
+            orderData.map((el) => {
+              if (el.type !== 'bun') {
+                console.log(el);
                 return (
-                  <div className={`${styles.dragElement} mb-4`} key={index}>
+                  // eslint-disable-next-line no-underscore-dangle
+                  <div className={`${styles.dragElement} mb-4`} key={el._id}>
                     <div className="mr-2">
-                      <DragIcon type="primary"/>
+                      <DragIcon type="primary" />
                     </div>
                     <ConstructorElement
                       text={el.name}
@@ -76,13 +82,15 @@ function BurgerConstructor({className, isVisible, handleModal, handleCloseModal}
                 );
               }
               return null;
-            })}
-        </div>) : null
+            })
+}
+          </div>
+        ) : null
       }
       <div className={`${styles.dragElement} ml-8`}>
         <ConstructorElement
           type="bottom"
-          isLocked={true}
+          isLocked
           text={`${bunData.name} (низ)`}
           price={bunData.price}
           thumbnail={bunData.image}
@@ -91,20 +99,27 @@ function BurgerConstructor({className, isVisible, handleModal, handleCloseModal}
       <div className={`${styles.dragElement} mr-4 mt-6 mt-10`}>
         <p className="text text_type_digits-medium mr-1">{totalPrice.price}</p>
         <div className="mr-10">
-          <CurrencyIcon type="primary"/>
+          <CurrencyIcon type="primary" />
         </div>
+        {/* eslint-disable-next-line max-len */}
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
         <div onClick={createOrder}>
-            <Button htmlType="button" type="primary" size="large">
-              Оформить заказ
-            </Button>
-          </div>
+          <Button htmlType="button" type="primary" size="large">
+            Оформить заказ
+          </Button>
+        </div>
         {
-          isVisible &&
-          <OrderDetails modalData={modalData} onClose={handleCloseModal}/>
+          isVisible
+          && (
+          <Modal onClose={handleCloseModal}>
+            <OrderDetails modalData={modalData} />
+          </Modal>
+          )
+          // <OrderDetails modalData={modalData} onClose={handleCloseModal}/>
         }
       </div>
     </div>
-  )
+  );
 }
 
 BurgerConstructor.propTypes = {

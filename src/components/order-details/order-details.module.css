@@ -8,11 +8,6 @@
     align-items: center;
 }
 
-
-.exitCross {
-    align-self: flex-end;
-}
-
 .orderNumber {
     color: #F2F2F3;
     text-align: center;
@@ -28,9 +23,3 @@
     line-height: 120px; /* 83.333% */
 }
 
-@media screen and (max-width: 1440px) {
-    .modalSize {
-        width: 45%;
-        height: 90vh;
-    }
-}

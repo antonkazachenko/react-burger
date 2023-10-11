@@ -28,3 +28,10 @@
     border-radius: 0;
     border: 0 solid #ffffff;
 }
+
+@media screen and (max-width: 1440px) {
+    .modalSize {
+        width: 45%;
+        height: 90vh;
+    }
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 type OrderContextType = {
     bunData: any[];
@@ -7,4 +7,6 @@ type OrderContextType = {
     setOrderData: React.Dispatch<any>;
 }
 
-export const OrderContext = React.createContext<OrderContextType | undefined>(undefined);
+const OrderContext = React.createContext<OrderContextType | undefined>(undefined);
+
+export default OrderContext;
