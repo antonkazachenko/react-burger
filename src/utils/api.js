@@ -1,4 +1,11 @@
-import { GET_INGREDIENTS__SUCCESS, GET_INGREDIENTS__FAILURE, GET_INGREDIENTS__REQUEST } from '../services/actions/ingredients';
+import {
+  GET_INGREDIENTS__SUCCESS,
+  GET_INGREDIENTS__FAILURE,
+  GET_INGREDIENTS__REQUEST,
+  POST_ORDER__REQUEST,
+  POST_ORDER__SUCCESS,
+  POST_ORDER__FAILURE,
+} from '../services/actions/ingredients';
 
 export const BASE_URL = 'https://norma.nomoreparties.space/api';
 const apiIngredients = `${BASE_URL}/ingredients`;
@@ -20,6 +27,33 @@ export function getIngredients() {
       .catch((err) => {
         console.log(err);
         dispatch({ type: GET_INGREDIENTS__FAILURE, payload: err });
+      });
+  };
+}
+
+export function createOrderRequest(constructorIngredients) {
+  return function (dispatch) {
+    // Start the API call by dispatching a request action
+    dispatch({ type: POST_ORDER__REQUEST });
+
+    return fetch(`${BASE_URL}/orders`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: localStorage.getItem('token'),
+      },
+      body: JSON.stringify({
+        ingredients: constructorIngredients,
+      }),
+    })
+      .then((res) => checkResponse(res))
+      .then((res) => {
+        dispatch({ type: POST_ORDER__SUCCESS, payload: res });
+        return res;
+      })
+      .catch((err) => {
+        dispatch({ type: POST_ORDER__FAILURE, payload: err });
+        console.log(err);
       });
   };
 }

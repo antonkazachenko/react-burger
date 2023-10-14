@@ -1,5 +1,5 @@
 import {
-  ADD_INGREDIENT,
+  ADD_INGREDIENT, CHANGE_BUN,
   CURRENT_ITEM_CLOSE,
   CURRENT_ITEM_OPEN,
   GET_INGREDIENTS__FAILURE,
@@ -18,7 +18,9 @@ const initialState = {
   error: null,
   constructorIngredients: [],
   createdOrder: null,
+  modalVisible: false,
   currentItem: null,
+  orderModalVisible: false,
 };
 
 // eslint-disable-next-line default-param-last
@@ -35,7 +37,7 @@ const ingredientsReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         ingredients: action.payload.data,
-        bunData: action.payload.data.filter((el) => el.type === 'bun'),
+        bunData: action.payload.data.filter((el) => el.type === 'bun')[0],
       };
     }
     case GET_INGREDIENTS__FAILURE: {
@@ -43,6 +45,12 @@ const ingredientsReducer = (state = initialState, action) => {
         ...state,
         ingredients: [],
         isLoading: true,
+      };
+    }
+    case CHANGE_BUN: {
+      return {
+        ...state,
+        bunData: action.payload,
       };
     }
     case ADD_INGREDIENT: {
@@ -55,13 +63,14 @@ const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         constructorIngredients:
-          state.constructorIngredients.filter((uniqId) => uniqId !== action.payload),
+        // eslint-disable-next-line no-underscore-dangle
+          state.constructorIngredients.filter((el) => el._id !== action.payload),
       };
     }
     case POST_ORDER__REQUEST: {
       return {
         ...state,
-        isLoading: true,
+        modalVisible: false,
       };
     }
     case POST_ORDER__SUCCESS: {
@@ -69,6 +78,7 @@ const ingredientsReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         createdOrder: action.payload,
+        modalVisible: true,
       };
     }
     case POST_ORDER__FAILURE: {
@@ -76,18 +86,27 @@ const ingredientsReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         error: action.payload,
+        modalVisible: false,
       };
     }
     case CURRENT_ITEM_OPEN: {
+      if (action.payload.type === 'bun') {
+        return {
+          ...state,
+          currentItem: action.payload,
+        };
+      }
       return {
         ...state,
         currentItem: action.payload,
+        modalVisible: true,
       };
     }
     case CURRENT_ITEM_CLOSE: {
       return {
         ...state,
         currentItem: null,
+        modalVisible: false,
       };
     }
     default: {

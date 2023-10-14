@@ -3,24 +3,29 @@ import {
   Button, ConstructorElement, CurrencyIcon, DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './burger-constructor.module.css';
 import IngredientsContext from '../../services/ingredientsContext';
 import OrderDetails from '../order-details/order-details';
-import OrderContext from '../../services/orderContext';
-import { BASE_URL, checkResponse } from '../../utils/api';
+// eslint-disable-next-line import/named
+import { createOrderRequest } from '../../utils/api';
 import Modal from '../modal/modal';
 
 function BurgerConstructor({
-  className, isVisible, handleModal, handleCloseModal,
+  className, handleCloseModal, isVisible, handleModal,
 }) {
-  const { data, totalPriceDispatcher, totalPrice } = useContext(IngredientsContext);
-  const [modalData, setModalData] = React.useState(null);
-  const { bunData, orderData, setOrderData } = useContext(OrderContext);
+  const dispatch = useDispatch();
+  const {
+    constructorIngredients,
+    bunData,
+    createdOrder,
+  } = useSelector((store) => store.ingredientsStore);
+  const { totalPriceDispatcher, totalPrice } = useContext(IngredientsContext);
 
   const handleIngredientRemoval = (id) => {
     // eslint-disable-next-line no-underscore-dangle
-    const newOrderData = orderData.filter((el) => el._id !== id);
-    setOrderData(newOrderData);
+    dispatch({ type: 'REMOVE_INGREDIENT', payload: id });
   };
 
   useEffect(() => {
@@ -28,8 +33,8 @@ function BurgerConstructor({
     if (bunData) {
       totalPriceValue += bunData.price * 2;
     }
-    if (orderData) {
-      orderData.forEach((el) => {
+    if (constructorIngredients) {
+      constructorIngredients.forEach((el) => {
         totalPriceValue += el.price;
       });
     }
@@ -38,32 +43,21 @@ function BurgerConstructor({
     } else {
       totalPriceDispatcher({ type: 'set', payload: totalPriceValue });
     }
-  }, [totalPriceDispatcher, bunData, orderData]);
+  }, [totalPriceDispatcher, bunData, constructorIngredients]);
 
   const createOrder = () => {
     const ingredientsArray = [];
-    data.forEach((el) => {
+    // eslint-disable-next-line no-underscore-dangle
+    ingredientsArray.push(bunData._id);
+    constructorIngredients.forEach((el) => {
       // eslint-disable-next-line no-underscore-dangle
       ingredientsArray.push(el._id);
     });
-    fetch(`${BASE_URL}/orders`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: localStorage.getItem('token'),
-      },
-      body: JSON.stringify({
-        ingredients: ingredientsArray,
-      }),
-    })
-      .then((res) => checkResponse(res))
-      .then((res) => {
-        setModalData(res);
-        handleModal();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // eslint-disable-next-line no-underscore-dangle
+    ingredientsArray.push(bunData._id);
+    // eslint-disable-next-line no-underscore-dangle
+    dispatch(createOrderRequest(ingredientsArray));
+    handleModal();
   };
   // TODO: What is the initial state of bunData?
   return (
@@ -78,10 +72,10 @@ function BurgerConstructor({
         />
       </div>
       {
-        orderData && orderData.length ? (
+        constructorIngredients && constructorIngredients.length ? (
           <div className={styles.overflow}>
             {
-            orderData.map((el) => {
+            constructorIngredients.map((el) => {
               if (el.type !== 'bun') {
                 return (
                   // eslint-disable-next-line no-underscore-dangle
@@ -127,13 +121,12 @@ function BurgerConstructor({
           </Button>
         </div>
         {
-          isVisible
+          isVisible && createdOrder
           && (
           <Modal onClose={handleCloseModal}>
-            <OrderDetails data={modalData} />
+            <OrderDetails />
           </Modal>
           )
-          // <OrderDetails modalData={modalData} onClose={handleCloseModal}/>
         }
       </div>
     </div>
@@ -142,9 +135,8 @@ function BurgerConstructor({
 
 BurgerConstructor.propTypes = {
   className: PropTypes.string.isRequired,
-  isVisible: PropTypes.bool.isRequired,
-  handleModal: PropTypes.func.isRequired,
   handleCloseModal: PropTypes.func.isRequired,
+  isVisible: PropTypes.bool.isRequired,
 };
 
 export default BurgerConstructor;

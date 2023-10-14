@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useSelector } from 'react-redux';
 import styles from './burger-ingredients.module.css';
 import IngredientTabs from '../ingredient-tabs/ingredient-tabs';
-import IngredientsContext from '../../services/ingredientsContext';
-import ingredientType from '../../utils/types';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import IngredientSection from '../ingredient-section/ingredient-section';
 import Modal from '../modal/modal';
@@ -11,9 +11,9 @@ import Modal from '../modal/modal';
 function BurgerIngredients({
   isVisible, handleModal, handleCloseModal,
 }) {
-  const { ingredients } =
-  const bread = data.filter((el) => el.type === 'bun');
-  const sauces = data.filter((el) => el.type === 'sauce');
+  const { ingredients } = useSelector((store) => store.ingredientsStore);
+  const bread = ingredients.filter((el) => el.type === 'bun');
+  const sauces = ingredients.filter((el) => el.type === 'sauce');
 
   const breadClasses = [`ml-4 ${styles.relative}`, 'ml-6'];
   const saucesClasses = ['ml-4', 'ml-6', `ml-4 mt-8 ${styles.relative}`, 'ml-6 mt-8'];

@@ -1,23 +1,27 @@
 import React from 'react';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './constructor-card.module.css';
-import orderContext from '../../services/orderContext';
+import { ADD_INGREDIENT, CHANGE_BUN } from '../../services/actions/ingredients';
 
 function ConstructorCard(props) {
   const {
     item, className, counterCheck, price, onClick,
   } = props;
 
-  const { orderData, setBunData, setOrderData } = React.useContext(orderContext);
+  const dispatch = useDispatch();
+  const { constructorIngredients } = useSelector((store) => store.ingredientsStore);
 
   function customClick() {
     onClick({ data: item, isCheckout: false });
+    console.log(constructorIngredients);
     if (item && item.type === 'bun') {
-      setBunData(item);
-      // eslint-disable-next-line no-underscore-dangle
-    } else if ((orderData.length === 0) || (orderData.every((el) => el._id !== item._id))) {
-      setOrderData([...orderData, item]);
+      dispatch({ type: CHANGE_BUN, payload: item });
+      // eslint-disable-next-line no-underscore-dangle,max-len
+    } else if ((constructorIngredients.length === 0) || (constructorIngredients.every((el) => el._id !== item._id))) {
+      dispatch({ type: ADD_INGREDIENT, payload: item });
     }
   }
 

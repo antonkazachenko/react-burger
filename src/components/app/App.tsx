@@ -7,7 +7,6 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { getIngredients } from '../../utils/api';
 import withModalControl from '../../hocs/with-modal-control';
 import IngredientsContext from '../../services/ingredientsContext';
-import OrderContext from '../../services/orderContext';
 
 const BurgerIngredientsWithModal = withModalControl(BurgerIngredients);
 const BurgerConstructorWithModal = withModalControl(BurgerConstructor);
@@ -26,6 +25,7 @@ function reducer(state: any, action: any) {
 
 function App() {
   const { ingredients, bunData, isLoading } = useSelector((state: any) => state.ingredientsStore);
+  const [_, setBunData] = React.useState([]);
   const [orderData, setOrderData] = React.useState([]);
   const [totalPrice, totalPriceDispatcher] = useReducer(reducer, TotalInitialState, undefined);
   const dispatch = useDispatch();
@@ -35,6 +35,8 @@ function App() {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     dispatch(getIngredients());
+    setBunData(bunData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   if (isLoading) {
@@ -45,23 +47,17 @@ function App() {
     <div className={styles.app}>
       <AppHeader />
       {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
-      <IngredientsContext.Provider value={{ data, totalPriceDispatcher, totalPrice }}>
-        {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
-        <OrderContext.Provider value={{
-          bunData, orderData, setBunData, setOrderData,
-        }}
-        >
-          <main>
-            <div className={styles.tabWidth}>
-              <BurgerIngredientsWithModal />
-            </div>
-            <div className={styles.tabWidth}>
-              <BurgerConstructorWithModal
-                className={`mt-25 ml-10 ${styles.flexColumn}`}
-              />
-            </div>
-          </main>
-        </OrderContext.Provider>
+      <IngredientsContext.Provider value={{ totalPriceDispatcher, totalPrice }}>
+        <main>
+          <div className={styles.tabWidth}>
+            <BurgerIngredientsWithModal />
+          </div>
+          <div className={styles.tabWidth}>
+            <BurgerConstructorWithModal
+              className={`mt-25 ml-10 ${styles.flexColumn}`}
+            />
+          </div>
+        </main>
       </IngredientsContext.Provider>
     </div>
   );

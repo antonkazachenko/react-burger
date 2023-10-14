@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import styles from './order-details.module.css';
 import { ReactComponent as OrderConfirmationTick } from '../../images/orderConfirmedTick.svg';
 import ingredientType from '../../utils/types';
 
-function OrderDetails({ data }) {
+function OrderDetails() {
+  const { createdOrder } = useSelector((store) => store.ingredientsStore);
   return (
     <div className={`${styles.orderDetails}`}>
       <div>
-        <p className={`${styles.orderNumber} text text_type_digits-large mt-15`}>{data.order.number}</p>
+        <p className={`${styles.orderNumber} text text_type_digits-large mt-15`}>{createdOrder.order.number}</p>
       </div>
       <div>
         <p className="text text_type_main-medium mt-8">идентификатор заказа</p>
@@ -26,11 +28,4 @@ function OrderDetails({ data }) {
   );
 }
 
-OrderDetails.propTypes = {
-  data: PropTypes.shape({
-    order: PropTypes.shape({
-      number: PropTypes.number.isRequired,
-    }),
-  }).isRequired,
-};
 export default OrderDetails;
