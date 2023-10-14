@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './App.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -24,25 +25,17 @@ function reducer(state: any, action: any) {
 }
 
 function App() {
-  const [data, setData] = React.useState([]);
-  const [bunData, setBunData] = React.useState<any>();
+  const { ingredients, bunData, isLoading } = useSelector((state: any) => state.ingredientsStore);
   const [orderData, setOrderData] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
   const [totalPrice, totalPriceDispatcher] = useReducer(reducer, TotalInitialState, undefined);
+  const dispatch = useDispatch();
+  const data = ingredients;
 
   useEffect(() => {
-    getIngredients()
-      .then((res) => {
-        setData(res.data.filter((item: any) => (item.type === 'bun' || item.type === 'sauce')));
-        setBunData(res.data[0]);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   if (isLoading) {
     return <div>Loading...</div>;

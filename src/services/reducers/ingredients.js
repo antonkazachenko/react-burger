@@ -13,14 +13,16 @@ import {
 
 const initialState = {
   ingredients: [],
-  isLoading: false,
+  bunData: [],
+  isLoading: true,
   error: null,
   constructorIngredients: [],
   createdOrder: null,
   currentItem: null,
 };
 
-const ingredientsReducer = (action, state = initialState) => {
+// eslint-disable-next-line default-param-last
+const ingredientsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_INGREDIENTS__REQUEST: {
       return {
@@ -32,14 +34,15 @@ const ingredientsReducer = (action, state = initialState) => {
       return {
         ...state,
         isLoading: false,
-        ingredients: action.payload,
+        ingredients: action.payload.data,
+        bunData: action.payload.data.filter((el) => el.type === 'bun'),
       };
     }
     case GET_INGREDIENTS__FAILURE: {
       return {
         ...state,
         ingredients: [],
-        isLoading: false,
+        isLoading: true,
       };
     }
     case ADD_INGREDIENT: {

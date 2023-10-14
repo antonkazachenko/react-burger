@@ -31,6 +31,8 @@ module.exports = {
     'jsx-a11y/no-noninteractive-element-interactions': 'off',
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
+    'import/no-named-as-default': 0,
+    'import/no-named-as-default-member': 0,
   },
   settings: {
     react: {

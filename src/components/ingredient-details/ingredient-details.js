@@ -1,8 +1,9 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styles from '../modal/modal.module.css';
-import ingredientType from '../../utils/types';
 
-function IngredientDetails({ data }) {
+function IngredientDetails() {
+  const data = useSelector((store) => store.ingredientsStore.currentItem);
   return (
     <>
       <div className={styles.image}><img src={data.image_large} alt={data.name} /></div>
@@ -50,9 +51,5 @@ function IngredientDetails({ data }) {
     </>
   );
 }
-
-IngredientDetails.propTypes = {
-  data: ingredientType.isRequired,
-};
 
 export default IngredientDetails;

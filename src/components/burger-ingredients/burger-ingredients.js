@@ -9,9 +9,9 @@ import IngredientSection from '../ingredient-section/ingredient-section';
 import Modal from '../modal/modal';
 
 function BurgerIngredients({
-  isVisible, modalData, handleModal, handleCloseModal,
+  isVisible, handleModal, handleCloseModal,
 }) {
-  const { data } = useContext(IngredientsContext);
+  const { ingredients } =
   const bread = data.filter((el) => el.type === 'bun');
   const sauces = data.filter((el) => el.type === 'sauce');
 
@@ -34,7 +34,7 @@ function BurgerIngredients({
           isVisible
           && (
           <Modal onClose={handleCloseModal} className={styles.modalSize} title="Детали ингдредианта">
-            <IngredientDetails data={modalData} />
+            <IngredientDetails />
           </Modal>
           )
         }

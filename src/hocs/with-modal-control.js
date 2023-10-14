@@ -1,20 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { CURRENT_ITEM_OPEN, CURRENT_ITEM_CLOSE } from '../services/actions/ingredients';
 
 function withModalControl(Component) {
   return function WithModalControl(props) {
+    const dispatch = useDispatch();
     const [isVisible, setIsVisible] = React.useState(false);
     const [modalData, setModalData] = React.useState(null);
 
     const handleModal = (item) => {
       setIsVisible(true);
       if (item && item.data) {
-        setModalData(item.data);
+        dispatch({ type: CURRENT_ITEM_OPEN, payload: item.data });
       }
     };
     const handleCloseModal = () => {
       setIsVisible(false);
-      setModalData(null);
+      dispatch({ type: CURRENT_ITEM_CLOSE });
     };
 
     return (
