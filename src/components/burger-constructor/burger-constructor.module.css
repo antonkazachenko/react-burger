@@ -6,7 +6,7 @@
 
 .overflow {
     overflow-y: auto;
-    max-xheight: 40.3vh;
+    max-height: 40.3vh;
     padding-right: 15px;
     margin-right: -20px;
 }

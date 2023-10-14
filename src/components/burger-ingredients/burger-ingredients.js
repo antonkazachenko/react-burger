@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { useInView } from 'react-intersection-observer'; // <-- Import the hook
+import { useInView } from 'react-intersection-observer';
 import styles from './burger-ingredients.module.css';
 import IngredientTabs from '../ingredient-tabs/ingredient-tabs';
 import IngredientDetails from '../ingredient-details/ingredient-details';

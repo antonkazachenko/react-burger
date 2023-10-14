@@ -1,5 +1,7 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import {
-  ADD_INGREDIENT, CHANGE_BUN,
+  ADD_INGREDIENT,
+  CHANGE_BUN,
   CURRENT_ITEM_CLOSE,
   CURRENT_ITEM_OPEN,
   GET_INGREDIENTS__FAILURE,
@@ -54,17 +56,48 @@ const ingredientsReducer = (state = initialState, action) => {
       };
     }
     case ADD_INGREDIENT: {
+      const ingredientExists = state.constructorIngredients
+        // eslint-disable-next-line no-underscore-dangle
+        .find((el) => el.ingredient._id === action.payload._id);
+
+      if (ingredientExists) {
+        // Increase the count for the ingredient
+        return {
+          ...state,
+          constructorIngredients: state.constructorIngredients
+            // eslint-disable-next-line no-underscore-dangle
+            .map((el) => (el.ingredient._id === action.payload._id
+              ? { ...el, count: el.count + 1 } : el)),
+        };
+      }
+      // Add the new ingredient with a count of 1
       return {
         ...state,
-        constructorIngredients: [...state.constructorIngredients, action.payload],
+        constructorIngredients: [...state.constructorIngredients,
+          { ingredient: action.payload, count: 1 }],
       };
     }
     case REMOVE_INGREDIENT: {
+      const ingredient = state.constructorIngredients
+        // eslint-disable-next-line no-underscore-dangle
+        .find((el) => el.ingredient._id === action.payload);
+
+      if (ingredient && ingredient.count > 1) {
+        // Decrease the count for the ingredient
+        return {
+          ...state,
+          constructorIngredients: state.constructorIngredients
+            // eslint-disable-next-line no-underscore-dangle
+            .map((el) => (el.ingredient._id === action.payload
+              ? { ...el, count: el.count - 1 } : el)),
+        };
+      }
+      // Remove the ingredient
       return {
         ...state,
         constructorIngredients:
         // eslint-disable-next-line no-underscore-dangle
-          state.constructorIngredients.filter((el) => el._id !== action.payload),
+          state.constructorIngredients.filter((el) => el.ingredient._id !== action.payload),
       };
     }
     case POST_ORDER__REQUEST: {

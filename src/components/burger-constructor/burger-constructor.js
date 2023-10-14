@@ -5,12 +5,16 @@ import {
 import PropTypes from 'prop-types';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useDispatch, useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { nanoid } from 'nanoid';
 import styles from './burger-constructor.module.css';
 import IngredientsContext from '../../services/ingredientsContext';
 import OrderDetails from '../order-details/order-details';
 // eslint-disable-next-line import/named
 import { createOrderRequest } from '../../utils/api';
 import Modal from '../modal/modal';
+import { ADD_INGREDIENT, CHANGE_BUN } from '../../services/actions/ingredients';
 
 function BurgerConstructor({
   className, handleCloseModal, isVisible, handleModal,
@@ -28,6 +32,20 @@ function BurgerConstructor({
     dispatch({ type: 'REMOVE_INGREDIENT', payload: id });
   };
 
+  const [, dropTarget] = useDrop({
+    accept: ['bun', 'sauce'],
+    drop(item) {
+      const itemCopy = { ...item };
+      itemCopy.id = nanoid();
+
+      if (itemCopy && itemCopy.type === 'bun') {
+        dispatch({ type: CHANGE_BUN, payload: itemCopy });
+      } else {
+        dispatch({ type: ADD_INGREDIENT, payload: itemCopy });
+      }
+    },
+  });
+
   useEffect(() => {
     let totalPriceValue = 0;
     if (bunData) {
@@ -35,7 +53,7 @@ function BurgerConstructor({
     }
     if (constructorIngredients) {
       constructorIngredients.forEach((el) => {
-        totalPriceValue += el.price;
+        totalPriceValue += el.ingredient.price * el.count;
       });
     }
     if (totalPriceValue === 0) {
@@ -61,7 +79,7 @@ function BurgerConstructor({
   };
   // TODO: What is the initial state of bunData?
   return (
-    <div className={className}>
+    <div className={className} ref={dropTarget}>
       <div className={`${styles.dragElement} ml-8 mb-4`}>
         <ConstructorElement
           type="top"
@@ -79,16 +97,16 @@ function BurgerConstructor({
               if (el.type !== 'bun') {
                 return (
                   // eslint-disable-next-line no-underscore-dangle
-                  <div className={`${styles.dragElement} mb-4`} key={el._id}>
+                  <div className={`${styles.dragElement} mb-4`} key={el.ingredient._id}>
                     <div className="mr-2">
                       <DragIcon type="primary" />
                     </div>
                     <ConstructorElement
-                      text={el.name}
-                      price={el.price}
-                      thumbnail={el.image}
+                      text={el.ingredient.name}
+                      price={el.ingredient.price}
+                      thumbnail={el.ingredient.image}
                       /* eslint-disable-next-line no-underscore-dangle */
-                      handleClose={() => handleIngredientRemoval(el._id)}
+                      handleClose={() => handleIngredientRemoval(el.ingredient._id)}
                     />
                   </div>
                 );
