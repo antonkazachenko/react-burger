@@ -95,7 +95,6 @@ export function createOrderRequest(constructorIngredients) {
     })
       .then((res) => {
         dispatch({ type: POST_ORDER__SUCCESS, payload: res });
-        dispatch({ type: RESET_CONSTRUCTOR });
         return res;
       })
       .catch((err) => {

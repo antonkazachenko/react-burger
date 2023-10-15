@@ -39,6 +39,7 @@ function BurgerConstructor({
   const [, dropTarget] = useDrop({
     accept: ['bun', 'sauce'],
     drop(item) {
+      if ((bunData.length === 0) && (item.type !== 'bun')) { return; }
       if (item && item.type === 'bun') {
         dispatch(changeBun(item));
       } else {
@@ -54,7 +55,7 @@ function BurgerConstructor({
     }
     if (constructorIngredients) {
       constructorIngredients.forEach((el) => {
-        totalPriceValue += el.ingredient.price * el.count;
+        totalPriceValue += el.ingredient.price;
       });
     }
     if (totalPriceValue === 0) {
@@ -79,6 +80,13 @@ function BurgerConstructor({
     handleModal();
   };
 
+  if (bunData.length === 0) {
+    return (
+      <div className={styles.dropZone} ref={dropTarget}>
+        <p className="text text_type_main-large mt-10">Перенесите булку в правую часть экрана</p>
+      </div>
+    );
+  }
   return (
     <div className={className} ref={dropTarget}>
       <div className={`${styles.dragElement} ml-8 mb-4`}>

@@ -44,7 +44,6 @@ const ingredientsReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         ingredients: action.payload.data,
-        bunData: action.payload.data.filter((el) => el.type === 'bun')[0],
       };
     }
     case GET_INGREDIENTS__FAILURE: {

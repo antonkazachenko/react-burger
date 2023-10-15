@@ -11,6 +11,10 @@
     margin-right: -20px;
 }
 
+.dropZone {
+    height: 100%;
+}
+
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
 * {
