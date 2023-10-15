@@ -26,19 +26,14 @@ function reducer(state: any, action: any) {
 }
 
 function App() {
-  const { ingredients, bunData, isLoading } = useSelector((state: any) => state.ingredientsStore);
-  const [_, setBunData] = React.useState([]);
-  const [orderData, setOrderData] = React.useState([]);
+  const { isLoading } = useSelector((state: any) => state.ingredientsStore);
   const [totalPrice, totalPriceDispatcher] = useReducer(reducer, TotalInitialState, undefined);
   const dispatch = useDispatch();
-  const data = ingredients;
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     dispatch(getIngredients());
-    setBunData(bunData);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   if (isLoading) {

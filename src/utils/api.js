@@ -23,7 +23,9 @@ export function getIngredients() {
     dispatch({ type: GET_INGREDIENTS__REQUEST });
     return fetch(apiIngredients)
       .then((res) => checkResponse(res))
-      .then((data) => dispatch({ type: GET_INGREDIENTS__SUCCESS, payload: data }))
+      .then((data) => {
+        dispatch({ type: GET_INGREDIENTS__SUCCESS, payload: data });
+      })
       .catch((err) => {
         console.log(err);
         dispatch({ type: GET_INGREDIENTS__FAILURE, payload: err });

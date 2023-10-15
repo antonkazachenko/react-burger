@@ -14,17 +14,21 @@ function BurgerIngredients({ isVisible, handleModal, handleCloseModal }) {
   const [activeTab, setActiveTab] = React.useState('one');
   const bread = ingredients.filter((el) => el.type === 'bun');
   const sauces = ingredients.filter((el) => el.type === 'sauce');
+  const main = ingredients.filter((el) => el.type === 'main');
 
-  const [breadRef, breadInView] = useInView({ threshold: 0.5 });
-  const [saucesRef, saucesInView] = useInView({ threshold: 0.5 });
+  const [breadRef, breadInView] = useInView({ threshold: 0.02 });
+  const [saucesRef, saucesInView] = useInView({ threshold: 0.33 });
+  const [mainRef, mainInView] = useInView({ threshold: 0.65 });
 
   const breadClasses = [`ml-4 ${styles.relative}`, 'ml-6'];
-  const saucesClasses = ['ml-4', 'ml-6', `ml-4 mt-8 ${styles.relative}`, 'ml-6 mt-8'];
+  const saucesClasses = ['ml-4', 'ml-6', 'ml-4 mt-8', 'ml-6 mt-8'];
+  const mainClasses = ['ml-4', 'ml-6', 'ml-4 mt-8', 'ml-6 mt-8', 'ml-4 mt-8', 'ml-6 mt-8', 'ml-4 mt-8', 'ml-6 mt-8', `ml-4 mt-8 ${styles.lastOdd}`];
 
   React.useEffect(() => {
     if (breadInView) setActiveTab('one');
     else if (saucesInView) setActiveTab('two');
-  }, [breadInView, saucesInView]);
+    else setActiveTab('three');
+  }, [breadInView, mainInView, saucesInView]);
 
   return (
     <article>
@@ -36,6 +40,9 @@ function BurgerIngredients({ isVisible, handleModal, handleCloseModal }) {
         </div>
         <div className="mt-10" ref={saucesRef}>
           <IngredientSection items={sauces} title="Соусы" classes={saucesClasses} handleModal={handleModal} />
+        </div>
+        <div className="mt-10" ref={mainRef}>
+          <IngredientSection items={main} title="Начинки" classes={mainClasses} handleModal={handleModal} />
         </div>
         {
           isVisible

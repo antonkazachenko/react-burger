@@ -2,6 +2,7 @@ import React from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 import styles from './draggable-ingredient.module.css';
 
 function DraggableIngredient({ ingredient, handleIngredientRemoval, index }) {
@@ -52,11 +53,11 @@ function DraggableIngredient({ ingredient, handleIngredientRemoval, index }) {
   );
 }
 
-DraggableIngredient.PropTypes = {
+DraggableIngredient.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  ingredient: React.PropTypes.object.isRequired,
-  handleIngredientRemoval: React.PropTypes.func.isRequired,
-  index: React.PropTypes.number.isRequired,
-}
+  ingredient: PropTypes.object.isRequired,
+  handleIngredientRemoval: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
+};
 
 export default DraggableIngredient;
