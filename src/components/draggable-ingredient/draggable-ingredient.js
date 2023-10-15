@@ -52,4 +52,11 @@ function DraggableIngredient({ ingredient, handleIngredientRemoval, index }) {
   );
 }
 
+DraggableIngredient.PropTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  ingredient: React.PropTypes.object.isRequired,
+  handleIngredientRemoval: React.PropTypes.func.isRequired,
+  index: React.PropTypes.number.isRequired,
+}
+
 export default DraggableIngredient;

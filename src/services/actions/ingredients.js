@@ -13,12 +13,3 @@ export const POST_ORDER__FAILURE = 'POST_ORDER__FAILURE';
 
 export const CURRENT_ITEM_OPEN = 'CURRENT_ITEM_OPEN';
 export const CURRENT_ITEM_CLOSE = 'CURRENT_ITEM_CLOSE';
-
-// const initialState = {
-//   ingredients: [],
-//   isLoading: false,
-//   error: null,
-//   constructorIngredients: [],
-//   createdOrder: null,
-//   currentItem: null,
-// };
