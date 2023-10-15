@@ -7,7 +7,7 @@ import { useDrag } from 'react-dnd';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { nanoid } from 'nanoid';
 import styles from './constructor-card.module.css';
-import { ADD_INGREDIENT, CHANGE_BUN } from '../../services/actions/ingredients';
+import { addIngredient, CHANGE_BUN } from '../../services/actions/ingredients';
 
 function ConstructorCard(props) {
   const {
@@ -31,15 +31,12 @@ function ConstructorCard(props) {
   });
 
   function customClick() {
-    const itemCopy = { ...item };
-    itemCopy.id = nanoid();
-
     onClick({ data: item, isCheckout: false });
 
-    if (itemCopy && itemCopy.type === 'bun') {
-      dispatch({ type: CHANGE_BUN, payload: itemCopy });
+    if (item && item.type === 'bun') {
+      dispatch({ type: CHANGE_BUN, payload: item });
     } else {
-      dispatch({ type: ADD_INGREDIENT, payload: itemCopy });
+      dispatch(addIngredient(item));
     }
   }
   return (

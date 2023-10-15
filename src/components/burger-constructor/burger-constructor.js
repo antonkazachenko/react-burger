@@ -13,8 +13,8 @@ import OrderDetails from '../order-details/order-details';
 // eslint-disable-next-line import/named
 import Modal from '../modal/modal';
 import {
-  ADD_INGREDIENT, CHANGE_BUN, RESET_TOTAL_PRICE,
-  SET_TOTAL_PRICE, REMOVE_INGREDIENT, createOrderRequest,
+  CHANGE_BUN, RESET_TOTAL_PRICE,
+  SET_TOTAL_PRICE, REMOVE_INGREDIENT, createOrderRequest, addIngredient,
 } from '../../services/actions/ingredients';
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 
@@ -37,12 +37,10 @@ function BurgerConstructor({
   const [, dropTarget] = useDrop({
     accept: ['bun', 'sauce'],
     drop(item) {
-      const itemCopy = { ...item };
-      itemCopy.id = nanoid();
-      if (itemCopy && itemCopy.type === 'bun') {
-        dispatch({ type: CHANGE_BUN, payload: itemCopy });
+      if (item && item.type === 'bun') {
+        dispatch({ type: CHANGE_BUN, payload: item });
       } else {
-        dispatch({ type: ADD_INGREDIENT, payload: itemCopy });
+        dispatch(addIngredient(item));
       }
     },
   });
@@ -98,7 +96,7 @@ function BurgerConstructor({
                 return (
                   <DraggableIngredient
                     /* eslint-disable-next-line no-underscore-dangle */
-                    key={el.ingredient._id}
+                    key={el.ingredient.uniqueId}
                     ingredient={el.ingredient}
                     handleIngredientRemoval={handleIngredientRemoval}
                     index={index}

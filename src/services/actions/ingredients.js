@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { v4 as uuidv4 } from 'uuid';
 import request from '../../utils/apiUtils';
 
 export const GET_INGREDIENTS__REQUEST = 'GET_INGREDIENTS__REQUEST';
@@ -58,3 +60,44 @@ export function createOrderRequest(constructorIngredients) {
       });
   };
 }
+
+export const addIngredient = (item) => ({
+  type: ADD_INGREDIENT,
+  payload: {
+    ...item,
+    uniqueId: uuidv4(),
+  },
+});
+
+export const removeIngredient = (id) => ({
+  type: REMOVE_INGREDIENT,
+  payload: id,
+});
+
+export const changeBun = (item) => ({
+  type: CHANGE_BUN,
+  payload: item,
+});
+
+export const reorderIngredients = (payload) => ({
+  type: REORDER_INGREDIENTS,
+  payload,
+});
+
+export const setCurrentItemOpen = (item) => ({
+  type: CURRENT_ITEM_OPEN,
+  payload: item,
+});
+
+export const setCurrentItemClose = () => ({
+  type: CURRENT_ITEM_CLOSE,
+});
+
+export const setTotalPrice = (price) => ({
+  type: SET_TOTAL_PRICE,
+  payload: price,
+});
+
+export const resetTotalPrice = () => ({
+  type: RESET_TOTAL_PRICE,
+});
