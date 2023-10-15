@@ -1,4 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+// eslint-disable-next-line import/no-extraneous-dependencies
 import {
   ADD_INGREDIENT,
   CHANGE_BUN,
@@ -53,7 +54,7 @@ const ingredientsReducer = (state = initialState, action) => {
         isLoading: true,
       };
     }
-    case REORDER_INGREDIENTS:
+    case REORDER_INGREDIENTS: {
       // eslint-disable-next-line no-case-declarations
       const { oldIndex, newIndex } = action.payload;
       // eslint-disable-next-line no-case-declarations
@@ -65,6 +66,7 @@ const ingredientsReducer = (state = initialState, action) => {
         ...state,
         constructorIngredients: updatedIngredients,
       };
+    }
     case CHANGE_BUN: {
       return {
         ...state,
