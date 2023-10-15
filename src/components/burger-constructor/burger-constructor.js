@@ -14,7 +14,7 @@ import OrderDetails from '../order-details/order-details';
 import { createOrderRequest } from '../../utils/api';
 import Modal from '../modal/modal';
 import {
-  ADD_INGREDIENT, CHANGE_BUN, RESET_TOTAL_PRICE, SET_TOTAL_PRICE,
+  ADD_INGREDIENT, CHANGE_BUN, RESET_TOTAL_PRICE, SET_TOTAL_PRICE, REMOVE_INGREDIENT,
 } from '../../services/actions/ingredients';
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 
@@ -31,7 +31,7 @@ function BurgerConstructor({
 
   const handleIngredientRemoval = (id) => {
     // eslint-disable-next-line no-underscore-dangle
-    dispatch({ type: 'REMOVE_INGREDIENT', payload: id });
+    dispatch({ type: REMOVE_INGREDIENT, payload: id });
   };
 
   const [, dropTarget] = useDrop({
