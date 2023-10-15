@@ -18,7 +18,7 @@ function DraggableIngredient({ ingredient, handleIngredientRemoval, index }) {
 
   const [, refDrop] = useDrop({
     accept: 'ingredient',
-    hover: (dragItem) => {
+    drop: (dragItem) => {
       if (dragItem.index !== index) {
         dispatch({
           type: 'REORDER_INGREDIENTS',
@@ -27,8 +27,6 @@ function DraggableIngredient({ ingredient, handleIngredientRemoval, index }) {
             newIndex: index,
           },
         });
-        // eslint-disable-next-line no-param-reassign
-        dragItem.index = index; // update index within item to the new value
       }
     },
   });
