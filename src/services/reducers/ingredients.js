@@ -10,8 +10,11 @@ import {
   POST_ORDER__FAILURE,
   POST_ORDER__REQUEST,
   POST_ORDER__SUCCESS,
-  REMOVE_INGREDIENT, REORDER_INGREDIENTS,
-  SET_TOTAL_PRICE, RESET_TOTAL_PRICE, RESET_CONSTRUCTOR,
+  REMOVE_INGREDIENT,
+  REORDER_INGREDIENTS,
+  RESET_CONSTRUCTOR,
+  RESET_TOTAL_PRICE,
+  SET_TOTAL_PRICE,
 } from '../actions/ingredients';
 
 const initialState = {
@@ -70,48 +73,19 @@ const ingredientsReducer = (state = initialState, action) => {
       };
     }
     case ADD_INGREDIENT: {
-      const ingredientExists = state.constructorIngredients
-        // eslint-disable-next-line no-underscore-dangle
-        .find((el) => el.ingredient._id === action.payload._id);
-
-      if (ingredientExists) {
-        // Increase the count for the ingredient
-        return {
-          ...state,
-          constructorIngredients: state.constructorIngredients
-            // eslint-disable-next-line no-underscore-dangle
-            .map((el) => (el.ingredient._id === action.payload._id
-              ? { ...el, count: el.count + 1 } : el)),
-        };
-      }
-      // Add the new ingredient with a count of 1
-      return {
-        ...state,
-        constructorIngredients: [...state.constructorIngredients,
-          { ingredient: action.payload, count: 1 }],
-      };
-    }
-    case REMOVE_INGREDIENT: {
-      const ingredient = state.constructorIngredients
-        // eslint-disable-next-line no-underscore-dangle
-        .find((el) => el.ingredient._id === action.payload);
-
-      if (ingredient && ingredient.count > 1) {
-        // Decrease the count for the ingredient
-        return {
-          ...state,
-          constructorIngredients: state.constructorIngredients
-            // eslint-disable-next-line no-underscore-dangle
-            .map((el) => (el.ingredient._id === action.payload
-              ? { ...el, count: el.count - 1 } : el)),
-        };
-      }
-      // Remove the ingredient
       return {
         ...state,
         constructorIngredients:
-        // eslint-disable-next-line no-underscore-dangle
-          state.constructorIngredients.filter((el) => el.ingredient._id !== action.payload),
+          [...state.constructorIngredients, {
+            ingredient: action.payload,
+          }],
+      };
+    }
+    case REMOVE_INGREDIENT: {
+      return {
+        ...state,
+        constructorIngredients: state.constructorIngredients
+          .filter((el) => el.ingredient.uniqueId !== action.payload),
       };
     }
     case POST_ORDER__REQUEST: {

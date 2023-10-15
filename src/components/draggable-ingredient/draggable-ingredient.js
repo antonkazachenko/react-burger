@@ -39,7 +39,7 @@ function DraggableIngredient({ ingredient, handleIngredientRemoval, index }) {
         price={ingredient.price}
         thumbnail={ingredient.image}
         /* eslint-disable-next-line no-underscore-dangle */
-        handleClose={() => handleIngredientRemoval(ingredient._id)}
+        handleClose={() => handleIngredientRemoval(ingredient.uniqueId)}
       />
     </div>
   );
