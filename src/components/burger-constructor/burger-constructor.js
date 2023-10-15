@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
-  Button, ConstructorElement, CurrencyIcon, DragIcon,
+  Button, ConstructorElement, CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -9,12 +9,13 @@ import { useDrop } from 'react-dnd';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { nanoid } from 'nanoid';
 import styles from './burger-constructor.module.css';
-import IngredientsContext from '../../services/ingredientsContext';
 import OrderDetails from '../order-details/order-details';
 // eslint-disable-next-line import/named
 import { createOrderRequest } from '../../utils/api';
 import Modal from '../modal/modal';
-import { ADD_INGREDIENT, CHANGE_BUN } from '../../services/actions/ingredients';
+import {
+  ADD_INGREDIENT, CHANGE_BUN, RESET_TOTAL_PRICE, SET_TOTAL_PRICE,
+} from '../../services/actions/ingredients';
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 
 function BurgerConstructor({
@@ -26,7 +27,7 @@ function BurgerConstructor({
     bunData,
     createdOrder,
   } = useSelector((store) => store.ingredientsStore);
-  const { totalPriceDispatcher, totalPrice } = useContext(IngredientsContext);
+  const { totalPrice } = useSelector((store) => store.ingredientsStore);
 
   const handleIngredientRemoval = (id) => {
     // eslint-disable-next-line no-underscore-dangle
@@ -57,11 +58,11 @@ function BurgerConstructor({
       });
     }
     if (totalPriceValue === 0) {
-      totalPriceDispatcher({ type: 'reset' });
+      dispatch({ type: RESET_TOTAL_PRICE });
     } else {
-      totalPriceDispatcher({ type: 'set', payload: totalPriceValue });
+      dispatch({ type: SET_TOTAL_PRICE, payload: totalPriceValue });
     }
-  }, [totalPriceDispatcher, bunData, constructorIngredients]);
+  }, [bunData, constructorIngredients, dispatch]);
 
   const createOrder = () => {
     const ingredientsArray = [];
@@ -119,7 +120,7 @@ function BurgerConstructor({
         />
       </div>
       <div className={`${styles.dragElement} mr-4 mt-6 mt-10`}>
-        <p className="text text_type_digits-medium mr-1">{totalPrice.price}</p>
+        <p className="text text_type_digits-medium mr-1">{totalPrice}</p>
         <div className="mr-10">
           <CurrencyIcon type="primary" />
         </div>

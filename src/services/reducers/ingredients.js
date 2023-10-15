@@ -11,6 +11,7 @@ import {
   POST_ORDER__REQUEST,
   POST_ORDER__SUCCESS,
   REMOVE_INGREDIENT, REORDER_INGREDIENTS,
+  SET_TOTAL_PRICE, RESET_TOTAL_PRICE,
 } from '../actions/ingredients';
 
 const initialState = {
@@ -22,6 +23,7 @@ const initialState = {
   createdOrder: null,
   modalVisible: false,
   currentItem: null,
+  totalPrice: 0,
   orderModalVisible: false,
 };
 
@@ -152,6 +154,18 @@ const ingredientsReducer = (state = initialState, action) => {
         ...state,
         currentItem: null,
         modalVisible: false,
+      };
+    }
+    case SET_TOTAL_PRICE: {
+      return {
+        ...state,
+        totalPrice: action.payload,
+      };
+    }
+    case RESET_TOTAL_PRICE: {
+      return {
+        ...state,
+        totalPrice: 0,
       };
     }
     default: {
