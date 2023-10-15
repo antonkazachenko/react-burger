@@ -128,7 +128,7 @@ function BurgerConstructor({
         />
       </div>
       <div className={`${styles.dragElement} mr-4 mt-6 mt-10`}>
-        <p className="text text_type_digits-medium mr-1">{totalPrice}</p>
+        <p className="text text_type_digits-medium mr-1">{Number.isNaN(totalPrice) ? 0 : totalPrice}</p>
         <div className="mr-10">
           <CurrencyIcon type="primary" />
         </div>
