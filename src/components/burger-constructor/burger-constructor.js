@@ -11,10 +11,10 @@ import { nanoid } from 'nanoid';
 import styles from './burger-constructor.module.css';
 import OrderDetails from '../order-details/order-details';
 // eslint-disable-next-line import/named
-import { createOrderRequest } from '../../utils/api';
 import Modal from '../modal/modal';
 import {
-  ADD_INGREDIENT, CHANGE_BUN, RESET_TOTAL_PRICE, SET_TOTAL_PRICE, REMOVE_INGREDIENT,
+  ADD_INGREDIENT, CHANGE_BUN, RESET_TOTAL_PRICE,
+  SET_TOTAL_PRICE, REMOVE_INGREDIENT, createOrderRequest,
 } from '../../services/actions/ingredients';
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 

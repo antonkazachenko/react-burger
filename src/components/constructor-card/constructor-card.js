@@ -61,12 +61,16 @@ function ConstructorCard(props) {
   );
 }
 
+ConstructorCard.defaultProps = {
+  className: '',
+};
+
 ConstructorCard.propTypes = {
   item: PropTypes.shape({
     image: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired,
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
   price: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
 };

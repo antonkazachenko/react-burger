@@ -7,10 +7,6 @@
     height: 60vh;
 }
 
-.lastOdd {
-    flex-grow: 0.5;
-}
-
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
 * {

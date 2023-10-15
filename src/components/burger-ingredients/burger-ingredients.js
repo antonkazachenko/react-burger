@@ -22,7 +22,7 @@ function BurgerIngredients({ isVisible, handleModal, handleCloseModal }) {
 
   const breadClasses = [`ml-4 ${styles.relative}`, 'ml-6'];
   const saucesClasses = ['ml-4', 'ml-6', 'ml-4 mt-8', 'ml-6 mt-8'];
-  const mainClasses = ['ml-4', 'ml-6', 'ml-4 mt-8', 'ml-6 mt-8', 'ml-4 mt-8', 'ml-6 mt-8', 'ml-4 mt-8', 'ml-6 mt-8', `ml-4 mt-8 ${styles.lastOdd}`];
+  const mainClasses = ['ml-4', 'ml-6', 'ml-4 mt-8', 'ml-6 mt-8', 'ml-4 mt-8', 'ml-6 mt-8', 'ml-4 mt-8', 'ml-6 mt-8', 'ml-4 mt-8'];
 
   React.useEffect(() => {
     if (breadInView) setActiveTab('one');

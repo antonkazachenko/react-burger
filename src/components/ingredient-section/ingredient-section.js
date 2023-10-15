@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ConstructorCard from '../constructor-card/constructor-card';
 import styles from './ingredient-section.module.css';
+import ConstructorCard from '../constructor-card/constructor-card';
 
 function IngredientSection({
   items, title, classes, handleModal,
@@ -19,10 +19,16 @@ function IngredientSection({
               className={classes[index]}
               item={el}
               price={el.price}
-              /* eslint-disable-next-line no-underscore-dangle */
+                  /* eslint-disable-next-line no-underscore-dangle */
               key={el._id}
             />
           ))
+        }
+        {
+          items.length % 2 !== 0
+          && (
+            <div className={`${classes[classes.length - 2]} ${styles.lastOdd}`} />
+          )
         }
       </article>
     </>
