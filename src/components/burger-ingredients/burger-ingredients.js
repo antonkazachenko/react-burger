@@ -47,7 +47,7 @@ function BurgerIngredients({ isVisible, handleModal, handleCloseModal }) {
         {
           isVisible
           && (
-            <Modal onClose={handleCloseModal} className={styles.modalSize} title="Детали ингдредиeнта" resetOnClose={false}>
+            <Modal onClose={handleCloseModal} className={styles.modalSize} title="Детали ингдредиeнта">
               <IngredientDetails />
             </Modal>
           )
