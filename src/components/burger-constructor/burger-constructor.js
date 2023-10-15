@@ -16,7 +16,7 @@ import {
   removeIngredient,
   changeBun,
   setTotalPrice,
-  resetTotalPrice,
+  resetTotalPrice, RESET_CONSTRUCTOR,
 } from '../../services/actions/ingredients';
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 
@@ -35,6 +35,11 @@ function BurgerConstructor({
   const handleIngredientRemoval = (id) => {
     // eslint-disable-next-line no-underscore-dangle
     dispatch(removeIngredient(id));
+  };
+
+  const handleCloseModalWithReset = () => {
+    handleCloseModal();
+    dispatch({ type: RESET_CONSTRUCTOR });
   };
 
   const [, dropTarget] = useDrop({
@@ -145,7 +150,7 @@ function BurgerConstructor({
         {
           isVisible && createdOrder
           && (
-          <Modal onClose={handleCloseModal}>
+          <Modal onClose={handleCloseModalWithReset} resetOnClose className={styles.modalWidth}>
             <OrderDetails />
           </Modal>
           )

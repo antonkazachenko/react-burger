@@ -10,9 +10,14 @@ function ConstructorCard(props) {
   const {
     item, className, price, onClick,
   } = props;
-  const ingredientCount = useSelector((store) => store.ingredientsStore.constructorIngredients
-    // eslint-disable-next-line no-underscore-dangle
-    .filter((el) => el.ingredient._id === item._id).length);
+  const ingredientCount = useSelector((store) => {
+    if (item.type !== 'bun') {
+      return store.ingredientsStore.constructorIngredients
+        // eslint-disable-next-line no-underscore-dangle
+        .filter((el) => el.ingredient._id === item._id).length;
+    }
+    return store.ingredientsStore.bunData === item ? 1 : 0;
+  });
 
   const [, dragBunRef] = useDrag({
     type: 'bun',

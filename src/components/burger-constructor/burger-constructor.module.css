@@ -15,6 +15,10 @@
     height: 100%;
 }
 
+.modalWidth {
+    width: 40%;
+}
+
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
 * {

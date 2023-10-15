@@ -5,24 +5,19 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import styles from './modal.module.css';
+import { RESET_CONSTRUCTOR } from '../../services/actions/ingredients';
 
 const modalRoot = document.getElementById('react-modals');
 
 function Modal(props) {
   const dispatch = useDispatch();
-  const handleClose = () => {
-    if (!props.title) {
-      dispatch({ type: 'RESET_CONSTRUCTOR' });
-    }
-
-    props.onClose({ data: null, isCheckout: false });
-  };
+  const handleClose = () => props.onClose({ data: null, isCheckout: false });
 
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.key === 'Escape') {
-        if (!props.title) {
-          dispatch({ type: 'RESET_CONSTRUCTOR' });
+        if (props.resetOnClose) {
+          dispatch({ type: RESET_CONSTRUCTOR });
         }
         props.onClose({ data: null, isCheckout: false });
       }
@@ -39,7 +34,7 @@ function Modal(props) {
       <>
         <ModalOverlay onClose={props.title ? props.onClose : handleClose} />
         <div className={`${styles.modal} ${props.className}`}>
-          {props.title
+          {!props.resetOnClose
             ? (
               <div className={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
                 <h2 className="text text_type_main-large">{props.title}</h2>
@@ -66,6 +61,18 @@ function Modal(props) {
 Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
+  title: PropTypes.string,
+  resetOnClose: PropTypes.bool,
+};
+
+Modal.defaultProps = {
+  resetOnClose: false,
+};
+
+Modal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  resetOnClose: PropTypes.bool,
   title: PropTypes.string,
 };
 
