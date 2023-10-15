@@ -2,16 +2,14 @@ import React from 'react';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import styles from './constructor-card.module.css';
-import { addIngredient, changeBun } from '../../services/actions/ingredients';
 
 function ConstructorCard(props) {
   const {
     item, className, price, onClick,
   } = props;
-  const dispatch = useDispatch();
   const ingredientCount = useSelector((store) => {
     const ingredient
       // eslint-disable-next-line no-underscore-dangle,operator-linebreak
@@ -30,13 +28,8 @@ function ConstructorCard(props) {
 
   function customClick() {
     onClick({ data: item, isCheckout: false });
-
-    if (item && item.type === 'bun') {
-      dispatch(changeBun(item));
-    } else {
-      dispatch(addIngredient(item));
-    }
   }
+
   return (
     // eslint-disable-next-line max-len
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions

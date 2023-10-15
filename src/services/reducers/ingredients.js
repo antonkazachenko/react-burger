@@ -11,7 +11,7 @@ import {
   POST_ORDER__REQUEST,
   POST_ORDER__SUCCESS,
   REMOVE_INGREDIENT, REORDER_INGREDIENTS,
-  SET_TOTAL_PRICE, RESET_TOTAL_PRICE,
+  SET_TOTAL_PRICE, RESET_TOTAL_PRICE, RESET_CONSTRUCTOR,
 } from '../actions/ingredients';
 
 const initialState = {
@@ -165,6 +165,14 @@ const ingredientsReducer = (state = initialState, action) => {
     case RESET_TOTAL_PRICE: {
       return {
         ...state,
+        totalPrice: 0,
+      };
+    }
+    case RESET_CONSTRUCTOR: {
+      return {
+        ...state,
+        bunData: [],
+        constructorIngredients: [],
         totalPrice: 0,
       };
     }
