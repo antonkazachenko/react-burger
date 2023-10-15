@@ -23,6 +23,7 @@ import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 function BurgerConstructor({
   className, handleCloseModal, isVisible, handleModal,
 }) {
+  const { isLoadingOrder } = useSelector((store) => store.ingredientsStore);
   const dispatch = useDispatch();
   const {
     constructorIngredients,
@@ -79,7 +80,7 @@ function BurgerConstructor({
     dispatch(createOrderRequest(ingredientsArray));
     handleModal();
   };
-
+  // TODO: add better loader
   if (bunData.length === 0) {
     return (
       <div className={styles.dropZone} ref={dropTarget}>
@@ -89,6 +90,8 @@ function BurgerConstructor({
   }
   return (
     <div className={className} ref={dropTarget}>
+      {isLoadingOrder && <div>Loading...</div>}
+
       <div className={`${styles.dragElement} ml-8 mb-4`}>
         <ConstructorElement
           type="top"

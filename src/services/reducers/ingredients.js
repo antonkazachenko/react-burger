@@ -25,9 +25,9 @@ const initialState = {
   error: null,
   constructorIngredients: [],
   createdOrder: null,
-  modalVisible: false,
   currentItem: null,
   totalPrice: 0,
+  isLoadingOrder: false,
   orderModalVisible: false,
 };
 
@@ -92,23 +92,21 @@ const ingredientsReducer = (state = initialState, action) => {
     case POST_ORDER__REQUEST: {
       return {
         ...state,
-        modalVisible: false,
+        isLoadingOrder: true,
       };
     }
     case POST_ORDER__SUCCESS: {
       return {
         ...state,
-        isLoading: false,
+        isLoadingOrder: false,
         createdOrder: action.payload,
-        modalVisible: true,
       };
     }
     case POST_ORDER__FAILURE: {
       return {
         ...state,
-        isLoading: false,
+        isLoadingOrder: false,
         error: action.payload,
-        modalVisible: false,
       };
     }
     case CURRENT_ITEM_OPEN: {
@@ -121,14 +119,12 @@ const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         currentItem: action.payload,
-        modalVisible: true,
       };
     }
     case CURRENT_ITEM_CLOSE: {
       return {
         ...state,
         currentItem: null,
-        modalVisible: false,
       };
     }
     case SET_TOTAL_PRICE: {
