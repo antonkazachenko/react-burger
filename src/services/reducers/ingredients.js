@@ -10,7 +10,7 @@ import {
   POST_ORDER__FAILURE,
   POST_ORDER__REQUEST,
   POST_ORDER__SUCCESS,
-  REMOVE_INGREDIENT,
+  REMOVE_INGREDIENT, REORDER_INGREDIENTS,
 } from '../actions/ingredients';
 
 const initialState = {
@@ -49,6 +49,18 @@ const ingredientsReducer = (state = initialState, action) => {
         isLoading: true,
       };
     }
+    case REORDER_INGREDIENTS:
+      // eslint-disable-next-line no-case-declarations
+      const { oldIndex, newIndex } = action.payload;
+      // eslint-disable-next-line no-case-declarations
+      const updatedIngredients = Array.from(state.constructorIngredients);
+      // eslint-disable-next-line no-case-declarations
+      const [removed] = updatedIngredients.splice(oldIndex, 1);
+      updatedIngredients.splice(newIndex, 0, removed);
+      return {
+        ...state,
+        constructorIngredients: updatedIngredients,
+      };
     case CHANGE_BUN: {
       return {
         ...state,

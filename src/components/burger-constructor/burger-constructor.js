@@ -15,6 +15,7 @@ import OrderDetails from '../order-details/order-details';
 import { createOrderRequest } from '../../utils/api';
 import Modal from '../modal/modal';
 import { ADD_INGREDIENT, CHANGE_BUN } from '../../services/actions/ingredients';
+import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 
 function BurgerConstructor({
   className, handleCloseModal, isVisible, handleModal,
@@ -37,7 +38,6 @@ function BurgerConstructor({
     drop(item) {
       const itemCopy = { ...item };
       itemCopy.id = nanoid();
-
       if (itemCopy && itemCopy.type === 'bun') {
         dispatch({ type: CHANGE_BUN, payload: itemCopy });
       } else {
@@ -77,7 +77,7 @@ function BurgerConstructor({
     dispatch(createOrderRequest(ingredientsArray));
     handleModal();
   };
-  // TODO: What is the initial state of bunData?
+
   return (
     <div className={className} ref={dropTarget}>
       <div className={`${styles.dragElement} ml-8 mb-4`}>
@@ -92,28 +92,20 @@ function BurgerConstructor({
       {
         constructorIngredients && constructorIngredients.length ? (
           <div className={styles.overflow}>
-            {
-            constructorIngredients.map((el) => {
+            {constructorIngredients.map((el, index) => {
               if (el.type !== 'bun') {
                 return (
-                  // eslint-disable-next-line no-underscore-dangle
-                  <div className={`${styles.dragElement} mb-4`} key={el.ingredient._id}>
-                    <div className="mr-2">
-                      <DragIcon type="primary" />
-                    </div>
-                    <ConstructorElement
-                      text={el.ingredient.name}
-                      price={el.ingredient.price}
-                      thumbnail={el.ingredient.image}
-                      /* eslint-disable-next-line no-underscore-dangle */
-                      handleClose={() => handleIngredientRemoval(el.ingredient._id)}
-                    />
-                  </div>
+                  <DraggableIngredient
+                    /* eslint-disable-next-line no-underscore-dangle */
+                    key={el.ingredient._id}
+                    ingredient={el.ingredient}
+                    handleIngredientRemoval={handleIngredientRemoval}
+                    index={index}
+                  />
                 );
               }
               return null;
-            })
-}
+            })}
           </div>
         ) : null
       }
