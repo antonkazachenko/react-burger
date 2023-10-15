@@ -1,5 +1,4 @@
-import checkResponse from '../../utils/apiUtils';
-import BASE_URL from '../../utils/constants';
+import request from '../../utils/apiUtils';
 
 export const GET_INGREDIENTS__REQUEST = 'GET_INGREDIENTS__REQUEST';
 export const GET_INGREDIENTS__SUCCESS = 'GET_INGREDIENTS__SUCCESS';
@@ -23,8 +22,7 @@ export const RESET_TOTAL_PRICE = 'DECREASE_TOTAL_PRICE';
 export function getIngredients() {
   return function (dispatch) {
     dispatch({ type: GET_INGREDIENTS__REQUEST });
-    return fetch(`${BASE_URL}/ingredients`)
-      .then((res) => checkResponse(res))
+    return request('/ingredients')
       .then((data) => {
         dispatch({ type: GET_INGREDIENTS__SUCCESS, payload: data });
       })
@@ -40,7 +38,7 @@ export function createOrderRequest(constructorIngredients) {
     // Start the API call by dispatching a request action
     dispatch({ type: POST_ORDER__REQUEST });
 
-    return fetch(`${BASE_URL}/orders`, {
+    return request('/orders', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -50,7 +48,6 @@ export function createOrderRequest(constructorIngredients) {
         ingredients: constructorIngredients,
       }),
     })
-      .then((res) => checkResponse(res))
       .then((res) => {
         dispatch({ type: POST_ORDER__SUCCESS, payload: res });
         return res;
