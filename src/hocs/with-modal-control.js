@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { CURRENT_ITEM_OPEN, CURRENT_ITEM_CLOSE } from '../services/actions/ingredients';
+import {
+  setCurrentItemOpen,
+  setCurrentItemClose,
+} from '../services/actions/ingredients';
 
 function withModalControl(Component) {
   return function WithModalControl(props) {
@@ -12,12 +15,12 @@ function withModalControl(Component) {
     const handleModal = (item) => {
       setIsVisible(true);
       if (item && item.data) {
-        dispatch({ type: CURRENT_ITEM_OPEN, payload: item.data });
+        dispatch(setCurrentItemOpen(item.data));
       }
     };
     const handleCloseModal = () => {
       setIsVisible(false);
-      dispatch({ type: CURRENT_ITEM_CLOSE });
+      dispatch(setCurrentItemClose());
     };
 
     return (

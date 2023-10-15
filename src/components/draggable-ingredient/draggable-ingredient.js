@@ -1,14 +1,11 @@
 import React from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { useDispatch } from 'react-redux';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { REORDER_INGREDIENTS } from '../../services/actions/ingredients';
+import { reorderIngredients } from '../../services/actions/ingredients';
 import styles from './draggable-ingredient.module.css';
 
 function DraggableIngredient({ ingredient, handleIngredientRemoval, index }) {
-  const dispatch = useDispatch();
-
   const [, refDrag] = useDrag({
     type: 'ingredient',
     // eslint-disable-next-line no-underscore-dangle
@@ -22,13 +19,7 @@ function DraggableIngredient({ ingredient, handleIngredientRemoval, index }) {
     accept: 'ingredient',
     drop: (dragItem) => {
       if (dragItem.index !== index) {
-        dispatch({
-          type: REORDER_INGREDIENTS,
-          payload: {
-            oldIndex: dragItem.index,
-            newIndex: index,
-          },
-        });
+        reorderIngredients({ oldIndex: dragItem.index, newIndex: index });
       }
     },
   });

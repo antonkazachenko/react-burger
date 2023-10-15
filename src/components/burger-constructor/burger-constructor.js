@@ -6,15 +6,17 @@ import PropTypes from 'prop-types';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { nanoid } from 'nanoid';
 import styles from './burger-constructor.module.css';
 import OrderDetails from '../order-details/order-details';
 // eslint-disable-next-line import/named
 import Modal from '../modal/modal';
 import {
-  CHANGE_BUN, RESET_TOTAL_PRICE,
-  SET_TOTAL_PRICE, REMOVE_INGREDIENT, createOrderRequest, addIngredient,
+  createOrderRequest,
+  addIngredient,
+  removeIngredient,
+  changeBun,
+  setTotalPrice,
+  resetTotalPrice,
 } from '../../services/actions/ingredients';
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 
@@ -31,14 +33,14 @@ function BurgerConstructor({
 
   const handleIngredientRemoval = (id) => {
     // eslint-disable-next-line no-underscore-dangle
-    dispatch({ type: REMOVE_INGREDIENT, payload: id });
+    dispatch(removeIngredient(id));
   };
 
   const [, dropTarget] = useDrop({
     accept: ['bun', 'sauce'],
     drop(item) {
       if (item && item.type === 'bun') {
-        dispatch({ type: CHANGE_BUN, payload: item });
+        dispatch(changeBun(item));
       } else {
         dispatch(addIngredient(item));
       }
@@ -56,9 +58,9 @@ function BurgerConstructor({
       });
     }
     if (totalPriceValue === 0) {
-      dispatch({ type: RESET_TOTAL_PRICE });
+      dispatch(resetTotalPrice());
     } else {
-      dispatch({ type: SET_TOTAL_PRICE, payload: totalPriceValue });
+      dispatch(setTotalPrice(totalPriceValue));
     }
   }, [bunData, constructorIngredients, dispatch]);
 

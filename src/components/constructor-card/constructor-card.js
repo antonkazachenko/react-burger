@@ -4,10 +4,8 @@ import PropTypes from 'prop-types';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { nanoid } from 'nanoid';
 import styles from './constructor-card.module.css';
-import { addIngredient, CHANGE_BUN } from '../../services/actions/ingredients';
+import { addIngredient, changeBun } from '../../services/actions/ingredients';
 
 function ConstructorCard(props) {
   const {
@@ -34,7 +32,7 @@ function ConstructorCard(props) {
     onClick({ data: item, isCheckout: false });
 
     if (item && item.type === 'bun') {
-      dispatch({ type: CHANGE_BUN, payload: item });
+      dispatch(changeBun(item));
     } else {
       dispatch(addIngredient(item));
     }
