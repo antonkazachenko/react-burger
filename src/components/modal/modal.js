@@ -31,7 +31,7 @@ function Modal(props) {
       <>
         <ModalOverlay onClose={props.title ? props.onClose : handleClose} />
         <div className={`${styles.modal} ${props.className}`}>
-          {!props.resetOnClose
+          {props.title
             ? (
               <div className={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
                 <h2 className="text text_type_main-large">{props.title}</h2>
@@ -59,10 +59,6 @@ Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   title: PropTypes.string,
-};
-
-Modal.defaultProps = {
-  resetOnClose: false,
 };
 
 export default Modal;
