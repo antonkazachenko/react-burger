@@ -150,7 +150,7 @@ function BurgerConstructor({
         {
           isVisible && createdOrder
           && (
-          <Modal onClose={handleCloseModalWithReset} resetOnClose className={styles.modalWidth}>
+          <Modal onClose={handleCloseModalWithReset} className={styles.modalWidth}>
             <OrderDetails />
           </Modal>
           )

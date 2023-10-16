@@ -29,7 +29,7 @@ function ConstructorCard(props) {
   });
 
   function customClick() {
-    onClick({ data: item, isCheckout: false });
+    onClick({ data: item });
   }
 
   return (

@@ -11,15 +11,12 @@ const modalRoot = document.getElementById('react-modals');
 
 function Modal(props) {
   const dispatch = useDispatch();
-  const handleClose = () => props.onClose({ data: null, isCheckout: false });
+  const handleClose = () => props.onClose();
 
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.key === 'Escape') {
-        if (props.resetOnClose) {
-          dispatch({ type: RESET_CONSTRUCTOR });
-        }
-        props.onClose({ data: null, isCheckout: false });
+        props.onClose();
       }
     };
     window.addEventListener('keydown', handleEsc);
@@ -62,18 +59,10 @@ Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   title: PropTypes.string,
-  resetOnClose: PropTypes.bool,
 };
 
 Modal.defaultProps = {
   resetOnClose: false,
-};
-
-Modal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
-  resetOnClose: PropTypes.bool,
-  title: PropTypes.string,
 };
 
 export default Modal;
