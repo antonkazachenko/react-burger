@@ -1,51 +1,66 @@
-import React from "react";
-import styles from "./burger-ingredients.module.css"
-import IngredientTabs from "../ingredient-tabs/ingredient-tabs";
-import PropTypes from "prop-types";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import IngredientSection from "../ingredient-section/ingredient-section";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useInView } from 'react-intersection-observer';
+import styles from './burger-ingredients.module.css';
+import IngredientTabs from '../ingredient-tabs/ingredient-tabs';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import IngredientSection from '../ingredient-section/ingredient-section';
+import Modal from '../modal/modal';
 
-function  BurgerIngredients({ data, isVisible, modalData, handleModal, handleCloseModal }) {
-  const bread = data.filter((el) => el.type === "bun");
-  const sauces = data.filter((el) => el.type === "sauce");
+function BurgerIngredients({ isVisible, handleModal, handleCloseModal }) {
+  const { ingredients } = useSelector((store) => store.ingredientsStore);
+  const [activeTab, setActiveTab] = React.useState('one');
+  const bread = ingredients.filter((el) => el.type === 'bun');
+  const sauces = ingredients.filter((el) => el.type === 'sauce');
+  const main = ingredients.filter((el) => el.type === 'main');
 
-  const breadClasses = [`ml-4 ${styles.relative}`, "ml-6"]
-  const saucesClasses = ["ml-4", "ml-6", `ml-4 mt-8 ${styles.relative}`, "ml-6 mt-8"]
+  const [breadRef, breadInView] = useInView({ threshold: 0.02 });
+  const [saucesRef, saucesInView] = useInView({ threshold: 0.33 });
+  const [mainRef, mainInView] = useInView({ threshold: 0.65 });
+
+  const breadClasses = [`ml-4 ${styles.relative}`, 'ml-6'];
+  const saucesClasses = ['ml-4', 'ml-6', 'ml-4 mt-8', 'ml-6 mt-8'];
+  const mainClasses = ['ml-4', 'ml-6', 'ml-4 mt-8', 'ml-6 mt-8', 'ml-4 mt-8', 'ml-6 mt-8', 'ml-4 mt-8', 'ml-6 mt-8', 'ml-4 mt-8'];
+
+  React.useEffect(() => {
+    if (breadInView) setActiveTab('one');
+    else if (saucesInView) setActiveTab('two');
+    else setActiveTab('three');
+  }, [breadInView, mainInView, saucesInView]);
+
   return (
     <article>
-      <p className="text text_type_main-large mt-10">
-        Соберите бургер
-      </p>
-      <IngredientTabs />
+      <p className="text text_type_main-large mt-10">Соберите бургер</p>
+      <IngredientTabs activeTab={activeTab} onTabChange={setActiveTab} />
       <div className={`${styles.overflow}`}>
-        <IngredientSection items={bread} title="Булки" classes={breadClasses} handleModal={handleModal}/>
-        <div className="mt-10">
-          <IngredientSection items={sauces} title="Соусы" classes={saucesClasses} handleModal={handleModal}/>
+        <div ref={breadRef}>
+          <IngredientSection items={bread} title="Булки" classes={breadClasses} handleModal={handleModal} />
+        </div>
+        <div className="mt-10" ref={saucesRef}>
+          <IngredientSection items={sauces} title="Соусы" classes={saucesClasses} handleModal={handleModal} />
+        </div>
+        <div className="mt-10" ref={mainRef}>
+          <IngredientSection items={main} title="Начинки" classes={mainClasses} handleModal={handleModal} />
         </div>
         {
-          isVisible &&
-          <IngredientDetails data={modalData}  onClose={handleCloseModal} />
+          isVisible
+          && (
+            <Modal onClose={handleCloseModal} className={styles.modalSize} title="Детали ингдредиeнта">
+              <IngredientDetails />
+            </Modal>
+          )
         }
       </div>
     </article>
-  )
+  );
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired,
-  })).isRequired,
+  isVisible: PropTypes.bool.isRequired,
+  handleModal: PropTypes.func.isRequired,
+  handleCloseModal: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;

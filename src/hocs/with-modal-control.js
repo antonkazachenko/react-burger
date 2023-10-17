@@ -1,22 +1,31 @@
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import {
+  setCurrentItemOpen,
+  setCurrentItemClose,
+} from '../services/actions/ingredients';
 
-const withModalControl = (Component) => {
+function withModalControl(Component) {
   return function WithModalControl(props) {
+    const dispatch = useDispatch();
     const [isVisible, setIsVisible] = React.useState(false);
     const [modalData, setModalData] = React.useState(null);
 
     const handleModal = (item) => {
       setIsVisible(true);
-      setModalData(item.data);
+      if (item && item.data) {
+        dispatch(setCurrentItemOpen(item.data));
+      }
     };
-
     const handleCloseModal = () => {
       setIsVisible(false);
-      setModalData(null);
+      dispatch(setCurrentItemClose());
     };
 
     return (
       <Component
+      /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...props}
         isVisible={isVisible}
         modalData={modalData}
@@ -26,5 +35,10 @@ const withModalControl = (Component) => {
     );
   };
 }
+
+withModalControl.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  Component: PropTypes.object.isRequired,
+};
 
 export default withModalControl;

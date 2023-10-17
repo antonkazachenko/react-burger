@@ -6,9 +6,17 @@
 
 .overflow {
     overflow-y: auto;
-    height: 40.3vh;
+    max-height: 40.3vh;
     padding-right: 15px;
     margin-right: -20px;
+}
+
+.dropZone {
+    height: 100%;
+}
+
+.modalWidth {
+    width: 40%;
 }
 
 /* ===== Scrollbar CSS ===== */
