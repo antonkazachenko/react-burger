@@ -2,9 +2,9 @@ import React from 'react';
 import {
   Button, EmailInput, Input, PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './register.module.css';
+import styles from './register-page.module.css';
 
-function Register() {
+function RegisterPage() {
   const [value, setValue] = React.useState('');
   return (
     <div className={styles.registerWindow}>
@@ -56,4 +56,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default RegisterPage;
