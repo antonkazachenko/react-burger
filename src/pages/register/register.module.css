@@ -1,0 +1,22 @@
+.registerWindow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 180px;
+}
+
+.registerBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.registerLinkBox {
+    display: flex;
+    flex-direction: row;
+}
+
+.secondaryButton {
+    padding: 0;
+}

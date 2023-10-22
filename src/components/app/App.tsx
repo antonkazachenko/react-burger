@@ -6,6 +6,7 @@ import AppHeader from '../app-header/app-header';
 import { getIngredients } from '../../services/actions/ingredients';
 import MainPage from '../../pages/main-page/main-page';
 import SignIn from '../../pages/sign-in/sign-in';
+import Register from '../../pages/register/register';
 
 function App() {
   const { isLoading } = useSelector((state: any) => state.ingredientsStore);
@@ -29,6 +30,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<SignIn />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </div>

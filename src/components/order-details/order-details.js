@@ -1,9 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import styles from './order-details.module.css';
 import { ReactComponent as OrderConfirmationTick } from '../../images/orderConfirmedTick.svg';
-import ingredientType from '../../utils/types';
 
 function OrderDetails() {
   const { createdOrder } = useSelector((store) => store.ingredientsStore);
