@@ -1,16 +1,11 @@
 import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import styles from './App.module.css';
 import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import withModalControl from '../../hocs/with-modal-control';
 import { getIngredients } from '../../services/actions/ingredients';
-
-const BurgerIngredientsWithModal = withModalControl(BurgerIngredients);
-const BurgerConstructorWithModal = withModalControl(BurgerConstructor);
+import MainPage from '../../pages/main-page/main-page';
+import SignIn from '../../pages/sign-in/sign-in';
 
 function App() {
   const { isLoading } = useSelector((state: any) => state.ingredientsStore);
@@ -30,18 +25,12 @@ function App() {
     <div className={styles.app}>
       <AppHeader />
       {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
-      <DndProvider backend={HTML5Backend}>
-        <main>
-          <div className={styles.tabWidth}>
-            <BurgerIngredientsWithModal />
-          </div>
-          <div className={styles.tabWidth}>
-            <BurgerConstructorWithModal
-              className={`mt-25 ml-10 ${styles.flexColumn}`}
-            />
-          </div>
-        </main>
-      </DndProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/login" element={<SignIn />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
