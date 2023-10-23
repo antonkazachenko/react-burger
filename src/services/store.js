@@ -3,6 +3,7 @@ import {
 } from 'redux';
 import thunk from 'redux-thunk';
 import ingredientsReducer from './reducers/ingredients';
+import accountReducer from './reducers/account';
 
 const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
   ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
@@ -10,6 +11,7 @@ const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_E
 
 const rootReducer = combineReducers({
   ingredientsStore: ingredientsReducer,
+  accountStore: accountReducer,
 });
 
 const enhancer = composeEnhancers(
