@@ -1,23 +1,34 @@
 import React from 'react';
 import {
-  Button, EmailInput,
+  Button, Input, PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './forgot-password-page.module.css';
+import styles from './reset-password-page.module.css';
 
-function ForgotPasswordPage() {
+function ResetPasswordPage() {
   const [value] = React.useState('');
   return (
     <div className={styles.forgotPasswordWindow}>
       <div className={styles.forgotPasswordBox}>
         <div className="text text_type_main-medium">Восстановление пароля</div>
-        <EmailInput
+        <PasswordInput
+          value={value}
+          name="password"
+          placeholder="Введите новый пароль"
+          extraClass="ml-1 mt-6"
           /* eslint-disable-next-line @typescript-eslint/no-empty-function */
           onChange={() => {
           }}
+        />
+        <Input
+          type="text"
+          placeholder="Введите код из письма"
+          /* eslint-disable-next-line @typescript-eslint/no-empty-function */
+          onChange={() => {}}
           value={value}
-          name="email"
-          isIcon={false}
-          placeholder="Укажите e-mail"
+          name="name"
+          error={false}
+          errorText="Ошибка"
+          size="default"
           extraClass="ml-1 mt-6"
         />
         <div className="mt-6">
@@ -38,4 +49,4 @@ function ForgotPasswordPage() {
   );
 }
 
-export default ForgotPasswordPage;
+export default ResetPasswordPage;
