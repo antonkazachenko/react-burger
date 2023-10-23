@@ -2,6 +2,8 @@ import React from 'react';
 import {
   Button, EmailInput, Input, PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Link } from 'react-router-dom';
 import styles from './register-page.module.css';
 
 function RegisterPage() {
@@ -47,9 +49,11 @@ function RegisterPage() {
           <div>
             Уже зарегистрированы?
           </div>
-          <Button htmlType="button" type="secondary" size="medium" extraClass={`${styles.secondaryButton} ml-2`}>
-            Войти
-          </Button>
+          <Link to="/login">
+            <Button htmlType="button" type="secondary" size="medium" extraClass={`${styles.secondaryButton} ml-2`}>
+              Войти
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

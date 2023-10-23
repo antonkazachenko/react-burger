@@ -2,6 +2,8 @@ import React from 'react';
 import {
   Button, EmailInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Link } from 'react-router-dom';
 import styles from './forgot-password-page.module.css';
 
 function ForgotPasswordPage() {
@@ -29,9 +31,11 @@ function ForgotPasswordPage() {
           <div>
             Вспомнили пароль?
           </div>
-          <Button htmlType="button" type="secondary" size="medium" extraClass={`${styles.secondaryButton} ml-2`}>
-            Войти
-          </Button>
+          <Link to="/login">
+            <Button htmlType="button" type="secondary" size="medium" extraClass={`${styles.secondaryButton} ml-2`}>
+              Войти
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

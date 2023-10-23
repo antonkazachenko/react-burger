@@ -2,6 +2,8 @@ import React from 'react';
 import {
   Button, EmailInput, PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Link } from 'react-router-dom';
 import styles from './sign-in.module.css';
 
 function SignIn() {
@@ -32,15 +34,19 @@ function SignIn() {
         </div>
         <div className={`mt-20 text text_type_main-default text_color_inactive ${styles.registerLinkBox}`}>
           <div>Вы — новый пользователь?</div>
-          <Button htmlType="button" type="secondary" size="medium" extraClass={`${styles.secondaryButton} ml-2`}>
-            Зарегистрироваться
-          </Button>
+          <Link to="/register">
+            <Button htmlType="button" type="secondary" size="medium" extraClass={`${styles.secondaryButton} ml-2`}>
+              Зарегистрироваться
+            </Button>
+          </Link>
         </div>
         <div className={`mt-4 text text_type_main-default text_color_inactive ${styles.registerLinkBox}`}>
           <div>Забыли пароль?</div>
-          <Button htmlType="button" type="secondary" size="medium" extraClass={`${styles.secondaryButton} ml-2`}>
-            Восстановите пароль
-          </Button>
+          <Link to="/forgot-password">
+            <Button htmlType="button" type="secondary" size="medium" extraClass={`${styles.secondaryButton} ml-2`}>
+              Восстановите пароль
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
