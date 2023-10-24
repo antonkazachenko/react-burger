@@ -5,9 +5,16 @@ import {
   REGISTER__FAILURE,
   REGISTER__REQUEST,
   REGISTER__SUCCESS,
+  RESET_PASSWORD__FAILURE,
+  RESET_PASSWORD__REQUEST,
+  RESET_PASSWORD__SUCCESS,
 } from '../actions/account';
 
 const initialState = {
+  emailCheckRequest: {
+    success: false,
+    error: false,
+  },
   passwordResetRequest: {
     success: false,
     error: false,
@@ -30,7 +37,7 @@ const accountReducer = (state = initialState, action) => {
     case EMAIL_CHECK__REQUEST: {
       return {
         ...state,
-        passwordResetRequest: {
+        emailCheckRequest: {
           success: false,
           error: false,
         },
@@ -39,7 +46,7 @@ const accountReducer = (state = initialState, action) => {
     case EMAIL_CHECK__SUCCESS: {
       return {
         ...state,
-        passwordResetRequest: {
+        emailCheckRequest: {
           success: true,
           error: false,
         },
@@ -48,7 +55,7 @@ const accountReducer = (state = initialState, action) => {
     case EMAIL_CHECK__FAILURE: {
       return {
         ...state,
-        passwordResetRequest: {
+        emailCheckRequest: {
           success: false,
           error: true,
         },
@@ -82,6 +89,37 @@ const accountReducer = (state = initialState, action) => {
       return {
         ...state,
         registerRequest: {
+          success: false,
+          error: true,
+        },
+      };
+    }
+    case RESET_PASSWORD__REQUEST: {
+      return {
+        ...state,
+        passwordResetRequest: {
+          success: false,
+          error: false,
+        },
+      };
+    }
+    case RESET_PASSWORD__SUCCESS: {
+      return {
+        ...state,
+        passwordResetRequest: {
+          success: true,
+          error: false,
+        },
+        user: {
+          ...state.user,
+          password: action.payload,
+        },
+      };
+    }
+    case RESET_PASSWORD__FAILURE: {
+      return {
+        ...state,
+        passwordResetRequest: {
           success: false,
           error: true,
         },

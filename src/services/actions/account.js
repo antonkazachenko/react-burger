@@ -8,6 +8,42 @@ export const REGISTER__REQUEST = 'REGISTER__REQUEST';
 export const REGISTER__SUCCESS = 'REGISTER__SUCCESS';
 export const REGISTER__FAILURE = 'REGISTER__FAILURE';
 
+export const RESET_PASSWORD__REQUEST = 'RESET_PASSWORD__REQUEST';
+export const RESET_PASSWORD__SUCCESS = 'RESET_PASSWORD__SUCCESS';
+export const RESET_PASSWORD__FAILURE = 'RESET_PASSWORD__FAILURE';
+
+export function resetPasswordRequest(password, token) {
+  return function (dispatch) {
+    dispatch({
+      type: RESET_PASSWORD__REQUEST,
+    });
+    request('/password-reset/reset', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ password, token }),
+    })
+      .then((res) => {
+        if (res.success) {
+          dispatch({
+            type: RESET_PASSWORD__SUCCESS,
+            payload: password,
+          });
+        } else {
+          dispatch({
+            type: RESET_PASSWORD__FAILURE,
+          });
+        }
+      })
+      .catch(() => {
+        dispatch({
+          type: RESET_PASSWORD__FAILURE,
+        });
+      });
+  };
+}
+
 export function passwordResetRequest(email) {
   return function (dispatch) {
     dispatch({

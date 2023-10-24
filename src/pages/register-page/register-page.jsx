@@ -22,7 +22,7 @@ function RegisterPage() {
 
   React.useEffect(() => {
     if (success) {
-      navigate('/');
+      navigate('/', { replace: true });
     }
   }, [success, navigate]);
 
