@@ -9,6 +9,7 @@ import SignIn from '../../pages/sign-in/sign-in';
 import RegisterPage from '../../pages/register-page/register-page';
 import ForgotPasswordPage from '../../pages/forgot-password-page/forgot-password-page';
 import ResetPasswordPage from '../../pages/reset-password-page/reset-password-page';
+import ProfileMainPage from '../../pages/profile-main-page/profile-main-page';
 
 function App() {
   const { isLoading } = useSelector((state: any) => state.ingredientsStore);
@@ -35,6 +36,9 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/profile" element={<ProfileMainPage />} />
+          <Route path="/profile/orders" element={<ProfileMainPage />} />
+          <Route path="/profile/orders/:id" element={<ProfileMainPage />} />
         </Routes>
       </BrowserRouter>
     </div>
