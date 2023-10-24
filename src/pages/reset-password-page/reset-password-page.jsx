@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Button, Input, PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link } from 'react-router-dom';
 import styles from './reset-password-page.module.css';
 
 function ResetPasswordPage() {
@@ -40,9 +41,11 @@ function ResetPasswordPage() {
           <div>
             Вспомнили пароль?
           </div>
-          <Button htmlType="button" type="secondary" size="medium" extraClass={`${styles.secondaryButton} ml-2`}>
-            Войти
-          </Button>
+          <Link to="/login">
+            <Button htmlType="button" type="secondary" size="medium" extraClass={`${styles.secondaryButton} ml-2`}>
+              Войти
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

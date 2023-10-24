@@ -3,11 +3,29 @@ import {
   Button, EmailInput, Input, PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './register-page.module.css';
+import { registerRequest } from '../../services/actions/account';
 
 function RegisterPage() {
-  const [value, setValue] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPass] = React.useState('');
+  const dispatch = useDispatch();
+  const { success } = useSelector((store) => store.accountStore.registerRequest.success);
+  const navigate = useNavigate();
+
+  const handleOnClick = () => {
+    dispatch(registerRequest(email, password, name));
+  };
+
+  React.useEffect(() => {
+    if (success) {
+      navigate('/');
+    }
+  }, [success, navigate]);
+
   return (
     <div className={styles.registerWindow}>
       <div className={styles.registerBox}>
@@ -15,8 +33,8 @@ function RegisterPage() {
         <Input
           type="text"
           placeholder="Имя"
-          onChange={(e) => setValue(e.target.value)}
-          value={value}
+          onChange={(e) => setName(e.target.value)}
+          value={name}
           name="name"
           error={false}
           errorText="Ошибка"
@@ -25,23 +43,21 @@ function RegisterPage() {
         />
         <EmailInput
           /* eslint-disable-next-line @typescript-eslint/no-empty-function */
-          onChange={() => {
-          }}
-          value={value}
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
           name="email"
           isIcon={false}
           extraClass="ml-1 mt-6"
         />
         <PasswordInput
-          value={value}
+          value={password}
           name="password"
           extraClass="ml-1 mt-6"
           /* eslint-disable-next-line @typescript-eslint/no-empty-function */
-          onChange={() => {
-          }}
+          onChange={(e) => setPass(e.target.value)}
         />
         <div className="mt-6">
-          <Button htmlType="button" type="primary" size="medium">
+          <Button htmlType="button" type="primary" size="medium" onClick={handleOnClick}>
             Зарегестрироваться
           </Button>
         </div>

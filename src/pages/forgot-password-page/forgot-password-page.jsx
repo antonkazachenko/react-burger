@@ -14,11 +14,6 @@ function ForgotPasswordPage() {
   const navigate = useNavigate();
   const { success } = useSelector((store) => store.accountStore.passwordResetRequest);
 
-  const handleOnChange = (e) => {
-    const newValue = e.target.value;
-    setValue(newValue);
-  };
-
   const handleOnClick = () => {
     dispatch(passwordResetRequest(value));
   };
@@ -35,7 +30,7 @@ function ForgotPasswordPage() {
         <div className="text text_type_main-medium">Восстановление пароля</div>
         <EmailInput
             /* eslint-disable-next-line @typescript-eslint/no-empty-function */
-          onChange={handleOnChange}
+          onChange={(e) => setValue(e.target.value)}
           value={value}
           name="email"
           isIcon={false}
