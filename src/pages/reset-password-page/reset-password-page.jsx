@@ -5,7 +5,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './reset-password-page.module.css';
-import {refreshTokenRequest, resetPasswordRequest} from '../../services/actions/account';
+import { resetPasswordRequest } from '../../services/actions/account';
 
 function ResetPasswordPage() {
   const [password, setPassword] = React.useState('');

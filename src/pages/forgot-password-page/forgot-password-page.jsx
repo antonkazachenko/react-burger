@@ -6,16 +6,16 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './forgot-password-page.module.css';
-import { passwordResetRequest } from '../../services/actions/account';
+import { emailCheckRequest } from '../../services/actions/account';
 
 function ForgotPasswordPage() {
   const [value, setValue] = React.useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { success } = useSelector((store) => store.accountStore.passwordResetRequest);
+  const { success } = useSelector((store) => store.accountStore.emailCheckRequest);
 
   const handleOnClick = () => {
-    dispatch(passwordResetRequest(value));
+    dispatch(emailCheckRequest(value));
   };
 
   useEffect(() => {

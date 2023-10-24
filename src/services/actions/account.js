@@ -21,38 +21,17 @@ export const LOGIN__REQUEST = 'LOGIN__REQUEST';
 export const LOGIN__SUCCESS = 'LOGIN__SUCCESS';
 export const LOGIN__FAILURE = 'LOGIN__FAILURE';
 
-export function loginRequest(email, password) {
-  return function (dispatch) {
-    dispatch({
-      type: LOGIN__REQUEST,
-    });
-    fetchWithRefresh('/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${getCookie('accessToken')}`,
-      },
-      body: JSON.stringify({ email, password }),
-    })
-      .then((res) => {
-        if (res.success) {
-          dispatch({
-            type: LOGIN__SUCCESS,
-            payload: res,
-          });
-        } else {
-          dispatch({
-            type: LOGIN__FAILURE,
-          });
-        }
-      })
-      .catch(() => {
-        dispatch({
-          type: LOGIN__FAILURE,
-        });
-      });
-  };
-}
+export const GET_USER__REQUEST = 'GET_USER__REQUEST';
+export const GET_USER__SUCCESS = 'GET_USER__SUCCESS';
+export const GET_USER__FAILURE = 'GET_USER__FAILURE';
+
+export const LOGOUT__REQUEST = 'LOGOUT__REQUEST';
+export const LOGOUT__SUCCESS = 'LOGOUT__SUCCESS';
+export const LOGOUT__FAILURE = 'LOGOUT__FAILURE';
+
+export const PROFILE_UPDATE__REQUEST = 'PROFILE_UPDATE__REQUEST';
+export const PROFILE_UPDATE__SUCCESS = 'PROFILE_UPDATE__SUCCESS';
+export const PROFILE_UPDATE__FAILURE = 'PROFILE_UPDATE__FAILURE';
 
 export function refreshTokenRequest() {
   return function (dispatch) {
@@ -69,6 +48,7 @@ export function refreshTokenRequest() {
       .then((res) => {
         if (res.success) {
           setCookie('refreshToken', res.refreshToken);
+          setCookie('accessToken', res.accessToken);
           dispatch({
             type: REFRESH_TOKEN__SUCCESS,
             payload: res,
@@ -87,6 +67,100 @@ export function refreshTokenRequest() {
   };
 }
 
+export function getUserRequest() {
+  return function (dispatch) {
+    dispatch({
+      type: GET_USER__REQUEST,
+    });
+    fetchWithRefresh('/auth/user', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie('accessToken')}`,
+      },
+    }, refreshTokenRequest, dispatch)
+      .then((res) => {
+        if (res.success) {
+          dispatch({
+            type: GET_USER__SUCCESS,
+            payload: res,
+          });
+        } else {
+          dispatch({
+            type: GET_USER__FAILURE,
+          });
+        }
+      })
+      .catch(() => {
+        dispatch({
+          type: GET_USER__FAILURE,
+        });
+      });
+  };
+}
+
+export const profileUpdateRequest = (name, email, password) => (dispatch) => {
+  dispatch({
+    type: PROFILE_UPDATE__REQUEST,
+  });
+  fetchWithRefresh('/auth/user', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getCookie('accessToken')}`,
+    },
+    body: JSON.stringify({ name, email, password }),
+  }, refreshTokenRequest, dispatch)
+    .then((res) => {
+      if (res.success) {
+        dispatch({
+          type: PROFILE_UPDATE__SUCCESS,
+          payload: res,
+        });
+      } else {
+        dispatch({
+          type: PROFILE_UPDATE__FAILURE,
+        });
+      }
+    })
+    .catch(() => {
+      dispatch({
+        type: PROFILE_UPDATE__FAILURE,
+      });
+    });
+};
+
+export function logoutRequest() {
+  return function (dispatch) {
+    dispatch({
+      type: LOGOUT__REQUEST,
+    });
+    request('/auth/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token: getCookie('refreshToken') }),
+    })
+      .then((res) => {
+        if (res.success) {
+          dispatch({
+            type: LOGOUT__SUCCESS,
+          });
+        } else {
+          dispatch({
+            type: LOGOUT__FAILURE,
+          });
+        }
+      })
+      .catch(() => {
+        dispatch({
+          type: LOGOUT__FAILURE,
+        });
+      });
+  };
+}
+
 export function resetPasswordRequest(password) {
   return function (dispatch) {
     dispatch({
@@ -98,7 +172,7 @@ export function resetPasswordRequest(password) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ password, token: getCookie('accessToken') }),
-    })
+    }, refreshTokenRequest, dispatch)
       .then((res) => {
         if (res.success) {
           dispatch({
@@ -119,7 +193,40 @@ export function resetPasswordRequest(password) {
   };
 }
 
-export function passwordResetRequest(email) {
+export function loginRequest(email, password) {
+  return function (dispatch) {
+    dispatch({
+      type: LOGIN__REQUEST,
+    });
+    fetchWithRefresh('/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie('accessToken')}`,
+      },
+      body: JSON.stringify({ email, password }),
+    }, refreshTokenRequest, dispatch)
+      .then((res) => {
+        if (res.success) {
+          dispatch({
+            type: LOGIN__SUCCESS,
+            payload: res,
+          });
+        } else {
+          dispatch({
+            type: LOGIN__FAILURE,
+          });
+        }
+      })
+      .catch(() => {
+        dispatch({
+          type: LOGIN__FAILURE,
+        });
+      });
+  };
+}
+
+export function emailCheckRequest(email) {
   return function (dispatch) {
     dispatch({
       type: EMAIL_CHECK__REQUEST,
@@ -165,6 +272,7 @@ export function registerRequest(email, password, name) {
       .then((res) => {
         if (res.success) {
           setCookie('refreshToken', res.refreshToken);
+          setCookie('accessToken', res.accessToken);
           dispatch({
             type: REGISTER__SUCCESS,
             payload: res,

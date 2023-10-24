@@ -3,32 +3,49 @@ import {
   Button, EmailInput, PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './sign-in.module.css';
+import { loginRequest, refreshTokenRequest } from '../../services/actions/account';
 
 function SignIn() {
-  const [value] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPass] = React.useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { success } = useSelector((store) => store.accountStore.loginRequest);
+
+  const handleOnClick = () => {
+    dispatch(loginRequest(email, password, refreshTokenRequest));
+  };
+
+  React.useEffect(() => {
+    if (success) {
+      navigate('/', { replace: true });
+    }
+  }, [success, navigate]);
+
   return (
     <div className={styles.loginWindow}>
       <div className={styles.loginBox}>
         <div className="text text_type_main-medium">Вход</div>
         <EmailInput
           /* eslint-disable-next-line @typescript-eslint/no-empty-function */
-          onChange={() => {}}
-          value={value}
+          onChange={(e) => { setEmail(e.target.value); }}
+          value={email}
           name="email"
           isIcon={false}
           extraClass="ml-1 mt-6"
         />
         <PasswordInput
-          value={value}
+          value={password}
           name="password"
           extraClass="ml-1 mt-6"
           /* eslint-disable-next-line @typescript-eslint/no-empty-function */
-          onChange={() => {}}
+          onChange={(e) => { setPass(e.target.value); }}
         />
         <div className="mt-6">
-          <Button htmlType="button" type="primary" size="medium">
+          <Button htmlType="button" type="primary" size="medium" onClick={handleOnClick}>
             Войти
           </Button>
         </div>

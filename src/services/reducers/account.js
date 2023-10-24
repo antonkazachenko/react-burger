@@ -11,6 +11,18 @@ import {
   REFRESH_TOKEN__SUCCESS,
   REFRESH_TOKEN__FAILURE,
   REFRESH_TOKEN__REQUEST,
+  LOGIN__SUCCESS,
+  LOGIN__FAILURE,
+  LOGIN__REQUEST,
+  LOGOUT__REQUEST,
+  LOGOUT__SUCCESS,
+  LOGOUT__FAILURE,
+  PROFILE_UPDATE__REQUEST,
+  PROFILE_UPDATE__SUCCESS,
+  PROFILE_UPDATE__FAILURE,
+  GET_USER__REQUEST,
+  GET_USER__SUCCESS,
+  GET_USER__FAILURE,
 } from '../actions/account';
 
 const initialState = {
@@ -30,17 +42,151 @@ const initialState = {
     success: false,
     error: false,
   },
+  loginRequest: {
+    success: false,
+    error: false,
+  },
+  logoutRequest: {
+    success: false,
+    error: false,
+  },
+  profileUpdateRequest: {
+    success: false,
+    error: false,
+  },
+  getUserRequest: {
+    success: false,
+    error: false,
+  },
   user: {
     name: '',
     email: '',
   },
-  accessToken: '',
-  refreshToken: '',
 };
 
 // eslint-disable-next-line default-param-last
 const accountReducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_USER__REQUEST: {
+      return {
+        ...state,
+        getUserRequest: {
+          success: false,
+          error: false,
+        },
+      };
+    }
+    case GET_USER__SUCCESS: {
+      return {
+        ...state,
+        getUserRequest: {
+          success: true,
+          error: false,
+        },
+        user: {
+          name: action.payload.user.name,
+          email: action.payload.user.email,
+        },
+      };
+    }
+    case GET_USER__FAILURE: {
+      return {
+        ...state,
+        getUserRequest: {
+          success: false,
+          error: true,
+        },
+      };
+    }
+    case PROFILE_UPDATE__REQUEST: {
+      return {
+        ...state,
+        profileUpdateRequest: {
+          success: false,
+          error: false,
+        },
+      };
+    }
+    case PROFILE_UPDATE__SUCCESS: {
+      return {
+        ...state,
+        profileUpdateRequest: {
+          success: true,
+          error: false,
+        },
+        user: {
+          name: action.payload.user.name,
+          email: action.payload.user.email,
+        },
+      };
+    }
+    case PROFILE_UPDATE__FAILURE: {
+      return {
+        ...state,
+        profileUpdateRequest: {
+          success: false,
+          error: true,
+        },
+      };
+    }
+    case LOGOUT__REQUEST: {
+      return {
+        ...state,
+        logoutRequest: {
+          success: false,
+          error: false,
+        },
+      };
+    }
+    case LOGOUT__SUCCESS: {
+      return {
+        ...state,
+        logoutRequest: {
+          success: true,
+          error: false,
+        },
+        user: {
+          name: '',
+          email: '',
+        },
+      };
+    }
+    case LOGOUT__FAILURE: {
+      return {
+        ...state,
+        logoutRequest: {
+          success: false,
+          error: true,
+        },
+      };
+    }
+    case LOGIN__REQUEST: {
+      return {
+        ...state,
+        loginRequest: {
+          success: false,
+          error: false,
+        },
+      };
+    }
+    case LOGIN__SUCCESS: {
+      return {
+        ...state,
+        loginRequest: {
+          success: true,
+          error: false,
+        },
+      };
+    }
+    case LOGIN__FAILURE: {
+      return {
+        ...state,
+        loginRequest: {
+          success: false,
+          error: true,
+        },
+      };
+    }
     case EMAIL_CHECK__REQUEST: {
       return {
         ...state,
@@ -88,8 +234,6 @@ const accountReducer = (state = initialState, action) => {
           name: action.payload.user.name,
           email: action.payload.user.email,
         },
-        accessToken: action.payload.accessToken,
-        refreshToken: action.payload.refreshToken,
       };
     }
     case REGISTER__FAILURE: {
@@ -148,8 +292,6 @@ const accountReducer = (state = initialState, action) => {
           success: true,
           error: false,
         },
-        accessToken: action.payload.accessToken,
-        refreshToken: action.payload.refreshToken,
       };
     }
     case REFRESH_TOKEN__FAILURE: {
