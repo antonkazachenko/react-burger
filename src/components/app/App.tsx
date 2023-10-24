@@ -27,7 +27,6 @@ function App() {
 
   return (
     <div className={styles.app}>
-      <AppHeader />
       {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
       <BrowserRouter>
         <Routes>

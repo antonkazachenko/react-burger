@@ -2,9 +2,13 @@ import React from 'react';
 import {
   BurgerIcon, ListIcon, Logo, ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styles from './app-header.module.css';
 
 function AppHeader() {
+  const { user } = useSelector((store) => store.accountStore);
+
   return (
     <header className={styles.navBar}>
       <nav className={`${styles.flexCentered} ${styles.navTab}`}>
@@ -32,17 +36,18 @@ function AppHeader() {
         </div>
       </nav>
       <Logo />
-      <nav className={`${styles.flexCentered} ${styles.navTab} ${styles.navRight} mt-4 mb-4 p-5`}>
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+      <Link to="/profile" className={`${styles.linkDecoration} ${styles.flexCentered} ${styles.navTab} ${styles.navRight} mt-4 mb-4 p-5`}>
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <a href="#" className={styles.navLink}>
           <div className="mr-2">
             <ProfileIcon type="secondary" />
           </div>
           <p className={`text text_type_main-default ${styles.secondary}`}>
-            Личный кабинет
+            { user.name ? user.name : 'Личный кабинет'}
           </p>
         </a>
-      </nav>
+      </Link>
     </header>
   );
 }
