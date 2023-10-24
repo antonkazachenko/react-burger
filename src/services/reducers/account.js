@@ -8,6 +8,9 @@ import {
   RESET_PASSWORD__FAILURE,
   RESET_PASSWORD__REQUEST,
   RESET_PASSWORD__SUCCESS,
+  REFRESH_TOKEN__SUCCESS,
+  REFRESH_TOKEN__FAILURE,
+  REFRESH_TOKEN__REQUEST,
 } from '../actions/account';
 
 const initialState = {
@@ -20,6 +23,10 @@ const initialState = {
     error: false,
   },
   registerRequest: {
+    success: false,
+    error: false,
+  },
+  refreshTokenRequest: {
     success: false,
     error: false,
   },
@@ -120,6 +127,35 @@ const accountReducer = (state = initialState, action) => {
       return {
         ...state,
         passwordResetRequest: {
+          success: false,
+          error: true,
+        },
+      };
+    }
+    case REFRESH_TOKEN__REQUEST: {
+      return {
+        ...state,
+        refreshTokenRequest: {
+          success: false,
+          error: false,
+        },
+      };
+    }
+    case REFRESH_TOKEN__SUCCESS: {
+      return {
+        ...state,
+        refreshTokenRequest: {
+          success: true,
+          error: false,
+        },
+        accessToken: action.payload.accessToken,
+        refreshToken: action.payload.refreshToken,
+      };
+    }
+    case REFRESH_TOKEN__FAILURE: {
+      return {
+        ...state,
+        refreshTokenRequest: {
           success: false,
           error: true,
         },

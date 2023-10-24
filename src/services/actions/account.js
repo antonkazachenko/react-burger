@@ -1,4 +1,5 @@
-import request from '../../utils/apiUtils';
+import request, { fetchWithRefresh } from '../../utils/apiUtils';
+import { getCookie, setCookie } from '../../utils/cookie';
 
 export const EMAIL_CHECK__REQUEST = 'PASSWORD_RESET__REQUEST';
 export const EMAIL_CHECK__SUCCESS = 'PASSWORD_RESET__SUCCESS';
@@ -12,17 +13,91 @@ export const RESET_PASSWORD__REQUEST = 'RESET_PASSWORD__REQUEST';
 export const RESET_PASSWORD__SUCCESS = 'RESET_PASSWORD__SUCCESS';
 export const RESET_PASSWORD__FAILURE = 'RESET_PASSWORD__FAILURE';
 
-export function resetPasswordRequest(password, token) {
+export const REFRESH_TOKEN__REQUEST = 'REFRESH_TOKEN__REQUEST';
+export const REFRESH_TOKEN__SUCCESS = 'REFRESH_TOKEN__SUCCESS';
+export const REFRESH_TOKEN__FAILURE = 'REFRESH_TOKEN__FAILURE';
+
+export const LOGIN__REQUEST = 'LOGIN__REQUEST';
+export const LOGIN__SUCCESS = 'LOGIN__SUCCESS';
+export const LOGIN__FAILURE = 'LOGIN__FAILURE';
+
+export function loginRequest(email, password) {
   return function (dispatch) {
     dispatch({
-      type: RESET_PASSWORD__REQUEST,
+      type: LOGIN__REQUEST,
     });
-    request('/password-reset/reset', {
+    fetchWithRefresh('/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie('accessToken')}`,
+      },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((res) => {
+        if (res.success) {
+          dispatch({
+            type: LOGIN__SUCCESS,
+            payload: res,
+          });
+        } else {
+          dispatch({
+            type: LOGIN__FAILURE,
+          });
+        }
+      })
+      .catch(() => {
+        dispatch({
+          type: LOGIN__FAILURE,
+        });
+      });
+  };
+}
+
+export function refreshTokenRequest() {
+  return function (dispatch) {
+    dispatch({
+      type: REFRESH_TOKEN__REQUEST,
+    });
+    request('/auth/refresh-token', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ password, token }),
+      body: JSON.stringify(getCookie('refreshToken')),
+    })
+      .then((res) => {
+        if (res.success) {
+          setCookie('refreshToken', res.refreshToken);
+          dispatch({
+            type: REFRESH_TOKEN__SUCCESS,
+            payload: res,
+          });
+        } else {
+          dispatch({
+            type: REFRESH_TOKEN__FAILURE,
+          });
+        }
+      })
+      .catch(() => {
+        dispatch({
+          type: REFRESH_TOKEN__FAILURE,
+        });
+      });
+  };
+}
+
+export function resetPasswordRequest(password) {
+  return function (dispatch) {
+    dispatch({
+      type: RESET_PASSWORD__REQUEST,
+    });
+    fetchWithRefresh('/password-reset/reset', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ password, token: getCookie('accessToken') }),
     })
       .then((res) => {
         if (res.success) {
@@ -89,6 +164,7 @@ export function registerRequest(email, password, name) {
     })
       .then((res) => {
         if (res.success) {
+          setCookie('refreshToken', res.refreshToken);
           dispatch({
             type: REGISTER__SUCCESS,
             payload: res,

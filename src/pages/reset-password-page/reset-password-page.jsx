@@ -5,19 +5,18 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './reset-password-page.module.css';
-import { resetPasswordRequest } from '../../services/actions/account';
+import {refreshTokenRequest, resetPasswordRequest} from '../../services/actions/account';
 
 function ResetPasswordPage() {
   const [password, setPassword] = React.useState('');
   const [emailCode, setEmailCode] = React.useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { accessToken } = useSelector((store) => store.accountStore);
   const { success } = useSelector((store) => store.accountStore.passwordResetRequest);
 
   // TODO: fix the token issue
   const handleOnClick = () => {
-    dispatch(resetPasswordRequest(password, accessToken));
+    dispatch(resetPasswordRequest(password));
   };
 
   useEffect(() => {
