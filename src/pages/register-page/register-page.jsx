@@ -13,7 +13,7 @@ function RegisterPage() {
   const [email, setEmail] = React.useState('');
   const [password, setPass] = React.useState('');
   const dispatch = useDispatch();
-  const { success } = useSelector((store) => store.accountStore.registerRequest.success);
+  const { success } = useSelector((store) => store.accountStore.registerRequest);
   const navigate = useNavigate();
 
   const handleOnClick = () => {
