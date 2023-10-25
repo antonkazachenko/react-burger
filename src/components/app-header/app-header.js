@@ -2,12 +2,24 @@ import React from 'react';
 import {
   BurgerIcon, ListIcon, Logo, ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styles from './app-header.module.css';
+import { getUserRequest } from '../../services/actions/account';
 
 function AppHeader() {
   const { user } = useSelector((store) => store.accountStore);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleAccountClick = () => {
+    dispatch(getUserRequest());
+    if (user.name === '') {
+      navigate('/login');
+    } else {
+      navigate('/profile');
+    }
+  };
 
   return (
     <header className={styles.navBar}>
@@ -37,14 +49,14 @@ function AppHeader() {
       </nav>
       <Logo />
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-      <Link to="/profile" className={`${styles.linkDecoration} ${styles.flexCentered} ${styles.navTab} ${styles.navRight} ${styles.navLink} mt-4 mb-4 p-5`}>
+      <nav onClick={handleAccountClick} className={`${styles.linkDecoration} ${styles.flexCentered} ${styles.navTab} ${styles.navRight} ${styles.navLink} mt-4 mb-4 p-5`}>
         <div className="mr-2">
           <ProfileIcon type="secondary" />
         </div>
         <p className={`text text_type_main-default ${styles.secondary}`}>
           { user.name ? user.name : 'Личный кабинет'}
         </p>
-      </Link>
+      </nav>
     </header>
   );
 }

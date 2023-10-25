@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './profile-main-page.module.css';
 import AppHeader from '../../components/app-header/app-header';
 import { logoutRequest } from '../../services/actions/account';
@@ -12,11 +12,12 @@ function ProfileMainPage() {
   const [password, setPass] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.accountStore);
 
   const handleLogout = () => {
-    dispatch(logoutRequest()).then(() => {
-      navigate('/');
-    });
+    console.log('logout');
+    dispatch(logoutRequest());
+    navigate('/', { replace: true });
   };
 
   return (
@@ -44,7 +45,7 @@ function ProfileMainPage() {
               </p>
             )}
           </NavLink>
-          <NavLink onClick={handleLogout} className={`${styles.menuTab} ${styles.linkDecoration}`} to="/" replace>
+          <NavLink onClick={handleLogout} className={`${styles.menuTab} ${styles.linkDecoration}`}>
             {({ isActive }) => (
               <p className={`text text_type_main-large ${isActive ? styles.activeColor : 'text_color_inactive'}`}>
                 Выйти

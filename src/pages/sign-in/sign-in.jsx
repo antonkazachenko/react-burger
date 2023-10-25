@@ -6,7 +6,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './sign-in.module.css';
-import { loginRequest, refreshTokenRequest } from '../../services/actions/account';
+import { getUserRequest, loginRequest, refreshTokenRequest } from '../../services/actions/account';
 import AppHeader from '../../components/app-header/app-header';
 
 function SignIn() {
@@ -14,17 +14,18 @@ function SignIn() {
   const [password, setPass] = React.useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { success } = useSelector((store) => store.accountStore.loginRequest);
+  const { user } = useSelector((store) => store.accountStore);
 
   const handleOnClick = () => {
     dispatch(loginRequest(email, password, refreshTokenRequest));
   };
 
   React.useEffect(() => {
-    if (success) {
+    dispatch(getUserRequest());
+    if (user.name !== '') {
       navigate('/', { replace: true });
     }
-  }, [success, navigate]);
+  }, [user, navigate, dispatch]);
 
   return (
     <>
