@@ -44,7 +44,7 @@ function ProfileMainPage() {
               </p>
             )}
           </NavLink>
-          <NavLink onClick={handleLogout} className={`${styles.menuTab} ${styles.linkDecoration}`}>
+          <NavLink onClick={handleLogout} className={`${styles.menuTab} ${styles.linkDecoration}`} to="/" replace>
             {({ isActive }) => (
               <p className={`text text_type_main-large ${isActive ? styles.activeColor : 'text_color_inactive'}`}>
                 Выйти

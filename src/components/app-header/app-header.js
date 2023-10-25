@@ -37,16 +37,13 @@ function AppHeader() {
       </nav>
       <Logo />
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-      <Link to="/profile" className={`${styles.linkDecoration} ${styles.flexCentered} ${styles.navTab} ${styles.navRight} mt-4 mb-4 p-5`}>
-        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a href="#" className={styles.navLink}>
-          <div className="mr-2">
-            <ProfileIcon type="secondary" />
-          </div>
-          <p className={`text text_type_main-default ${styles.secondary}`}>
-            { user.name ? user.name : 'Личный кабинет'}
-          </p>
-        </a>
+      <Link to="/profile" className={`${styles.linkDecoration} ${styles.flexCentered} ${styles.navTab} ${styles.navRight} ${styles.navLink} mt-4 mb-4 p-5`}>
+        <div className="mr-2">
+          <ProfileIcon type="secondary" />
+        </div>
+        <p className={`text text_type_main-default ${styles.secondary}`}>
+          { user.name ? user.name : 'Личный кабинет'}
+        </p>
       </Link>
     </header>
   );

@@ -176,6 +176,10 @@ const accountReducer = (state = initialState, action) => {
           success: true,
           error: false,
         },
+        user: {
+          name: action.payload.user.name,
+          email: action.payload.user.email,
+        },
       };
     }
     case LOGIN__FAILURE: {

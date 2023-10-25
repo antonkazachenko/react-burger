@@ -1,5 +1,5 @@
 import request, { fetchWithRefresh } from '../../utils/apiUtils';
-import { getCookie, setCookie } from '../../utils/cookie';
+import { deleteCookie, getCookie, setCookie } from '../../utils/cookie';
 
 export const EMAIL_CHECK__REQUEST = 'PASSWORD_RESET__REQUEST';
 export const EMAIL_CHECK__SUCCESS = 'PASSWORD_RESET__SUCCESS';
@@ -68,15 +68,15 @@ export function refreshTokenRequest() {
 }
 
 export function getUserRequest() {
-  return function (dispatch) {
+  return async function (dispatch) {
     dispatch({
       type: GET_USER__REQUEST,
     });
-    fetchWithRefresh('/auth/user', {
+    await fetchWithRefresh('/auth/user', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${getCookie('accessToken')}`,
+        Authorization: getCookie('accessToken'),
       },
     }, refreshTokenRequest, dispatch)
       .then((res) => {
@@ -91,7 +91,8 @@ export function getUserRequest() {
           });
         }
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log(e);
         dispatch({
           type: GET_USER__FAILURE,
         });
@@ -143,6 +144,8 @@ export function logoutRequest() {
       body: JSON.stringify({ token: getCookie('refreshToken') }),
     })
       .then((res) => {
+        deleteCookie('refreshToken');
+        deleteCookie('accessToken');
         if (res.success) {
           dispatch({
             type: LOGOUT__SUCCESS,
@@ -208,6 +211,8 @@ export function loginRequest(email, password) {
     }, refreshTokenRequest, dispatch)
       .then((res) => {
         if (res.success) {
+          setCookie('refreshToken', res.refreshToken);
+          setCookie('accessToken', res.accessToken);
           dispatch({
             type: LOGIN__SUCCESS,
             payload: res,
