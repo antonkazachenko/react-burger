@@ -3,7 +3,7 @@ import {
   BurgerIcon, ListIcon, Logo, ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './app-header.module.css';
 import { getUserRequest } from '../../services/actions/account';
 
@@ -26,14 +26,27 @@ function AppHeader() {
       <nav className={`${styles.flexCentered} ${styles.navTab}`}>
         <div className={`${styles.flexCentered} mt-4 mb-4 p-5 mr-2`}>
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <a href="#" className={styles.navLink}>
-            <div className="mr-2">
-              <BurgerIcon type="primary" />
-            </div>
-            <p className="text text_type_main-default">
-              Конструктор
-            </p>
-          </a>
+          <NavLink to="/" href="#" className={styles.navLink}>
+            {(window.location.pathname === '/') ? (
+              <>
+                <div className="mr-2">
+                  <BurgerIcon type="primary" />
+                </div>
+                <p className="text text_type_main-default">
+                  Конструктор
+                </p>
+              </>
+            ) : (
+              <>
+                <div className="mr-2">
+                  <BurgerIcon type="secondary" />
+                </div>
+                <p className={`text text_type_main-default ${styles.secondary}`}>
+                  Конструктор
+                </p>
+              </>
+            )}
+          </NavLink>
         </div>
         <div className={`${styles.flexCentered} mt-4 mb-4 p-5`}>
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}

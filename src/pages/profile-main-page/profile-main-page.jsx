@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './profile-main-page.module.css';
 import AppHeader from '../../components/app-header/app-header';
@@ -30,7 +30,7 @@ function ProfileMainPage() {
             to="/profile"
           >
             {({ isActive }) => (
-              <p className={`text text_type_main-large ${isActive ? styles.activeColor : 'text_color_inactive'}`}>
+              <p className={`text text_type_main-large ${(isActive && !window.location.href.includes('orders')) ? styles.activeColor : 'text_color_inactive'}`}>
                 Профиль
               </p>
             )}
@@ -45,13 +45,11 @@ function ProfileMainPage() {
               </p>
             )}
           </NavLink>
-          <NavLink onClick={handleLogout} className={`${styles.menuTab} ${styles.linkDecoration}`}>
-            {({ isActive }) => (
-              <p className={`text text_type_main-large ${isActive ? styles.activeColor : 'text_color_inactive'}`}>
-                Выйти
-              </p>
-            )}
-          </NavLink>
+          <Link onClick={handleLogout} className={`${styles.menuTab} ${styles.linkDecoration}`} to="/" replace>
+            <p className="text text_type_main-large text_color_inactive">
+              Выйти
+            </p>
+          </Link>
           <div className="mt-20">
             <p className="text text_type_main-default text_color_inactive">
               В этом разделе вы можете
