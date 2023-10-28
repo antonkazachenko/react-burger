@@ -10,6 +10,7 @@ import ForgotPasswordPage from '../../pages/forgot-password-page/forgot-password
 import ResetPasswordPage from '../../pages/reset-password-page/reset-password-page';
 import ProfileMainPage from '../../pages/profile-main-page/profile-main-page';
 import ProtectedRouteElement from '../protected-route-element/protected-route-element';
+import ProfileOrdersPage from '../../pages/profile-orders-page/profile-orders-page';
 
 function App() {
   const { isLoading } = useSelector((state: any) => state.ingredientsStore);
@@ -44,7 +45,7 @@ function App() {
           <Route
             path="/profile/orders"
             element={(
-              <ProtectedRouteElement element={<ProfileMainPage />} />
+              <ProtectedRouteElement element={<ProfileOrdersPage />} />
             )}
           />
           <Route
