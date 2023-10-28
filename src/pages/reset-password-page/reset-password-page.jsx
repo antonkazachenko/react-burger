@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Button, Input, PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './reset-password-page.module.css';
-import { resetPasswordRequest } from '../../services/actions/account';
+import { getUserRequest, resetPasswordRequest } from '../../services/actions/account';
 import AppHeader from '../../components/app-header/app-header';
 
 function ResetPasswordPage() {
@@ -14,18 +14,20 @@ function ResetPasswordPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { success } = useSelector((store) => store.accountStore.passwordResetRequest);
+  const { user } = useSelector((state) => state.accountStore);
 
   // TODO: fix the token issue
   const handleOnClick = () => {
     dispatch(resetPasswordRequest(password));
   };
 
-  useEffect(() => {
-    if (success) {
+  React.useEffect(() => {
+    dispatch(getUserRequest());
+    if (success || user.name !== '') {
+      // TODO: implement reset request status
       navigate('/', { replace: true });
     }
-  }, [success, navigate]);
-
+  }, [success, navigate, dispatch, user.name]);
   return (
     <>
       <AppHeader />

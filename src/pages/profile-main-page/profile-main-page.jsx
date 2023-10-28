@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styles from './profile-main-page.module.css';
 import AppHeader from '../../components/app-header/app-header';
 import { logoutRequest } from '../../services/actions/account';
@@ -12,10 +12,7 @@ function ProfileMainPage() {
   const [password, setPass] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.accountStore);
-
   const handleLogout = () => {
-    console.log('logout');
     dispatch(logoutRequest());
     navigate('/', { replace: true });
   };

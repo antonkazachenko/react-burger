@@ -6,7 +6,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './register-page.module.css';
-import { registerRequest } from '../../services/actions/account';
+import { getUserRequest, registerRequest } from '../../services/actions/account';
 import AppHeader from '../../components/app-header/app-header';
 
 function RegisterPage() {
@@ -16,16 +16,18 @@ function RegisterPage() {
   const dispatch = useDispatch();
   const { success } = useSelector((store) => store.accountStore.registerRequest);
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.accountStore);
 
   const handleOnClick = () => {
     dispatch(registerRequest(email, password, name));
   };
 
   React.useEffect(() => {
-    if (success) {
+    dispatch(getUserRequest());
+    if (success || user.name !== '') {
       navigate('/', { replace: true });
     }
-  }, [success, navigate]);
+  }, [success, navigate, dispatch, user.name]);
 
   return (
     <>
