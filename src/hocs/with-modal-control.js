@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   setCurrentItemOpen,
   setCurrentItemClose,
@@ -11,6 +12,8 @@ function withModalControl(Component) {
     const dispatch = useDispatch();
     const [isVisible, setIsVisible] = React.useState(false);
     const [modalData, setModalData] = React.useState(null);
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const handleModal = (item) => {
       setIsVisible(true);
@@ -21,6 +24,9 @@ function withModalControl(Component) {
     const handleCloseModal = () => {
       setIsVisible(false);
       dispatch(setCurrentItemClose());
+      if (window.location.pathname !== '/') {
+        navigate('/');
+      }
     };
 
     return (

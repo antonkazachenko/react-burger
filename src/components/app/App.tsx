@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './App.module.css';
 import { getIngredients } from '../../services/actions/ingredients';
@@ -15,6 +15,8 @@ import ProfileOrdersPage from '../../pages/profile-orders-page/profile-orders-pa
 function App() {
   const { isLoading } = useSelector((state: any) => state.ingredientsStore);
   const dispatch = useDispatch();
+  const location = useLocation();
+  const state = location.state as { backgroundLocation?: Location };
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -29,33 +31,36 @@ function App() {
   return (
     <div className={styles.app}>
       {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/login" element={<SignIn />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/reset-password" element={<ResetPasswordPage />} />
-          <Route
-            path="/profile"
-            element={(
-              <ProtectedRouteElement element={<ProfileMainPage />} />
+      <Routes location={state?.backgroundLocation || location}>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/login" element={<SignIn />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route
+          path="/profile"
+          element={(
+            <ProtectedRouteElement element={<ProfileMainPage />} />
             )}
-          />
-          <Route
-            path="/profile/orders"
-            element={(
-              <ProtectedRouteElement element={<ProfileOrdersPage />} />
+        />
+        <Route
+          path="/profile/orders"
+          element={(
+            <ProtectedRouteElement element={<ProfileOrdersPage />} />
             )}
-          />
-          <Route
-            path="/profile/orders/:id"
-            element={(
-              <ProtectedRouteElement element={<ProfileMainPage />} />
+        />
+        <Route
+          path="/profile/orders/:id"
+          element={(
+            <ProtectedRouteElement element={<ProfileMainPage />} />
             )}
-          />
-        </Routes>
-      </BrowserRouter>
+        />
+      </Routes>
+      {/* {state?.backgroundLocation && ( */}
+      {/*  <Routes> */}
+      {/*    <Route path="/:id" element={<Modal />} /> */}
+      {/*  </Routes> */}
+      {/* )} */}
     </div>
   );
 }
