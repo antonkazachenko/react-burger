@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   setCurrentItemOpen,
   setCurrentItemClose,
@@ -11,8 +11,7 @@ function withModalControl(Component) {
   return function WithModalControl(props) {
     const dispatch = useDispatch();
     const [isVisible, setIsVisible] = React.useState(false);
-    const [modalData, setModalData] = React.useState(null);
-    const location = useLocation();
+    const [modalData] = React.useState(null);
     const navigate = useNavigate();
 
     const handleModal = (item) => {

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import MoonLoader from 'react-spinners/MoonLoader';
 import styles from './App.module.css';
 import { getIngredients } from '../../services/actions/ingredients';
 import MainPage from '../../pages/main-page/main-page';
@@ -25,7 +26,17 @@ function App() {
   }, [dispatch]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className={styles.spinner}>
+        <MoonLoader
+          color="rgb(133, 133, 173, 1)"
+          cssOverride={{}}
+          loading
+          size={100}
+          speedMultiplier={1}
+        />
+      </div>
+    );
   }
 
   return (
