@@ -5,7 +5,8 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './reset-password-page.module.css';
-import { getUserRequest, resetPasswordRequest } from '../../services/actions/account';
+// eslint-disable-next-line import/named
+import { getUserRequest, resetPasswordRequest, resetPasswordReset } from '../../services/actions/account';
 import AppHeader from '../../components/app-header/app-header';
 
 function ResetPasswordPage() {
@@ -16,16 +17,17 @@ function ResetPasswordPage() {
   const { success } = useSelector((store) => store.accountStore.passwordResetRequest);
   const { user } = useSelector((state) => state.accountStore);
 
-  // TODO: fix the token issue
-  const handleOnClick = () => {
+  const handleOnClick = async () => {
     dispatch(resetPasswordRequest(password));
   };
 
   React.useEffect(() => {
     dispatch(getUserRequest());
-    if (success || user.name !== '') {
-      // TODO: implement reset request status
+    if (user.name !== '') {
       navigate('/', { replace: true });
+    } else if (success) {
+      dispatch(resetPasswordReset());
+      navigate('/login', { replace: true });
     }
   }, [success, navigate, dispatch, user.name]);
   return (

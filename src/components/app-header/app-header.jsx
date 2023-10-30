@@ -63,12 +63,25 @@ function AppHeader() {
       <Logo />
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
       <nav onClick={handleAccountClick} className={`${styles.linkDecoration} ${styles.flexCentered} ${styles.navTab} ${styles.navRight} ${styles.navLink} mt-4 mb-4 p-5`}>
-        <div className="mr-2">
-          <ProfileIcon type="secondary" />
-        </div>
-        <p className={`text text_type_main-default ${styles.secondary}`}>
-          { user.name ? user.name : 'Личный кабинет'}
-        </p>
+        {(window.location.href.includes('profile')) ? (
+          <>
+            <div className="mr-2">
+              <ProfileIcon type="primary" />
+            </div>
+            <p className="text text_type_main-default">
+              { user.name ? user.name : 'Личный кабинет'}
+            </p>
+          </>
+        ) : (
+          <>
+            <div className="mr-2">
+              <ProfileIcon type="secondary" />
+            </div>
+            <p className={`text text_type_main-default ${styles.secondary}`}>
+              { user.name ? user.name : 'Личный кабинет'}
+            </p>
+          </>
+        )}
       </nav>
     </header>
   );

@@ -14,7 +14,6 @@ function RegisterPage() {
   const [email, setEmail] = React.useState('');
   const [password, setPass] = React.useState('');
   const dispatch = useDispatch();
-  const { success } = useSelector((store) => store.accountStore.registerRequest);
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.accountStore);
 
@@ -24,10 +23,10 @@ function RegisterPage() {
 
   React.useEffect(() => {
     dispatch(getUserRequest());
-    if (success || user.name !== '') {
+    if (user.name !== '') {
       navigate('/', { replace: true });
     }
-  }, [success, navigate, dispatch, user.name]);
+  }, [navigate, dispatch, user.name]);
 
   return (
     <>

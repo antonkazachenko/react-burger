@@ -6,7 +6,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './sign-in.module.css';
-import { getUserRequest, loginRequest, refreshTokenRequest } from '../../services/actions/account';
+import { getUserRequest, loginRequest } from '../../services/actions/account';
 import AppHeader from '../../components/app-header/app-header';
 
 function SignIn() {
@@ -17,7 +17,7 @@ function SignIn() {
   const { user } = useSelector((store) => store.accountStore);
 
   const handleOnClick = () => {
-    dispatch(loginRequest(email, password, refreshTokenRequest));
+    dispatch(loginRequest(email, password));
   };
 
   React.useEffect(() => {

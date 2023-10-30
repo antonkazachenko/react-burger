@@ -3,12 +3,11 @@ import {
   Button, ConstructorElement, CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
+import { useNavigate } from 'react-router-dom';
 import styles from './burger-constructor.module.css';
 import OrderDetails from '../order-details/order-details';
-// eslint-disable-next-line import/named
 import Modal from '../modal/modal';
 import {
   createOrderRequest,
@@ -23,12 +22,14 @@ import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 function BurgerConstructor({
   className, handleCloseModal, handleModal,
 }) {
-  const [isVisible, setisVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
     constructorIngredients,
     bunData,
   } = useSelector((store) => store.ingredientsStore);
+  const { name } = useSelector((store) => store.accountStore.user);
   const { totalPrice } = useSelector((store) => store.ingredientsStore);
 
   const handleIngredientRemoval = (id) => {
@@ -37,7 +38,7 @@ function BurgerConstructor({
   };
 
   const handleCloseModalWithReset = () => {
-    setisVisible(false);
+    setIsVisible(false);
     handleCloseModal();
     dispatch({ type: RESET_CONSTRUCTOR });
   };
@@ -72,6 +73,9 @@ function BurgerConstructor({
   }, [bunData, constructorIngredients, dispatch]);
 
   const createOrder = () => {
+    if (!name) {
+      navigate('/login', { replace: true });
+    }
     const ingredientsArray = [];
     // eslint-disable-next-line no-underscore-dangle
     ingredientsArray.push(bunData._id);
@@ -82,7 +86,7 @@ function BurgerConstructor({
     // eslint-disable-next-line no-underscore-dangle
     ingredientsArray.push(bunData._id);
     // eslint-disable-next-line no-underscore-dangle
-    setisVisible(true);
+    setIsVisible(true);
     dispatch(createOrderRequest(ingredientsArray));
     handleModal();
   };

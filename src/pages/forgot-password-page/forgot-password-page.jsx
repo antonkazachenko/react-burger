@@ -6,7 +6,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './forgot-password-page.module.css';
-import { emailCheckRequest, getUserRequest } from '../../services/actions/account';
+import { emailCheckRequest, emailCheckReset, getUserRequest } from '../../services/actions/account';
 import AppHeader from '../../components/app-header/app-header';
 
 function ForgotPasswordPage() {
@@ -18,12 +18,13 @@ function ForgotPasswordPage() {
 
   const handleOnClick = () => {
     dispatch(emailCheckRequest(value));
+    navigate('/reset-password', { replace: true });
   };
 
   React.useEffect(() => {
     dispatch(getUserRequest());
-    if (success || user.name !== '') {
-      // TODO: implement reset request status
+    if (user.name !== '') {
+      dispatch(emailCheckReset());
       navigate('/', { replace: true });
     }
   }, [success, navigate, dispatch, user.name]);
