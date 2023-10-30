@@ -90,7 +90,6 @@ function BurgerConstructor({
     dispatch(createOrderRequest(ingredientsArray));
     handleModal();
   };
-  // TODO: add better loader
   if (bunData.length === 0) {
     return (
       <div className={styles.dropZone} ref={dropTarget}>
