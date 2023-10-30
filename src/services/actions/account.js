@@ -4,34 +4,90 @@ import { deleteCookie, getCookie, setCookie } from '../../utils/cookie';
 export const EMAIL_CHECK__REQUEST = 'PASSWORD_RESET__REQUEST';
 export const EMAIL_CHECK__SUCCESS = 'PASSWORD_RESET__SUCCESS';
 export const EMAIL_CHECK__FAILURE = 'PASSWORD_RESET__FAILURE';
+export const EMAIL_CHECK__RESET = 'PASSWORD_RESET__RESET';
 
 export const REGISTER__REQUEST = 'REGISTER__REQUEST';
 export const REGISTER__SUCCESS = 'REGISTER__SUCCESS';
 export const REGISTER__FAILURE = 'REGISTER__FAILURE';
+export const REGISTER__RESET = 'REGISTER__RESET';
 
 export const RESET_PASSWORD__REQUEST = 'RESET_PASSWORD__REQUEST';
 export const RESET_PASSWORD__SUCCESS = 'RESET_PASSWORD__SUCCESS';
 export const RESET_PASSWORD__FAILURE = 'RESET_PASSWORD__FAILURE';
+export const RESET_PASSWORD__RESET = 'RESET_PASSWORD__RESET';
 
 export const REFRESH_TOKEN__REQUEST = 'REFRESH_TOKEN__REQUEST';
 export const REFRESH_TOKEN__SUCCESS = 'REFRESH_TOKEN__SUCCESS';
 export const REFRESH_TOKEN__FAILURE = 'REFRESH_TOKEN__FAILURE';
+export const REFRESH_TOKEN_RESET = 'REFRESH_TOKEN_RESET';
 
 export const LOGIN__REQUEST = 'LOGIN__REQUEST';
 export const LOGIN__SUCCESS = 'LOGIN__SUCCESS';
 export const LOGIN__FAILURE = 'LOGIN__FAILURE';
+export const LOGIN__RESET = 'LOGIN__RESET';
 
 export const GET_USER__REQUEST = 'GET_USER__REQUEST';
 export const GET_USER__SUCCESS = 'GET_USER__SUCCESS';
 export const GET_USER__FAILURE = 'GET_USER__FAILURE';
+export const GET_USER__RESET = 'GET_USER__RESET';
 
 export const LOGOUT__REQUEST = 'LOGOUT__REQUEST';
 export const LOGOUT__SUCCESS = 'LOGOUT__SUCCESS';
 export const LOGOUT__FAILURE = 'LOGOUT__FAILURE';
+export const LOGOUT__RESET = 'LOGOUT__RESET';
 
 export const PROFILE_UPDATE__REQUEST = 'PROFILE_UPDATE__REQUEST';
 export const PROFILE_UPDATE__SUCCESS = 'PROFILE_UPDATE__SUCCESS';
 export const PROFILE_UPDATE__FAILURE = 'PROFILE_UPDATE__FAILURE';
+export const PROFILE_UPDATE__RESET = 'PROFILE_UPDATE__RESET';
+
+export function resetPasswordReset() {
+  return {
+    type: RESET_PASSWORD__RESET,
+  };
+}
+
+export function emailCheckReset() {
+  return {
+    type: EMAIL_CHECK__RESET,
+  };
+}
+
+export function registerReset() {
+  return {
+    type: REGISTER__RESET,
+  };
+}
+
+export function refreshTokenReset() {
+  return {
+    type: REFRESH_TOKEN_RESET,
+  };
+}
+
+export function loginReset() {
+  return {
+    type: LOGIN__RESET,
+  };
+}
+
+export function getUserReset() {
+  return {
+    type: GET_USER__RESET,
+  };
+}
+
+export function logoutReset() {
+  return {
+    type: LOGOUT__RESET,
+  };
+}
+
+export function profileUpdateReset() {
+  return {
+    type: PROFILE_UPDATE__RESET,
+  };
+}
 
 export function refreshTokenRequest() {
   return function (dispatch) {
@@ -169,7 +225,7 @@ export function resetPasswordRequest(password) {
     dispatch({
       type: RESET_PASSWORD__REQUEST,
     });
-    fetchWithRefresh('/password-reset/reset', {
+    fetchWithRefresh('/password-reset', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -205,11 +261,11 @@ export function loginRequest(email, password) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${getCookie('accessToken')}`,
       },
       body: JSON.stringify({ email, password }),
     }, refreshTokenRequest, dispatch)
       .then((res) => {
+        console.log(res);
         if (res.success) {
           setCookie('refreshToken', res.refreshToken);
           setCookie('accessToken', res.accessToken);
@@ -223,7 +279,8 @@ export function loginRequest(email, password) {
           });
         }
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log(e);
         dispatch({
           type: LOGIN__FAILURE,
         });

@@ -2,27 +2,35 @@ import {
   EMAIL_CHECK__FAILURE,
   EMAIL_CHECK__REQUEST,
   EMAIL_CHECK__SUCCESS,
+  EMAIL_CHECK__RESET,
   REGISTER__FAILURE,
   REGISTER__REQUEST,
   REGISTER__SUCCESS,
+  REGISTER__RESET,
   RESET_PASSWORD__FAILURE,
   RESET_PASSWORD__REQUEST,
   RESET_PASSWORD__SUCCESS,
+  RESET_PASSWORD__RESET,
   REFRESH_TOKEN__SUCCESS,
   REFRESH_TOKEN__FAILURE,
   REFRESH_TOKEN__REQUEST,
+  REFRESH_TOKEN_RESET,
   LOGIN__SUCCESS,
   LOGIN__FAILURE,
   LOGIN__REQUEST,
+  LOGIN__RESET,
   LOGOUT__REQUEST,
   LOGOUT__SUCCESS,
   LOGOUT__FAILURE,
+  LOGOUT__RESET,
   PROFILE_UPDATE__REQUEST,
   PROFILE_UPDATE__SUCCESS,
   PROFILE_UPDATE__FAILURE,
+  PROFILE_UPDATE__RESET,
   GET_USER__REQUEST,
   GET_USER__SUCCESS,
   GET_USER__FAILURE,
+  GET_USER__RESET,
 } from '../actions/account';
 
 const initialState = {
@@ -98,6 +106,15 @@ const accountReducer = (state = initialState, action) => {
         },
       };
     }
+    case GET_USER__RESET: {
+      return {
+        ...state,
+        getUserRequest: {
+          success: false,
+          error: false,
+        },
+      };
+    }
     case PROFILE_UPDATE__REQUEST: {
       return {
         ...state,
@@ -126,6 +143,15 @@ const accountReducer = (state = initialState, action) => {
         profileUpdateRequest: {
           success: false,
           error: true,
+        },
+      };
+    }
+    case PROFILE_UPDATE__RESET: {
+      return {
+        ...state,
+        profileUpdateRequest: {
+          success: false,
+          error: false,
         },
       };
     }
@@ -160,6 +186,15 @@ const accountReducer = (state = initialState, action) => {
         },
       };
     }
+    case LOGOUT__RESET: {
+      return {
+        ...state,
+        logoutRequest: {
+          success: false,
+          error: false,
+        },
+      };
+    }
     case LOGIN__REQUEST: {
       return {
         ...state,
@@ -191,6 +226,15 @@ const accountReducer = (state = initialState, action) => {
         },
       };
     }
+    case LOGIN__RESET: {
+      return {
+        ...state,
+        loginRequest: {
+          success: false,
+          error: false,
+        },
+      };
+    }
     case EMAIL_CHECK__REQUEST: {
       return {
         ...state,
@@ -215,6 +259,15 @@ const accountReducer = (state = initialState, action) => {
         emailCheckRequest: {
           success: false,
           error: true,
+        },
+      };
+    }
+    case EMAIL_CHECK__RESET: {
+      return {
+        ...state,
+        emailCheckRequest: {
+          success: false,
+          error: false,
         },
       };
     }
@@ -249,6 +302,15 @@ const accountReducer = (state = initialState, action) => {
         },
       };
     }
+    case REGISTER__RESET: {
+      return {
+        ...state,
+        registerRequest: {
+          success: false,
+          error: false,
+        },
+      };
+    }
     case RESET_PASSWORD__REQUEST: {
       return {
         ...state,
@@ -280,6 +342,15 @@ const accountReducer = (state = initialState, action) => {
         },
       };
     }
+    case RESET_PASSWORD__RESET: {
+      return {
+        ...state,
+        passwordResetRequest: {
+          success: false,
+          error: false,
+        },
+      };
+    }
     case REFRESH_TOKEN__REQUEST: {
       return {
         ...state,
@@ -304,6 +375,15 @@ const accountReducer = (state = initialState, action) => {
         refreshTokenRequest: {
           success: false,
           error: true,
+        },
+      };
+    }
+    case REFRESH_TOKEN_RESET: {
+      return {
+        ...state,
+        refreshTokenRequest: {
+          success: false,
+          error: false,
         },
       };
     }
