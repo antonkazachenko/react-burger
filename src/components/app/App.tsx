@@ -16,6 +16,7 @@ import ProtectedRouteElement from '../protected-route-element/protected-route-el
 import ProfileOrdersPage from '../../pages/profile-orders-page/profile-orders-page';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
+import NonModalIngredientPage from '../../pages/non-modal-ingredient-page/non-modal-ingredient-page';
 
 function App() {
   const { isLoading } = useSelector((state: any) => state.ingredientsStore);
@@ -58,6 +59,10 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route
+          path="/ingredients/:id"
+          element={(<NonModalIngredientPage />)}
+        />
+        <Route
           path="/profile"
           element={(
             <ProtectedRouteElement element={<ProfileMainPage />} />
@@ -80,7 +85,7 @@ function App() {
       {state?.backgroundLocation && (
         <Routes>
           <Route
-            path="/:id"
+            path="/ingredients/:id"
             element={(
               <Modal onClose={handleCloseModal} title="Детали ингредиента">
                 <IngredientDetails />

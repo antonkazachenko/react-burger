@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   BurgerIcon, ListIcon, Logo, ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -20,6 +20,10 @@ function AppHeader() {
       navigate('/profile');
     }
   };
+
+  useEffect(() => {
+    dispatch(getUserRequest());
+  }, [dispatch]);
 
   return (
     <div className={styles.bg}>

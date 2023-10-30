@@ -22,7 +22,7 @@ function IngredientSection({
               /* eslint-disable-next-line no-underscore-dangle */
               key={el._id}
               /* eslint-disable-next-line no-underscore-dangle */
-              to={`/${el._id}`}
+              to={`/ingredients/${el._id}`}
               state={{ backgroundLocation: location }}
             >
               <ConstructorCard

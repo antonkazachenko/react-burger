@@ -5,11 +5,9 @@ import { useSelector } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 import styles from './burger-ingredients.module.css';
 import IngredientTabs from '../ingredient-tabs/ingredient-tabs';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 import IngredientSection from '../ingredient-section/ingredient-section';
-import Modal from '../modal/modal';
 
-function BurgerIngredients({ isVisible, handleModal, handleCloseModal }) {
+function BurgerIngredients({ handleModal }) {
   const { ingredients } = useSelector((store) => store.ingredientsStore);
   const [activeTab, setActiveTab] = React.useState('one');
   const bread = ingredients.filter((el) => el.type === 'bun');
@@ -44,23 +42,14 @@ function BurgerIngredients({ isVisible, handleModal, handleCloseModal }) {
         <div className="mt-10" ref={mainRef}>
           <IngredientSection items={main} title="Начинки" classes={mainClasses} handleModal={handleModal} />
         </div>
-        {
-          isVisible
-          && (
-            <Modal onClose={handleCloseModal} className={styles.modalSize} title="Детали ингдредиeнта">
-              <IngredientDetails />
-            </Modal>
-          )
-        }
+
       </div>
     </article>
   );
 }
 
 BurgerIngredients.propTypes = {
-  isVisible: PropTypes.bool.isRequired,
   handleModal: PropTypes.func.isRequired,
-  handleCloseModal: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;
