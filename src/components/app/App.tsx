@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import {
+  Routes, Route, useLocation, useNavigate,
+} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import MoonLoader from 'react-spinners/MoonLoader';
 import styles from './App.module.css';
-import { getIngredients } from '../../services/actions/ingredients';
+import { getIngredients, setCurrentItemClose } from '../../services/actions/ingredients';
 import MainPage from '../../pages/main-page/main-page';
 import SignIn from '../../pages/sign-in/sign-in';
 import RegisterPage from '../../pages/register-page/register-page';
@@ -19,7 +21,13 @@ function App() {
   const { isLoading } = useSelector((state: any) => state.ingredientsStore);
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
   const state = location.state as { backgroundLocation?: Location };
+
+  const handleCloseModal = () => {
+    dispatch(setCurrentItemClose());
+    navigate(-1);
+  };
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -50,14 +58,6 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route
-          path="/:id"
-          element={(
-            <Modal title="Детали ингредиента">
-              <IngredientDetails />
-            </Modal>
-                  )}
-        />
-        <Route
           path="/profile"
           element={(
             <ProtectedRouteElement element={<ProfileMainPage />} />
@@ -82,7 +82,7 @@ function App() {
           <Route
             path="/:id"
             element={(
-              <Modal title="Детали ингредиента">
+              <Modal onClose={handleCloseModal} title="Детали ингредиента">
                 <IngredientDetails />
               </Modal>
                   )}
@@ -94,9 +94,3 @@ function App() {
 }
 
 export default App;
-
-// {/* {state?.backgroundLocation && ( */}
-// {/*  <Routes> */}
-// {/*    <Route path="/:id" element={<Modal />} /> */}
-// {/*  </Routes> */}
-// {/* )} */}
