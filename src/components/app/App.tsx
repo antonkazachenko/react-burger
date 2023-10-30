@@ -6,17 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import MoonLoader from 'react-spinners/MoonLoader';
 import styles from './App.module.css';
 import { getIngredients, setCurrentItemClose } from '../../services/actions/ingredients';
-import MainPage from '../../pages/main-page/main-page';
-import SignIn from '../../pages/sign-in/sign-in';
-import RegisterPage from '../../pages/register-page/register-page';
-import ForgotPasswordPage from '../../pages/forgot-password-page/forgot-password-page';
-import ResetPasswordPage from '../../pages/reset-password-page/reset-password-page';
-import ProfileMainPage from '../../pages/profile-main-page/profile-main-page';
-import ProtectedRouteElement from '../protected-route-element/protected-route-element';
-import ProfileOrdersPage from '../../pages/profile-orders-page/profile-orders-page';
-import IngredientDetails from '../ingredient-details/ingredient-details';
+import {
+  MainPage, SignIn, RegisterPage, ForgotPasswordPage, ResetPasswordPage,
+  NonModalIngredientPage, ProfileMainPage, ProfileOrdersPage,
+} from '../../pages';
 import Modal from '../modal/modal';
-import NonModalIngredientPage from '../../pages/non-modal-ingredient-page/non-modal-ingredient-page';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import ProtectedRouteElement from '../protected-route-element/protected-route-element';
 
 function App() {
   const { isLoading } = useSelector((state: any) => state.ingredientsStore);
