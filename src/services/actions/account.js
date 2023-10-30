@@ -147,8 +147,7 @@ export function getUserRequest() {
           });
         }
       })
-      .catch((e) => {
-        console.log(e);
+      .catch(() => {
         dispatch({
           type: GET_USER__FAILURE,
         });
@@ -220,17 +219,17 @@ export function logoutRequest() {
   };
 }
 
-export function resetPasswordRequest(password) {
+export function resetPasswordRequest(password, token) {
   return function (dispatch) {
     dispatch({
       type: RESET_PASSWORD__REQUEST,
     });
-    fetchWithRefresh('/password-reset', {
+    fetchWithRefresh('/password-reset/reset', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ password, token: getCookie('accessToken') }),
+      body: JSON.stringify({ password, token }),
     }, refreshTokenRequest, dispatch)
       .then((res) => {
         if (res.success) {
@@ -265,7 +264,6 @@ export function loginRequest(email, password) {
       body: JSON.stringify({ email, password }),
     }, refreshTokenRequest, dispatch)
       .then((res) => {
-        console.log(res);
         if (res.success) {
           setCookie('refreshToken', res.refreshToken);
           setCookie('accessToken', res.accessToken);
@@ -279,8 +277,7 @@ export function loginRequest(email, password) {
           });
         }
       })
-      .catch((e) => {
-        console.log(e);
+      .catch(() => {
         dispatch({
           type: LOGIN__FAILURE,
         });

@@ -15,3 +15,8 @@
 .activeColor {
     color: #F2F2F3;
 }
+
+.app {
+    margin: 0 auto;
+    max-width: 1240px;
+}

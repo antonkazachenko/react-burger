@@ -21,6 +21,7 @@
 }
 
 .navBar {
+    background-color: #1C1C21;
     composes: flexCentered;
     justify-content: space-between;
 }
@@ -35,4 +36,17 @@
 
 .linkDecoration {
     text-decoration: none;
+}
+
+.app {
+    margin: 0 auto;
+    max-width: 1240px;
+}
+
+.bg {
+    background-color: #1C1C21;
+}
+
+.logo {
+    margin-left: 1.5%;
 }

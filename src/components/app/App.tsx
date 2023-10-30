@@ -40,40 +40,38 @@ function App() {
   }
 
   return (
-    <div className={styles.app}>
-      {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
-      <Routes location={state?.backgroundLocation || location}>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route
-          path="/profile"
-          element={(
-            <ProtectedRouteElement element={<ProfileMainPage />} />
+    <Routes location={state?.backgroundLocation || location}>
+      <Route path="/" element={<MainPage />} />
+      <Route path="/login" element={<SignIn />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/reset-password" element={<ResetPasswordPage />} />
+      <Route
+        path="/profile"
+        element={(
+          <ProtectedRouteElement element={<ProfileMainPage />} />
             )}
-        />
-        <Route
-          path="/profile/orders"
-          element={(
-            <ProtectedRouteElement element={<ProfileOrdersPage />} />
+      />
+      <Route
+        path="/profile/orders"
+        element={(
+          <ProtectedRouteElement element={<ProfileOrdersPage />} />
             )}
-        />
-        <Route
-          path="/profile/orders/:id"
-          element={(
-            <ProtectedRouteElement element={<ProfileMainPage />} />
+      />
+      <Route
+        path="/profile/orders/:id"
+        element={(
+          <ProtectedRouteElement element={<ProfileMainPage />} />
             )}
-        />
-      </Routes>
-      {/* {state?.backgroundLocation && ( */}
-      {/*  <Routes> */}
-      {/*    <Route path="/:id" element={<Modal />} /> */}
-      {/*  </Routes> */}
-      {/* )} */}
-    </div>
+      />
+    </Routes>
   );
 }
 
 export default App;
+
+// {/* {state?.backgroundLocation && ( */}
+// {/*  <Routes> */}
+// {/*    <Route path="/:id" element={<Modal />} /> */}
+// {/*  </Routes> */}
+// {/* )} */}

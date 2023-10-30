@@ -15,18 +15,20 @@ function MainPage() {
     <>
       <AppHeader />
       { /* eslint-disable-next-line react/jsx-no-constructed-context-values */ }
-      <DndProvider backend={HTML5Backend}>
-        <main>
-          <div className={styles.tabWidth}>
-            <BurgerIngredientsWithModal />
-          </div>
-          <div className={styles.tabWidth}>
-            <BurgerConstructorWithModal
-              className={`mt-25 ml-10 ${styles.flexColumn}`}
-            />
-          </div>
-        </main>
-      </DndProvider>
+      <div className={styles.app}>
+        <DndProvider backend={HTML5Backend}>
+          <main>
+            <div className={styles.tabWidth}>
+              <BurgerIngredientsWithModal />
+            </div>
+            <div className={styles.tabWidth}>
+              <BurgerConstructorWithModal
+                className={`mt-25 ml-10 ${styles.flexColumn}`}
+              />
+            </div>
+          </main>
+        </DndProvider>
+      </div>
     </>
   );
 }

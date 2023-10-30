@@ -11,3 +11,8 @@ main {
 .tabWidth {
     width: 50%;
 }
+
+.app {
+    margin: 0 auto;
+    max-width: 1240px;
+}

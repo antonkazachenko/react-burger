@@ -17,8 +17,8 @@ function ResetPasswordPage() {
   const { success } = useSelector((store) => store.accountStore.passwordResetRequest);
   const { user } = useSelector((state) => state.accountStore);
 
-  const handleOnClick = async () => {
-    dispatch(resetPasswordRequest(password));
+  const handleOnClick = () => {
+    dispatch(resetPasswordRequest(password, emailCode));
   };
 
   React.useEffect(() => {
