@@ -1,9 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import styles from '../modal/modal.module.css';
 
 function IngredientDetails() {
-  const data = useSelector((store) => store.ingredientsStore.currentItem);
+  const { id } = useParams();
+  const data = useSelector((store) => store
+    // eslint-disable-next-line no-underscore-dangle
+    .ingredientsStore.ingredients.find((item) => item._id === id));
   return (
     <>
       <div className={styles.image}><img src={data.image_large} alt={data.name} /></div>

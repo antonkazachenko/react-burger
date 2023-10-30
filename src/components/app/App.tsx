@@ -12,6 +12,8 @@ import ResetPasswordPage from '../../pages/reset-password-page/reset-password-pa
 import ProfileMainPage from '../../pages/profile-main-page/profile-main-page';
 import ProtectedRouteElement from '../protected-route-element/protected-route-element';
 import ProfileOrdersPage from '../../pages/profile-orders-page/profile-orders-page';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import Modal from '../modal/modal';
 
 function App() {
   const { isLoading } = useSelector((state: any) => state.ingredientsStore);
@@ -40,31 +42,54 @@ function App() {
   }
 
   return (
-    <Routes location={state?.backgroundLocation || location}>
-      <Route path="/" element={<MainPage />} />
-      <Route path="/login" element={<SignIn />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-      <Route path="/reset-password" element={<ResetPasswordPage />} />
-      <Route
-        path="/profile"
-        element={(
-          <ProtectedRouteElement element={<ProfileMainPage />} />
-            )}
-      />
-      <Route
-        path="/profile/orders"
-        element={(
-          <ProtectedRouteElement element={<ProfileOrdersPage />} />
-            )}
-      />
-      <Route
-        path="/profile/orders/:id"
-        element={(
-          <ProtectedRouteElement element={<ProfileMainPage />} />
-            )}
-      />
-    </Routes>
+    <>
+      <Routes location={state?.backgroundLocation || location}>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/login" element={<SignIn />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route
+          path="/:id"
+          element={(
+            <Modal title="Детали ингредиента">
+              <IngredientDetails />
+            </Modal>
+                  )}
+        />
+        <Route
+          path="/profile"
+          element={(
+            <ProtectedRouteElement element={<ProfileMainPage />} />
+              )}
+        />
+        <Route
+          path="/profile/orders"
+          element={(
+            <ProtectedRouteElement element={<ProfileOrdersPage />} />
+              )}
+        />
+        <Route
+          path="/profile/orders/:id"
+          element={(
+            <ProtectedRouteElement element={<ProfileMainPage />} />
+              )}
+        />
+      </Routes>
+
+      {state?.backgroundLocation && (
+        <Routes>
+          <Route
+            path="/:id"
+            element={(
+              <Modal title="Детали ингредиента">
+                <IngredientDetails />
+              </Modal>
+                  )}
+          />
+        </Routes>
+      )}
+    </>
   );
 }
 
