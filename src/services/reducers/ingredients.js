@@ -145,6 +145,7 @@ const ingredientsReducer = (state = initialState, action) => {
         bunData: [],
         constructorIngredients: [],
         totalPrice: 0,
+        createdOrder: null,
       };
     }
     default: {

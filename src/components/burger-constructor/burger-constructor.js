@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button, ConstructorElement, CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -21,14 +21,14 @@ import {
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 
 function BurgerConstructor({
-  className, handleCloseModal, isVisible, handleModal,
+  className, handleCloseModal, handleModal,
 }) {
   const { isLoadingOrder } = useSelector((store) => store.ingredientsStore);
+  const [isVisible, setisVisible] = useState(false);
   const dispatch = useDispatch();
   const {
     constructorIngredients,
     bunData,
-    createdOrder,
   } = useSelector((store) => store.ingredientsStore);
   const { totalPrice } = useSelector((store) => store.ingredientsStore);
 
@@ -38,6 +38,7 @@ function BurgerConstructor({
   };
 
   const handleCloseModalWithReset = () => {
+    setisVisible(false);
     handleCloseModal();
     dispatch({ type: RESET_CONSTRUCTOR });
   };
@@ -82,6 +83,7 @@ function BurgerConstructor({
     // eslint-disable-next-line no-underscore-dangle
     ingredientsArray.push(bunData._id);
     // eslint-disable-next-line no-underscore-dangle
+    setisVisible(true);
     dispatch(createOrderRequest(ingredientsArray));
     handleModal();
   };
@@ -148,7 +150,7 @@ function BurgerConstructor({
           </Button>
         </div>
         {
-          isVisible && createdOrder
+          isVisible
           && (
           <Modal onClose={handleCloseModalWithReset} className={styles.modalWidth}>
             <OrderDetails />
@@ -163,7 +165,6 @@ function BurgerConstructor({
 BurgerConstructor.propTypes = {
   className: PropTypes.string.isRequired,
   handleCloseModal: PropTypes.func.isRequired,
-  isVisible: PropTypes.bool.isRequired,
 };
 
 export default BurgerConstructor;
