@@ -23,7 +23,6 @@ import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 function BurgerConstructor({
   className, handleCloseModal, handleModal,
 }) {
-  const { isLoadingOrder } = useSelector((store) => store.ingredientsStore);
   const [isVisible, setisVisible] = useState(false);
   const dispatch = useDispatch();
   const {
@@ -97,7 +96,6 @@ function BurgerConstructor({
   }
   return (
     <div className={className} ref={dropTarget}>
-      {isLoadingOrder && <div>Loading...</div>}
 
       <div className={`${styles.dragElement} ml-8 mb-4`}>
         <ConstructorElement
@@ -165,6 +163,7 @@ function BurgerConstructor({
 BurgerConstructor.propTypes = {
   className: PropTypes.string.isRequired,
   handleCloseModal: PropTypes.func.isRequired,
+  handleModal: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;

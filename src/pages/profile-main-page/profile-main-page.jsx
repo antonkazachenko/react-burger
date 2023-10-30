@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './profile-main-page.module.css';
 import AppHeader from '../../components/app-header/app-header';
 import { logoutRequest } from '../../services/actions/account';
 
 function ProfileMainPage() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const { user } = useSelector((store) => store.accountStore);
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
   const [password, setPass] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
