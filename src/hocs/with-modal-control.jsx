@@ -6,22 +6,23 @@ import {
   setCurrentItemOpen,
   setCurrentItemClose,
 } from '../services/actions/ingredients';
+import useModal from '../hooks/useModal';
 
 function withModalControl(Component) {
   return function WithModalControl(props) {
     const dispatch = useDispatch();
-    const [isVisible, setIsVisible] = React.useState(false);
+    const { isModalOpen, openModal, closeModal } = useModal();
     const [modalData] = React.useState(null);
     const navigate = useNavigate();
 
     const handleModal = (item) => {
-      setIsVisible(true);
+      openModal();
       if (item && item.data) {
         dispatch(setCurrentItemOpen(item.data));
       }
     };
     const handleCloseModal = () => {
-      setIsVisible(false);
+      closeModal();
       dispatch(setCurrentItemClose());
       if (window.location.pathname !== '/') {
         navigate('/');
@@ -32,7 +33,7 @@ function withModalControl(Component) {
       <Component
       /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...props}
-        isVisible={isVisible}
+        isVisible={isModalOpen}
         modalData={modalData}
         handleModal={handleModal}
         handleCloseModal={handleCloseModal}
