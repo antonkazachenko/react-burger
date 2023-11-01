@@ -7,17 +7,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './reset-password-page.module.css';
 // eslint-disable-next-line import/named
 import { getUserRequest, resetPasswordRequest, resetPasswordReset } from '../../services/actions/account';
+import useForm from '../../hooks/useForm';
 
 function ResetPasswordPage() {
-  const [password, setPassword] = React.useState('');
-  const [emailCode, setEmailCode] = React.useState('');
+  const { values, handleChange } = useForm({ password: '', emailCode: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { success } = useSelector((store) => store.accountStore.passwordResetRequest);
   const { user } = useSelector((state) => state.accountStore);
 
-  const handleOnClick = () => {
-    dispatch(resetPasswordRequest(password, emailCode));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(resetPasswordRequest(values.password, values.emailCode));
   };
 
   React.useEffect(() => {
@@ -33,31 +34,33 @@ function ResetPasswordPage() {
     <div className={styles.forgotPasswordWindow}>
       <div className={styles.forgotPasswordBox}>
         <div className="text text_type_main-medium">Восстановление пароля</div>
-        <PasswordInput
-          value={password}
-          name="password"
-          placeholder="Введите новый пароль"
-          extraClass="ml-1 mt-6"
+        <form onSubmit={handleSubmit}>
+          <PasswordInput
+            value={values.password}
+            name="password"
+            placeholder="Введите новый пароль"
+            extraClass="ml-1 mt-6"
+          /* eslint-disable-next-line @typescript-eslint/no-empty-function */
+            onChange={handleChange}
+          />
+          <Input
+            type="text"
+            placeholder="Введите код из письма"
             /* eslint-disable-next-line @typescript-eslint/no-empty-function */
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Input
-          type="text"
-          placeholder="Введите код из письма"
-            /* eslint-disable-next-line @typescript-eslint/no-empty-function */
-          onChange={(e) => setEmailCode(e.target.value)}
-          value={emailCode}
-          name="name"
-          error={false}
-          errorText="Ошибка"
-          size="default"
-          extraClass="ml-1 mt-6"
-        />
-        <div className="mt-6">
-          <Button htmlType="button" type="primary" size="medium" onClick={handleOnClick}>
-            Восстановить
-          </Button>
-        </div>
+            onChange={handleChange}
+            value={values.emailCode}
+            name="emailCode"
+            error={false}
+            errorText="Ошибка"
+            size="default"
+            extraClass="ml-1 mt-6"
+          />
+          <div className={`mt-6 ${styles.resetBtn}`}>
+            <Button htmlType="submit" type="primary" size="medium">
+              Восстановить
+            </Button>
+          </div>
+        </form>
         <div className={`mt-20 text text_type_main-default text_color_inactive ${styles.forgotPasswordLinkBox}`}>
           <div>
             Вспомнили пароль?

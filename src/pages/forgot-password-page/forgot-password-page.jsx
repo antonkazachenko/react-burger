@@ -7,16 +7,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './forgot-password-page.module.css';
 import { emailCheckRequest, emailCheckReset, getUserRequest } from '../../services/actions/account';
+import useForm from '../../hooks/useForm';
 
 function ForgotPasswordPage() {
-  const [value, setValue] = React.useState('');
+  const { values, handleChange } = useForm({ email: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { success } = useSelector((store) => store.accountStore.emailCheckRequest);
   const { user } = useSelector((state) => state.accountStore);
 
-  const handleOnClick = () => {
-    dispatch(emailCheckRequest(value));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(emailCheckRequest(values.email));
     navigate('/reset-password', { replace: true });
   };
 
@@ -32,20 +34,22 @@ function ForgotPasswordPage() {
     <div className={styles.forgotPasswordWindow}>
       <div className={styles.forgotPasswordBox}>
         <div className="text text_type_main-medium">Восстановление пароля</div>
-        <EmailInput
-            /* eslint-disable-next-line @typescript-eslint/no-empty-function */
-          onChange={(e) => setValue(e.target.value)}
-          value={value}
-          name="email"
-          isIcon={false}
-          placeholder="Укажите e-mail"
-          extraClass="ml-1 mt-6"
-        />
-        <div className="mt-6">
-          <Button htmlType="button" type="primary" size="medium" onClick={handleOnClick}>
-            Восстановить
-          </Button>
-        </div>
+        <form onSubmit={handleSubmit}>
+          <EmailInput
+          /* eslint-disable-next-line @typescript-eslint/no-empty-function */
+            onChange={handleChange}
+            value={values.email}
+            name="email"
+            isIcon={false}
+            placeholder="Укажите e-mail"
+            extraClass="ml-1 mt-6"
+          />
+          <div className={`mt-6 ${styles.resetBtn}`}>
+            <Button htmlType="submit" type="primary" size="medium">
+              Восстановить
+            </Button>
+          </div>
+        </form>
         <div className={`mt-20 text text_type_main-default text_color_inactive ${styles.forgotPasswordLinkBox}`}>
           <div>
             Вспомнили пароль?
