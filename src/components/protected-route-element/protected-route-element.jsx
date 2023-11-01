@@ -1,45 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
-import MoonLoader from 'react-spinners/MoonLoader';
-import { getUserRequest } from '../../services/actions/account';
-import styles from '../app/App.module.css';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate, useLocation } from 'react-router-dom';
 
-export function ProtectedRouteElement({ element }) {
-  const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
-  const { name } = useSelector((state) => state.accountStore.user);
+export default function ProtectedRouteElement({ element, anonymous = false }) {
+  const name = useSelector((store) => store.accountStore.user.name);
 
-  useEffect(() => {
-    dispatch(getUserRequest())
-      .then(() => {
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  }, [dispatch]);
+  const location = useLocation();
+  const from = location.state?.from || '/';
 
-  if (loading) {
-    return (
-      <div className={styles.spinner}>
-        <MoonLoader
-          color="rgb(133, 133, 173, 1)"
-          cssOverride={{}}
-          loading
-          size={100}
-          speedMultiplier={1}
-        />
-      </div>
-    );
+  if (anonymous && name) {
+    return <Navigate to={from} />;
   }
 
-  return name !== '' ? element : <Navigate to="/login" replace />;
+  if (!anonymous && !name) {
+    return <Navigate to="/login" state={{ from: location }} />;
+  }
+
+  return element;
 }
-
-ProtectedRouteElement.propTypes = {
-  element: PropTypes.element.isRequired,
-};
-
-export default ProtectedRouteElement;

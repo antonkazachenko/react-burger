@@ -52,10 +52,10 @@ function App() {
       <AppHeader />
       <Routes location={state?.backgroundLocation || location}>
         <Route path="/" element={<MainPage />} />
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/login" element={<ProtectedRouteElement element={<SignIn />} anonymous />} />
+        <Route path="/register" element={<ProtectedRouteElement element={<RegisterPage />} anonymous />} />
+        <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPasswordPage />} anonymous />} />
+        <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPasswordPage />} anonymous />} />
         <Route
           path="/ingredients/:id"
           element={(<NonModalIngredientPage />)}
