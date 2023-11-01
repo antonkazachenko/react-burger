@@ -102,18 +102,12 @@ export function refreshTokenRequest() {
       body: JSON.stringify(getCookie('refreshToken')),
     })
       .then((res) => {
-        if (res.success) {
-          setCookie('refreshToken', res.refreshToken);
-          setCookie('accessToken', res.accessToken);
-          dispatch({
-            type: REFRESH_TOKEN__SUCCESS,
-            payload: res,
-          });
-        } else {
-          dispatch({
-            type: REFRESH_TOKEN__FAILURE,
-          });
-        }
+        setCookie('refreshToken', res.refreshToken);
+        setCookie('accessToken', res.accessToken);
+        dispatch({
+          type: REFRESH_TOKEN__SUCCESS,
+          payload: res,
+        });
       })
       .catch(() => {
         dispatch({
@@ -136,16 +130,10 @@ export function getUserRequest() {
       },
     }, refreshTokenRequest, dispatch)
       .then((res) => {
-        if (res.success) {
-          dispatch({
-            type: GET_USER__SUCCESS,
-            payload: res,
-          });
-        } else {
-          dispatch({
-            type: GET_USER__FAILURE,
-          });
-        }
+        dispatch({
+          type: GET_USER__SUCCESS,
+          payload: res,
+        });
       })
       .catch(() => {
         dispatch({
@@ -168,16 +156,10 @@ export const profileUpdateRequest = (name, email, password) => (dispatch) => {
     body: JSON.stringify({ name, email, password }),
   }, refreshTokenRequest, dispatch)
     .then((res) => {
-      if (res.success) {
-        dispatch({
-          type: PROFILE_UPDATE__SUCCESS,
-          payload: res,
-        });
-      } else {
-        dispatch({
-          type: PROFILE_UPDATE__FAILURE,
-        });
-      }
+      dispatch({
+        type: PROFILE_UPDATE__SUCCESS,
+        payload: res,
+      });
     })
     .catch(() => {
       dispatch({
@@ -198,18 +180,12 @@ export function logoutRequest() {
       },
       body: JSON.stringify({ token: getCookie('refreshToken') }),
     })
-      .then((res) => {
+      .then(() => {
         deleteCookie('refreshToken');
         deleteCookie('accessToken');
-        if (res.success) {
-          dispatch({
-            type: LOGOUT__SUCCESS,
-          });
-        } else {
-          dispatch({
-            type: LOGOUT__FAILURE,
-          });
-        }
+        dispatch({
+          type: LOGOUT__SUCCESS,
+        });
       })
       .catch(() => {
         dispatch({
@@ -231,17 +207,11 @@ export function resetPasswordRequest(password, token) {
       },
       body: JSON.stringify({ password, token }),
     }, refreshTokenRequest, dispatch)
-      .then((res) => {
-        if (res.success) {
-          dispatch({
-            type: RESET_PASSWORD__SUCCESS,
-            payload: password,
-          });
-        } else {
-          dispatch({
-            type: RESET_PASSWORD__FAILURE,
-          });
-        }
+      .then(() => {
+        dispatch({
+          type: RESET_PASSWORD__SUCCESS,
+          payload: password,
+        });
       })
       .catch(() => {
         dispatch({
@@ -264,18 +234,12 @@ export function loginRequest(email, password) {
       body: JSON.stringify({ email, password }),
     }, refreshTokenRequest, dispatch)
       .then((res) => {
-        if (res.success) {
-          setCookie('refreshToken', res.refreshToken);
-          setCookie('accessToken', res.accessToken);
-          dispatch({
-            type: LOGIN__SUCCESS,
-            payload: res,
-          });
-        } else {
-          dispatch({
-            type: LOGIN__FAILURE,
-          });
-        }
+        setCookie('refreshToken', res.refreshToken);
+        setCookie('accessToken', res.accessToken);
+        dispatch({
+          type: LOGIN__SUCCESS,
+          payload: res,
+        });
       })
       .catch(() => {
         dispatch({
@@ -297,16 +261,10 @@ export function emailCheckRequest(email) {
       },
       body: JSON.stringify({ email }),
     })
-      .then((res) => {
-        if (res.success) {
-          dispatch({
-            type: EMAIL_CHECK__SUCCESS,
-          });
-        } else {
-          dispatch({
-            type: EMAIL_CHECK__FAILURE,
-          });
-        }
+      .then(() => {
+        dispatch({
+          type: EMAIL_CHECK__SUCCESS,
+        });
       })
       .catch(() => {
         dispatch({
@@ -329,18 +287,12 @@ export function registerRequest(email, password, name) {
       body: JSON.stringify({ email, password, name }),
     })
       .then((res) => {
-        if (res.success) {
-          setCookie('refreshToken', res.refreshToken);
-          setCookie('accessToken', res.accessToken);
-          dispatch({
-            type: REGISTER__SUCCESS,
-            payload: res,
-          });
-        } else {
-          dispatch({
-            type: REGISTER__FAILURE,
-          });
-        }
+        setCookie('refreshToken', res.refreshToken);
+        setCookie('accessToken', res.accessToken);
+        dispatch({
+          type: REGISTER__SUCCESS,
+          payload: res,
+        });
       })
       .catch(() => {
         dispatch({

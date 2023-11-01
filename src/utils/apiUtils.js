@@ -4,7 +4,17 @@ import { setCookie } from './cookie';
 const checkResponse = (res) => (res.ok ? res.json() : res.json()
   .then((err) => Promise.reject(err)));
 
-const request = (url, options) => fetch(`${BASE_URL}${url}`, options).then(checkResponse);
+const checkSuccess = (res) => {
+  if (res && res.success) {
+    return res;
+  }
+  // eslint-disable-next-line prefer-promise-reject-errors
+  return Promise.reject(`Ответ не success: ${res}`);
+};
+
+const request = (endpoint, options) => fetch(`${BASE_URL}${endpoint}`, options)
+  .then(checkResponse)
+  .then(checkSuccess);
 
 export const fetchWithRefresh = async (url, options, refreshToken, dispatch) => {
   try {

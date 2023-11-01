@@ -14,21 +14,19 @@ function ForgotPasswordPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { success } = useSelector((store) => store.accountStore.emailCheckRequest);
-  const { user } = useSelector((state) => state.accountStore);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(emailCheckRequest(values.email));
-    navigate('/reset-password', { replace: true });
   };
 
   React.useEffect(() => {
     dispatch(getUserRequest());
-    if (user.name !== '') {
+    if (success) {
       dispatch(emailCheckReset());
-      navigate('/', { replace: true });
+      navigate('/reset-password', { replace: true });
     }
-  }, [success, navigate, dispatch, user.name]);
+  }, [success, navigate, dispatch]);
 
   return (
     <div className={styles.forgotPasswordWindow}>
