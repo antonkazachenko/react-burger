@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Button, Input, PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './reset-password-page.module.css';
 // eslint-disable-next-line import/named
@@ -13,6 +13,8 @@ function ResetPasswordPage() {
   const { values, handleChange } = useForm({ password: '', emailCode: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || '/';
   const { success } = useSelector((store) => store.accountStore.passwordResetRequest);
   const { user } = useSelector((state) => state.accountStore);
 
@@ -25,11 +27,13 @@ function ResetPasswordPage() {
     dispatch(getUserRequest());
     if (user.name !== '') {
       navigate('/', { replace: true });
+    } else if (from !== '/forgot-password') {
+      navigate(from, { replace: true });
     } else if (success) {
       dispatch(resetPasswordReset());
       navigate('/login', { replace: true });
     }
-  }, [success, navigate, dispatch, user.name]);
+  }, [success, navigate, dispatch, user.name, from]);
   return (
     <div className={styles.forgotPasswordWindow}>
       <div className={styles.forgotPasswordBox}>

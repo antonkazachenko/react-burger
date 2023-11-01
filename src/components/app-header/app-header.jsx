@@ -3,7 +3,7 @@ import {
   BurgerIcon, ListIcon, Logo, ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import styles from './app-header.module.css';
 import { getUserRequest } from '../../services/actions/account';
 
@@ -67,7 +67,9 @@ function AppHeader() {
             </div>
           </nav>
           <div className={styles.logo}>
-            <Logo />
+            <Link to="/">
+              <Logo />
+            </Link>
           </div>
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
           <nav onClick={handleAccountClick} className={`${styles.linkDecoration} ${styles.flexCentered} ${styles.navTab} ${styles.navRight} ${styles.navLink} mt-4 mb-4 p-5`}>

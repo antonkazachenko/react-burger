@@ -19,7 +19,7 @@ main {
 
 .spinner {
   display: flex;
-  height: 80vh;
+  height: 100vh;
   justify-content: center;
   align-items: center;
 }

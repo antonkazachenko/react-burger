@@ -24,7 +24,7 @@ function ForgotPasswordPage() {
     dispatch(getUserRequest());
     if (success) {
       dispatch(emailCheckReset());
-      navigate('/reset-password', { replace: true });
+      navigate('/reset-password', { state: { from: '/forgot-password' }, replace: true });
     }
   }, [success, navigate, dispatch]);
 
