@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './profile-main-page.module.css';
 import { logoutRequest } from '../../services/actions/account';
+import useForm from '../../hooks/useForm';
 
 function ProfileMainPage() {
   const { user } = useSelector((store) => store.accountStore);
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
-  const [password, setPass] = useState('');
+  const { values, handleChange } = useForm({ name: user.name, email: user.email, password: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -55,30 +54,32 @@ function ProfileMainPage() {
           </div>
         </div>
         <div className="mt-30 ml-15">
-          <Input
-            type="text"
-            placeholder="Имя"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-            name="name"
-            error={false}
-            errorText="Ошибка"
-            size="default"
-            extraClass="ml-1 mt-6"
-          />
-          <EmailInput
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            name="email"
-            isIcon={false}
-            extraClass="ml-1 mt-6"
-          />
-          <PasswordInput
-            value={password}
-            name="password"
-            extraClass="ml-1 mt-6"
-            onChange={(e) => setPass(e.target.value)}
-          />
+          <form>
+            <Input
+              type="text"
+              placeholder="Имя"
+              onChange={handleChange}
+              value={values.name}
+              name="name"
+              error={false}
+              errorText="Ошибка"
+              size="default"
+              extraClass="ml-1 mt-6"
+            />
+            <EmailInput
+              onChange={handleChange}
+              value={values.email}
+              name="email"
+              isIcon={false}
+              extraClass="ml-1 mt-6"
+            />
+            <PasswordInput
+              value={values.password}
+              name="password"
+              extraClass="ml-1 mt-6"
+              onChange={handleChange}
+            />
+          </form>
         </div>
       </div>
     </div>
