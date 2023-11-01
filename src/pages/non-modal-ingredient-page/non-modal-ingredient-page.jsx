@@ -2,7 +2,6 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styles from './non-modal-ingredient-page.module.css';
-import AppHeader from '../../components/app-header/app-header';
 
 function NonModalIngredientPage() {
   const { id } = useParams();
@@ -12,7 +11,6 @@ function NonModalIngredientPage() {
 
   return (
     <>
-      <AppHeader />
       <div className={`mt-30 ${styles.flex}`}>
         <div className={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
           <h2 className="text text_type_main-large">Детали ингредиента</h2>

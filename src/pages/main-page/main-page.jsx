@@ -5,7 +5,6 @@ import styles from './main-page.module.css';
 import withModalControl from '../../hocs/with-modal-control';
 import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
-import AppHeader from '../../components/app-header/app-header';
 
 const BurgerIngredientsWithModal = withModalControl(BurgerIngredients);
 const BurgerConstructorWithModal = withModalControl(BurgerConstructor);
@@ -13,7 +12,6 @@ const BurgerConstructorWithModal = withModalControl(BurgerConstructor);
 function MainPage() {
   return (
     <>
-      <AppHeader />
       { /* eslint-disable-next-line react/jsx-no-constructed-context-values */ }
       <div className={styles.app}>
         <DndProvider backend={HTML5Backend}>

@@ -13,6 +13,7 @@ import {
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import ProtectedRouteElement from '../protected-route-element/protected-route-element';
+import AppHeader from '../app-header/app-header';
 
 function App() {
   const { isLoading } = useSelector((state: any) => state.ingredientsStore);
@@ -48,6 +49,7 @@ function App() {
 
   return (
     <>
+      <AppHeader />
       <Routes location={state?.backgroundLocation || location}>
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<SignIn />} />
