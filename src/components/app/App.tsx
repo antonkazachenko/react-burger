@@ -1,20 +1,31 @@
 import React, { useEffect } from 'react';
+import {
+  Routes, Route, useLocation, useNavigate,
+} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import MoonLoader from 'react-spinners/MoonLoader';
 import styles from './App.module.css';
+import { getIngredients, setCurrentItemClose } from '../../services/actions/ingredients';
+import {
+  MainPage, SignIn, RegisterPage, ForgotPasswordPage, ResetPasswordPage,
+  NonModalIngredientPage, ProfileMainPage, ProfileOrdersPage,
+} from '../../pages';
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import ProtectedRouteElement from '../protected-route-element/protected-route-element';
 import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import withModalControl from '../../hocs/with-modal-control';
-import { getIngredients } from '../../services/actions/ingredients';
-
-const BurgerIngredientsWithModal = withModalControl(BurgerIngredients);
-const BurgerConstructorWithModal = withModalControl(BurgerConstructor);
 
 function App() {
   const { isLoading } = useSelector((state: any) => state.ingredientsStore);
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const state = location.state as { backgroundLocation?: Location };
+
+  const handleCloseModal = () => {
+    dispatch(setCurrentItemClose());
+    navigate(-1);
+  };
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -23,26 +34,65 @@ function App() {
   }, [dispatch]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className={styles.spinner}>
+        <MoonLoader
+          color="rgb(133, 133, 173, 1)"
+          cssOverride={{}}
+          loading
+          size={100}
+          speedMultiplier={1}
+        />
+      </div>
+    );
   }
 
   return (
-    <div className={styles.app}>
+    <>
       <AppHeader />
-      {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
-      <DndProvider backend={HTML5Backend}>
-        <main>
-          <div className={styles.tabWidth}>
-            <BurgerIngredientsWithModal />
-          </div>
-          <div className={styles.tabWidth}>
-            <BurgerConstructorWithModal
-              className={`mt-25 ml-10 ${styles.flexColumn}`}
-            />
-          </div>
-        </main>
-      </DndProvider>
-    </div>
+      <Routes location={state?.backgroundLocation || location}>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/login" element={<ProtectedRouteElement element={<SignIn />} anonymous />} />
+        <Route path="/register" element={<ProtectedRouteElement element={<RegisterPage />} anonymous />} />
+        <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPasswordPage />} anonymous />} />
+        <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPasswordPage />} anonymous />} />
+        <Route
+          path="/ingredients/:id"
+          element={(<NonModalIngredientPage />)}
+        />
+        <Route
+          path="/profile"
+          element={(
+            <ProtectedRouteElement element={<ProfileMainPage />} />
+              )}
+        />
+        <Route
+          path="/profile/orders"
+          element={(
+            <ProtectedRouteElement element={<ProfileOrdersPage />} />
+              )}
+        />
+        <Route
+          path="/profile/orders/:id"
+          element={(
+            <ProtectedRouteElement element={<ProfileMainPage />} />
+              )}
+        />
+      </Routes>
+
+      {state?.backgroundLocation && (
+        <Routes>
+          <Route
+            path="/ingredients/:id"
+            element={(
+              <Modal onClose={handleCloseModal} title="Детали ингредиента">
+                <IngredientDetails />
+              </Modal>
+                  )}
+          />
+        </Routes>
+      )}
+    </>
   );
 }
 

@@ -1,12 +1,28 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import MoonLoader from 'react-spinners/MoonLoader';
 import styles from './order-details.module.css';
 import { ReactComponent as OrderConfirmationTick } from '../../images/orderConfirmedTick.svg';
-import ingredientType from '../../utils/types';
 
 function OrderDetails() {
   const { createdOrder } = useSelector((store) => store.ingredientsStore);
+
+  if (!createdOrder) {
+    return (
+      <div className={`${styles.orderDetails}`}>
+        <div className={`${styles.spinner}`}>
+          <MoonLoader
+            color="rgb(133, 133, 173, 1)"
+            cssOverride={{}}
+            loading
+            size={100}
+            speedMultiplier={1}
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`${styles.orderDetails}`}>
       <div>

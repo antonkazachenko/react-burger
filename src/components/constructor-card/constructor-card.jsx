@@ -6,10 +6,9 @@ import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import styles from './constructor-card.module.css';
 
-function ConstructorCard(props) {
-  const {
-    item, className, price, onClick,
-  } = props;
+function ConstructorCard({
+  item, className, price, onClick,
+}) {
   const ingredientCount = useSelector((store) => {
     if (item.type !== 'bun') {
       return store.ingredientsStore.constructorIngredients

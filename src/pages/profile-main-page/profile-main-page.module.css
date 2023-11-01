@@ -1,0 +1,22 @@
+.menuTab {
+    height: 64px;
+    display: flex;
+    align-items: center;
+}
+
+.flex {
+    display: flex;
+}
+
+.linkDecoration {
+    text-decoration: none;
+}
+
+.activeColor {
+    color: #F2F2F3;
+}
+
+.app {
+    margin: 0 auto;
+    max-width: 1240px;
+}

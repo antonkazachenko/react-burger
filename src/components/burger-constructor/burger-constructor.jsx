@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button, ConstructorElement, CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
+import { useNavigate } from 'react-router-dom';
 import styles from './burger-constructor.module.css';
 import OrderDetails from '../order-details/order-details';
-// eslint-disable-next-line import/named
 import Modal from '../modal/modal';
 import {
   createOrderRequest,
@@ -21,15 +20,16 @@ import {
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 
 function BurgerConstructor({
-  className, handleCloseModal, isVisible, handleModal,
+  className, handleCloseModal, handleModal,
 }) {
-  const { isLoadingOrder } = useSelector((store) => store.ingredientsStore);
+  const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
     constructorIngredients,
     bunData,
-    createdOrder,
   } = useSelector((store) => store.ingredientsStore);
+  const { name } = useSelector((store) => store.accountStore.user);
   const { totalPrice } = useSelector((store) => store.ingredientsStore);
 
   const handleIngredientRemoval = (id) => {
@@ -38,6 +38,7 @@ function BurgerConstructor({
   };
 
   const handleCloseModalWithReset = () => {
+    setIsVisible(false);
     handleCloseModal();
     dispatch({ type: RESET_CONSTRUCTOR });
   };
@@ -72,6 +73,9 @@ function BurgerConstructor({
   }, [bunData, constructorIngredients, dispatch]);
 
   const createOrder = () => {
+    if (!name) {
+      navigate('/login', { replace: true });
+    }
     const ingredientsArray = [];
     // eslint-disable-next-line no-underscore-dangle
     ingredientsArray.push(bunData._id);
@@ -82,10 +86,10 @@ function BurgerConstructor({
     // eslint-disable-next-line no-underscore-dangle
     ingredientsArray.push(bunData._id);
     // eslint-disable-next-line no-underscore-dangle
+    setIsVisible(true);
     dispatch(createOrderRequest(ingredientsArray));
     handleModal();
   };
-  // TODO: add better loader
   if (bunData.length === 0) {
     return (
       <div className={styles.dropZone} ref={dropTarget}>
@@ -95,7 +99,6 @@ function BurgerConstructor({
   }
   return (
     <div className={className} ref={dropTarget}>
-      {isLoadingOrder && <div>Loading...</div>}
 
       <div className={`${styles.dragElement} ml-8 mb-4`}>
         <ConstructorElement
@@ -148,7 +151,7 @@ function BurgerConstructor({
           </Button>
         </div>
         {
-          isVisible && createdOrder
+          isVisible
           && (
           <Modal onClose={handleCloseModalWithReset} className={styles.modalWidth}>
             <OrderDetails />
@@ -163,7 +166,7 @@ function BurgerConstructor({
 BurgerConstructor.propTypes = {
   className: PropTypes.string.isRequired,
   handleCloseModal: PropTypes.func.isRequired,
-  isVisible: PropTypes.bool.isRequired,
+  handleModal: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;
