@@ -12,6 +12,11 @@
     align-items: center;
 }
 
+.registerBtn {
+    display: flex;
+    justify-content: center;
+}
+
 .registerLinkBox {
     display: flex;
     flex-direction: row;

@@ -7,17 +7,17 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './register-page.module.css';
 import { getUserRequest, registerRequest } from '../../services/actions/account';
+import useForm from '../../hooks/useForm';
 
 function RegisterPage() {
-  const [name, setName] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [password, setPass] = React.useState('');
+  const { values, handleChange } = useForm({ name: '', email: '', password: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.accountStore);
 
-  const handleOnClick = () => {
-    dispatch(registerRequest(email, password, name));
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    dispatch(registerRequest(values.email, values.password, values.name));
   };
 
   React.useEffect(() => {
@@ -31,37 +31,39 @@ function RegisterPage() {
     <div className={styles.registerWindow}>
       <div className={styles.registerBox}>
         <div className="text text_type_main-medium">Регистрация</div>
-        <Input
-          type="text"
-          placeholder="Имя"
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-          name="name"
-          error={false}
-          errorText="Ошибка"
-          size="default"
-          extraClass="ml-1 mt-6"
-        />
-        <EmailInput
+        <form onSubmit={handleOnSubmit}>
+          <Input
+            type="text"
+            placeholder="Имя"
+            onChange={handleChange}
+            value={values.name}
+            name="name"
+            error={false}
+            errorText="Ошибка"
+            size="default"
+            extraClass="ml-1 mt-6"
+          />
+          <EmailInput
             /* eslint-disable-next-line @typescript-eslint/no-empty-function */
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-          name="email"
-          isIcon={false}
-          extraClass="ml-1 mt-6"
-        />
-        <PasswordInput
-          value={password}
-          name="password"
-          extraClass="ml-1 mt-6"
+            onChange={handleChange}
+            value={values.email}
+            name="email"
+            isIcon={false}
+            extraClass="ml-1 mt-6"
+          />
+          <PasswordInput
+            value={values.password}
+            name="password"
+            extraClass="ml-1 mt-6"
             /* eslint-disable-next-line @typescript-eslint/no-empty-function */
-          onChange={(e) => setPass(e.target.value)}
-        />
-        <div className="mt-6">
-          <Button htmlType="button" type="primary" size="medium" onClick={handleOnClick}>
-            Зарегестрироваться
-          </Button>
-        </div>
+            onChange={handleChange}
+          />
+          <div className={`mt-6 ${styles.registerBtn}`}>
+            <Button htmlType="submit" type="primary" size="medium">
+              Зарегестрироваться
+            </Button>
+          </div>
+        </form>
         <div className={`mt-20 text text_type_main-default text_color_inactive ${styles.registerLinkBox}`}>
           <div>
             Уже зарегистрированы?
