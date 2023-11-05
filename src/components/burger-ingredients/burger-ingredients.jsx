@@ -48,8 +48,13 @@ function BurgerIngredients({ handleModal }) {
   );
 }
 
+BurgerIngredients.defaultProps = {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  handleModal: () => {},
+};
+
 BurgerIngredients.propTypes = {
-  handleModal: PropTypes.func.isRequired,
+  handleModal: PropTypes.func,
 };
 
 export default BurgerIngredients;

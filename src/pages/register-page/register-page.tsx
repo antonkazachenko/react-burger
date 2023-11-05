@@ -13,15 +13,18 @@ function RegisterPage() {
   const { values, handleChange } = useForm({ name: '', email: '', password: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.accountStore);
+  // TODO: remove any
+  const { user } = useSelector((state: any) => state.accountStore);
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(registerRequest(values.email, values.password, values.name));
+    // TODO: remove any
+    dispatch<any>(registerRequest(values.email, values.password, values.name));
   };
 
   React.useEffect(() => {
-    dispatch(getUserRequest());
+    // TODO: remove any
+    dispatch<any>(getUserRequest());
     if (user.name !== '') {
       navigate('/', { replace: true });
     }

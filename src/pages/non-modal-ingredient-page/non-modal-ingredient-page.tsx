@@ -3,11 +3,26 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styles from './non-modal-ingredient-page.module.css';
 
+type TItemType = {
+  _id: string;
+  name: string;
+  type: string;
+  proteins: number;
+  fat: number;
+  carbohydrates: number;
+  calories: number;
+  price: number;
+  image: string;
+  image_mobile: string;
+  image_large: string;
+  __v: number;
+}
+
 function NonModalIngredientPage() {
   const { id } = useParams();
-  const data = useSelector((store) => store
+  const data = useSelector((store: any) => store
   // eslint-disable-next-line no-underscore-dangle
-    .ingredientsStore.ingredients.find((item) => item._id === id));
+    .ingredientsStore.ingredients.find((item: TItemType) => item._id === id));
 
   return (
     <>

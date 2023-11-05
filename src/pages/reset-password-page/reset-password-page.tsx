@@ -15,16 +15,16 @@ function ResetPasswordPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || '/';
-  const { success } = useSelector((store) => store.accountStore.passwordResetRequest);
-  const { user } = useSelector((state) => state.accountStore);
+  const { success } = useSelector((store: any) => store.accountStore.passwordResetRequest);
+  const { user } = useSelector((state: any) => state.accountStore);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(resetPasswordRequest(values.password, values.emailCode));
+    dispatch<any>(resetPasswordRequest(values.password, values.emailCode));
   };
 
   React.useEffect(() => {
-    dispatch(getUserRequest());
+    dispatch<any>(getUserRequest());
     if (user.name !== '') {
       navigate('/', { replace: true });
     } else if (from !== '/forgot-password') {

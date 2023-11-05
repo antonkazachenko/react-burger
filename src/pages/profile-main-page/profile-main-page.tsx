@@ -7,12 +7,12 @@ import { logoutRequest } from '../../services/actions/account';
 import useForm from '../../hooks/useForm';
 
 function ProfileMainPage() {
-  const { user } = useSelector((store) => store.accountStore);
+  const { user } = useSelector((store: any) => store.accountStore);
   const { values, handleChange } = useForm({ name: user.name, email: user.email, password: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogout = () => {
-    dispatch(logoutRequest());
+    dispatch<any>(logoutRequest());
     navigate('/', { replace: true });
   };
 

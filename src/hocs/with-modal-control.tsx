@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -8,14 +7,24 @@ import {
 } from '../services/actions/ingredients';
 import useModal from '../hooks/useModal';
 
-function withModalControl(Component) {
+interface WithModalControlsReturn {
+  isVisible: boolean;
+  modalData: any;
+  handleModal: (item: any) => void;
+  handleCloseModal: () => void;
+}
+
+function withModalControl<P>(
+  Component: React.ComponentType<P>,
+): React.FC<P & WithModalControlsReturn> {
   return function WithModalControl(props) {
     const dispatch = useDispatch();
     const { isModalOpen, openModal, closeModal } = useModal();
     const [modalData] = React.useState(null);
     const navigate = useNavigate();
 
-    const handleModal = (item) => {
+    // TODO: remove this any
+    const handleModal = (item: any) => {
       openModal();
       if (item && item.data) {
         dispatch(setCurrentItemOpen(item.data));
@@ -31,7 +40,7 @@ function withModalControl(Component) {
 
     return (
       <Component
-      /* eslint-disable-next-line react/jsx-props-no-spreading */
+        /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...props}
         isVisible={isModalOpen}
         modalData={modalData}
@@ -41,10 +50,5 @@ function withModalControl(Component) {
     );
   };
 }
-
-withModalControl.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  Component: PropTypes.object.isRequired,
-};
 
 export default withModalControl;
