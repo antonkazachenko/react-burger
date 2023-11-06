@@ -9,18 +9,16 @@ import useModal from '../hooks/useModal';
 
 interface WithModalControlsReturn {
   isVisible: boolean;
-  modalData: any;
-  handleModal: (item: any) => void;
+  handleModal: () => void;
   handleCloseModal: () => void;
 }
 
-function withModalControl<P>(
+function withModalControl<P extends object>(
   Component: React.ComponentType<P>,
 ): React.FC<P & WithModalControlsReturn> {
   return function WithModalControl(props) {
     const dispatch = useDispatch();
     const { isModalOpen, openModal, closeModal } = useModal();
-    const [modalData] = React.useState(null);
     const navigate = useNavigate();
 
     // TODO: remove this any
@@ -43,7 +41,6 @@ function withModalControl<P>(
         /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...props}
         isVisible={isModalOpen}
-        modalData={modalData}
         handleModal={handleModal}
         handleCloseModal={handleCloseModal}
       />
