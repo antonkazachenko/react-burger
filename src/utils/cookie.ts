@@ -1,4 +1,8 @@
-export function setCookie(name, value, props) {
+type TCookieProps = {
+  expires: number | Date;
+};
+
+export function setCookie(name: string, value: string | null, props: TCookieProps) {
   // eslint-disable-next-line no-param-reassign
   props = props || {};
   let exp = props.expires;
@@ -8,7 +12,7 @@ export function setCookie(name, value, props) {
     // eslint-disable-next-line no-multi-assign,no-param-reassign
     exp = props.expires = d;
   }
-  if (exp && exp.toUTCString) {
+  if (exp && typeof exp !== 'number' && exp.toUTCString) {
     // eslint-disable-next-line no-param-reassign
     props.expires = exp.toUTCString();
   }
@@ -26,13 +30,13 @@ export function setCookie(name, value, props) {
   document.cookie = updatedCookie;
 }
 
-export function getCookie(name) {
+export function getCookie(name: string) {
   const matches = document.cookie.match(
     new RegExp(`(?:^|; )${name.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1')}=([^;]*)`),
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function deleteCookie(name) {
+export function deleteCookie(name: string) {
   setCookie(name, null, { expires: -1 });
 }
