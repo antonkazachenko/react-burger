@@ -1,12 +1,33 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './ingredient-section.module.css';
 import ConstructorCard from '../constructor-card/constructor-card';
 
-function IngredientSection({
+type TItemType = {
+    _id: string;
+    name: string;
+    type: string;
+    proteins: number;
+    fat: number;
+    carbohydrates: number;
+    calories: number;
+    price: number;
+    image: string;
+    image_mobile: string;
+    image_large: string;
+    __v: number;
+}
+
+type TIngredientSection = {
+    items : Array<TItemType>;
+    title: string;
+    classes: Array<string>;
+    handleModal: () => void;
+}
+
+const IngredientSection: FC<TIngredientSection> = ({
   items, title, classes, handleModal,
-}) {
+}) => {
   const location = useLocation();
 
   return (
@@ -44,15 +65,6 @@ function IngredientSection({
       </article>
     </>
   );
-}
-
-IngredientSection.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  items: PropTypes.array.isRequired,
-  title: PropTypes.string.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  classes: PropTypes.array.isRequired,
-  handleModal: PropTypes.func.isRequired,
 };
 
 export default IngredientSection;

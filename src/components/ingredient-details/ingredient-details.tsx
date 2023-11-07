@@ -4,11 +4,27 @@ import { useParams } from 'react-router-dom';
 import MoonLoader from 'react-spinners/MoonLoader';
 import styles from '../modal/modal.module.css';
 
+type TItemType = {
+  _id: string;
+  name: string;
+  type: string;
+  proteins: number;
+  fat: number;
+  carbohydrates: number;
+  calories: number;
+  price: number;
+  image: string;
+  image_mobile: string;
+  image_large: string;
+  __v: number;
+}
+
 function IngredientDetails() {
   const { id } = useParams();
-  const data = useSelector((store) => store
+  // TODO: remove this any
+  const data = useSelector((store: any) => store
     // eslint-disable-next-line no-underscore-dangle
-    .ingredientsStore.ingredients.find((item) => item._id === id));
+    .ingredientsStore.ingredients.find((item: TItemType) => item._id === id));
 
   if (!id) {
     return (

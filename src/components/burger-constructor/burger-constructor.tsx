@@ -17,6 +17,7 @@ import {
   resetTotalPrice, RESET_CONSTRUCTOR,
 } from '../../services/actions/ingredients';
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
+import { WithModalControlsReturn } from '../../hocs/with-modal-control';
 
 type TItemType = {
   _id: string;
@@ -51,7 +52,7 @@ type TBurgerConstructorProp = {
   handleModal: () => void;
 }
 
-const BurgerConstructor: FC<TBurgerConstructorProp> = ({
+const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = ({
   className, handleCloseModal, handleModal,
 }) => {
   const [isVisible, setIsVisible] = useState(false);

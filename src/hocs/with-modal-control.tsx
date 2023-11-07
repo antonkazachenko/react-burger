@@ -7,16 +7,16 @@ import {
 } from '../services/actions/ingredients';
 import useModal from '../hooks/useModal';
 
-interface WithModalControlsReturn {
+export interface WithModalControlsReturn {
   isVisible: boolean;
   handleModal: () => void;
   handleCloseModal: () => void;
 }
 
-function withModalControl<P extends object>(
+function withModalControl<P extends WithModalControlsReturn>(
   Component: React.ComponentType<P>,
-): React.FC<P & WithModalControlsReturn> {
-  return function WithModalControl(props) {
+) {
+  return function WithModalControl(props: Omit<P, keyof WithModalControlsReturn>) {
     const dispatch = useDispatch();
     const { isModalOpen, openModal, closeModal } = useModal();
     const navigate = useNavigate();
@@ -38,11 +38,11 @@ function withModalControl<P extends object>(
 
     return (
       <Component
-        /* eslint-disable-next-line react/jsx-props-no-spreading */
-        {...props}
-        isVisible={isModalOpen}
+            /* eslint-disable-next-line react/jsx-props-no-spreading */
+        {...props as P}
         handleModal={handleModal}
         handleCloseModal={handleCloseModal}
+        isVisible={isModalOpen}
       />
     );
   };
