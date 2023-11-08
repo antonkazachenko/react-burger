@@ -1,18 +1,23 @@
-type TCookieProps = {
-  expires: number | Date;
-};
-
-export function setCookie(name: string, value: string | null, props: TCookieProps) {
+export function setCookie(
+  name: string,
+  value: string,
+  props: { [key: string]: string | number | Date | boolean } = {},
+) {
   // eslint-disable-next-line no-param-reassign
-  props = props || {};
+  props = {
+    path: '/',
+    ...props,
+  };
+
   let exp = props.expires;
-  if (typeof exp === 'number' && exp) {
+  if (exp && typeof exp === 'number') {
     const d = new Date();
     d.setTime(d.getTime() + exp * 1000);
     // eslint-disable-next-line no-multi-assign,no-param-reassign
     exp = props.expires = d;
   }
-  if (exp && typeof exp !== 'number' && exp.toUTCString) {
+
+  if (exp && exp instanceof Date) {
     // eslint-disable-next-line no-param-reassign
     props.expires = exp.toUTCString();
   }
@@ -38,5 +43,5 @@ export function getCookie(name: string) {
 }
 
 export function deleteCookie(name: string) {
-  setCookie(name, null, { expires: -1 });
+  setCookie(name, '', { expires: -1 });
 }
