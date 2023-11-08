@@ -4,22 +4,7 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import styles from './constructor-card.module.css';
-
-type TItemType = {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
-  uniqueId?: string;
-}
+import TItemType from '../../types/ItemType';
 
 type TConstructorCardProp = {
   item: TItemType;

@@ -5,24 +5,10 @@ import { useInView } from 'react-intersection-observer';
 import styles from './burger-ingredients.module.css';
 import IngredientTabs from '../ingredient-tabs/ingredient-tabs';
 import IngredientSection from '../ingredient-section/ingredient-section';
+import TItemType from '../../types/ItemType';
 
 type TBurgerIngredientsProp = {
   handleModal: () => void;
-}
-
-type TItemType = {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
 }
 
 const BurgerIngredients: FC<TBurgerIngredientsProp> = ({ handleModal }) => {

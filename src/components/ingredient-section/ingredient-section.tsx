@@ -2,21 +2,7 @@ import React, { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './ingredient-section.module.css';
 import ConstructorCard from '../constructor-card/constructor-card';
-
-type TItemType = {
-    _id: string;
-    name: string;
-    type: string;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    calories: number;
-    price: number;
-    image: string;
-    image_mobile: string;
-    image_large: string;
-    __v: number;
-}
+import TItemType from '../../types/ItemType';
 
 type TIngredientSection = {
     items : Array<TItemType>;

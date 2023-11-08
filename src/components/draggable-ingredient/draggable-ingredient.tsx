@@ -4,26 +4,11 @@ import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burg
 import { useDispatch } from 'react-redux';
 import { reorderIngredients } from '../../services/actions/ingredients';
 import styles from './draggable-ingredient.module.css';
-
-type TItemType = {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
-  uniqueId: string;
-}
+import TItemType from '../../types/ItemType';
 
 type TDraggableIngredientProp = {
     ingredient: TItemType;
-    handleIngredientRemoval: (id: string) => void;
+    handleIngredientRemoval: (id: string | undefined) => void;
     index: number;
 }
 

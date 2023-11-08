@@ -18,33 +18,7 @@ import {
 } from '../../services/actions/ingredients';
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 import { WithModalControlsReturn } from '../../hocs/with-modal-control';
-
-type TItemType = {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
-}
-// const initialState = {
-//   ingredients: [],
-//   bunData: [],
-//   isLoading: true,
-//   error: null,
-//   constructorIngredients: [],
-//   createdOrder: null,
-//   currentItem: null,
-//   totalPrice: 0,
-//   isLoadingOrder: false,
-//   orderModalVisible: false,
-// };
+import TItemType from '../../types/ItemType';
 
 type TBurgerConstructorProp = {
   className: string;
@@ -66,7 +40,8 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
   const { name } = useSelector((store: any) => store.accountStore.user);
   const { totalPrice } = useSelector((store: any) => store.ingredientsStore);
 
-  const handleIngredientRemoval = (id: string) => {
+  const handleIngredientRemoval = (id: string | undefined) => {
+    if (typeof id === 'undefined') { return; }
     // eslint-disable-next-line no-underscore-dangle
     dispatch(removeIngredient(id));
   };
