@@ -33,6 +33,7 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/no-named-as-default': 0,
     'import/no-named-as-default-member': 0,
+    'react/function-component-definition': 'off',
   },
   settings: {
     react: {

@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { reorderIngredients } from '../../services/actions/ingredients';
 import styles from './draggable-ingredient.module.css';
+import TItemType from '../../types/ItemType';
 
-function DraggableIngredient({ ingredient, handleIngredientRemoval, index }) {
+type TDraggableIngredientProp = {
+    ingredient: TItemType;
+    handleIngredientRemoval: (id: string | undefined) => void;
+    index: number;
+}
+
+type TDraggableIngredientItem = {
+  id: string;
+  index: number;
+  fromConstructor: boolean;
+}
+
+const DraggableIngredient: FC<TDraggableIngredientProp> = ({
+  ingredient, handleIngredientRemoval, index,
+}) => {
   const dispatch = useDispatch();
 
   const [, refDrag] = useDrag({
@@ -20,7 +34,7 @@ function DraggableIngredient({ ingredient, handleIngredientRemoval, index }) {
 
   const [, refDrop] = useDrop({
     accept: 'ingredient',
-    drop: (dragItem) => {
+    drop: (dragItem: TDraggableIngredientItem) => {
       if (dragItem.index !== index) {
         dispatch(reorderIngredients({ oldIndex: dragItem.index, newIndex: index }));
       }
@@ -29,7 +43,7 @@ function DraggableIngredient({ ingredient, handleIngredientRemoval, index }) {
     },
   });
 
-  const ref = (node) => {
+  const ref: React.RefCallback<HTMLElement> = (node) => {
     refDrag(node);
     refDrop(node);
   };
@@ -48,13 +62,6 @@ function DraggableIngredient({ ingredient, handleIngredientRemoval, index }) {
       />
     </div>
   );
-}
-
-DraggableIngredient.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  ingredient: PropTypes.object.isRequired,
-  handleIngredientRemoval: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
 };
 
 export default DraggableIngredient;

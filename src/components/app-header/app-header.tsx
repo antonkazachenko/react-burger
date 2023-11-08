@@ -8,11 +8,15 @@ import styles from './app-header.module.css';
 import { getUserRequest } from '../../services/actions/account';
 
 function AppHeader() {
-  const { user } = useSelector((store) => store.accountStore);
+  // TODO: remove this any
+  const { user } = useSelector((store: any) => store.accountStore);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleAccountClick = () => {
+    // TODO: remove this ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     dispatch(getUserRequest());
     if (user.name === '') {
       navigate('/login');
@@ -22,6 +26,9 @@ function AppHeader() {
   };
 
   useEffect(() => {
+    // TODO: remove this ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     dispatch(getUserRequest());
   }, [dispatch]);
 
@@ -32,7 +39,7 @@ function AppHeader() {
           <nav className={`${styles.flexCentered} ${styles.navTab}`}>
             <div className={`${styles.flexCentered} mt-4 mb-4 p-5 mr-2`}>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <NavLink to="/" href="#" className={styles.navLink}>
+              <NavLink to="/" className={styles.navLink}>
                 {(window.location.pathname === '/') ? (
                   <>
                     <div className="mr-2">
@@ -57,8 +64,8 @@ function AppHeader() {
             <div className={`${styles.flexCentered} mt-4 mb-4 p-5`}>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a href="#" className={`${styles.navLink} ${styles.secondary}`}>
-                <div className="mr-2">
-                  <ListIcon type="secondary" className={styles.secondary} />
+                <div className={`${styles.secondary} mr-2`}>
+                  <ListIcon type="secondary" />
                 </div>
                 <p className={`text text_type_main-default ${styles.secondary}`}>
                   Лента заказов

@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import styles from './ingredient-tabs.module.css';
 
 const tabs = [
@@ -16,10 +15,14 @@ const tabs = [
     index: 'three',
   }];
 
-function IngredientTabs({ activeTab, onTabChange }) {
-  return (
-    <nav className={`${styles.justifyCenter} ${styles.flex} mt-5 mb-10`}>
-      {
+type TIngredientTabsProp = {
+  activeTab: string;
+  onTabChange: (index: string) => void;
+}
+
+const IngredientTabs: FC<TIngredientTabsProp> = ({ activeTab, onTabChange }) => (
+  <nav className={`${styles.justifyCenter} ${styles.flex} mt-5 mb-10`}>
+    {
         tabs.map((el) => (
           <Tab
             value={el.index}
@@ -33,13 +36,7 @@ function IngredientTabs({ activeTab, onTabChange }) {
           </Tab>
         ))
       }
-    </nav>
-  );
-}
-
-IngredientTabs.propTypes = {
-  activeTab: PropTypes.string.isRequired,
-  onTabChange: PropTypes.func.isRequired,
-};
+  </nav>
+);
 
 export default IngredientTabs;

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -8,14 +7,22 @@ import {
 } from '../services/actions/ingredients';
 import useModal from '../hooks/useModal';
 
-function withModalControl(Component) {
-  return function WithModalControl(props) {
+export interface WithModalControlsReturn {
+  isVisible: boolean;
+  handleModal: () => void;
+  handleCloseModal: () => void;
+}
+
+function withModalControl<P extends WithModalControlsReturn>(
+  Component: React.ComponentType<P>,
+) {
+  return function WithModalControl(props: Omit<P, keyof WithModalControlsReturn>) {
     const dispatch = useDispatch();
     const { isModalOpen, openModal, closeModal } = useModal();
-    const [modalData] = React.useState(null);
     const navigate = useNavigate();
 
-    const handleModal = (item) => {
+    // TODO: remove this any
+    const handleModal = (item: any) => {
       openModal();
       if (item && item.data) {
         dispatch(setCurrentItemOpen(item.data));
@@ -31,20 +38,14 @@ function withModalControl(Component) {
 
     return (
       <Component
-      /* eslint-disable-next-line react/jsx-props-no-spreading */
-        {...props}
-        isVisible={isModalOpen}
-        modalData={modalData}
+            /* eslint-disable-next-line react/jsx-props-no-spreading */
+        {...props as P}
         handleModal={handleModal}
         handleCloseModal={handleCloseModal}
+        isVisible={isModalOpen}
       />
     );
   };
 }
-
-withModalControl.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  Component: PropTypes.object.isRequired,
-};
 
 export default withModalControl;

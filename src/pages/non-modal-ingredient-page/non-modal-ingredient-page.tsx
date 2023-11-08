@@ -2,12 +2,13 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styles from './non-modal-ingredient-page.module.css';
+import TItemType from '../../types/ItemType';
 
 function NonModalIngredientPage() {
   const { id } = useParams();
-  const data = useSelector((store) => store
+  const data = useSelector((store: any) => store
   // eslint-disable-next-line no-underscore-dangle
-    .ingredientsStore.ingredients.find((item) => item._id === id));
+    .ingredientsStore.ingredients.find((item: TItemType) => item._id === id));
 
   return (
     <>

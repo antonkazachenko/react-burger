@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import styles from './constructor-card.module.css';
+import TItemType from '../../types/ItemType';
 
-function ConstructorCard({
+type TConstructorCardProp = {
+  item: TItemType;
+  className?: string;
+  price: number;
+  onClick: (item: { data: TItemType }) => void;
+}
+
+const ConstructorCard: FC<TConstructorCardProp> = ({
   item, className, price, onClick,
-}) {
-  const ingredientCount = useSelector((store) => {
+}) => {
+  // TODO: remove this any
+  const ingredientCount = useSelector((store: any) => {
     if (item.type !== 'bun') {
       return store.ingredientsStore.constructorIngredients
+        // TODO: remove this any
         // eslint-disable-next-line no-underscore-dangle
-        .filter((el) => el.ingredient._id === item._id).length;
+        .filter((el: any) => el.ingredient._id === item._id).length;
     }
     return store.ingredientsStore.bunData === item ? 1 : 0;
   });
@@ -48,20 +57,9 @@ function ConstructorCard({
       { ingredientCount > 0 ? <Counter count={ingredientCount} size="default" extraClass="m-1" /> : null }
     </div>
   );
-}
+};
 
 ConstructorCard.defaultProps = {
   className: '',
 };
-
-ConstructorCard.propTypes = {
-  item: PropTypes.shape({
-    image: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-  }).isRequired,
-  className: PropTypes.string,
-  price: PropTypes.number.isRequired,
-  onClick: PropTypes.func.isRequired,
-};
-
 export default ConstructorCard;

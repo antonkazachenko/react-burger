@@ -13,15 +13,18 @@ function SignIn() {
   const { values, handleChange } = useForm({ email: '', password: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useSelector((store) => store.accountStore);
+  // TODO: remove any
+  const { user } = useSelector((store: any) => store.accountStore);
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(loginRequest(values.email, values.password));
+    // TODO: remove any
+    dispatch<any>(loginRequest(values.email, values.password));
   };
 
   React.useEffect(() => {
-    dispatch(getUserRequest());
+    // TODO: remove any
+    dispatch<any>(getUserRequest());
     if (user.name !== '') {
       navigate('/', { replace: true });
     }

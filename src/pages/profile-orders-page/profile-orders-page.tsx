@@ -9,7 +9,7 @@ function ProfileOrdersPage() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    dispatch(logoutRequest());
+    dispatch<any>(logoutRequest());
     navigate('/', { replace: true });
   };
 
