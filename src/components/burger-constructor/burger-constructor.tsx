@@ -14,11 +14,12 @@ import {
   removeIngredient,
   changeBun,
   setTotalPrice,
-  resetTotalPrice, RESET_CONSTRUCTOR,
+  resetTotalPrice,
 } from '../../services/actions/ingredients';
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 import { WithModalControlsReturn } from '../../hocs/with-modal-control';
 import TItemType from '../../types/ItemType';
+import {RESET_CONSTRUCTOR} from "../../services/constants/ingredients";
 
 type TBurgerConstructorProp = {
   className: string;

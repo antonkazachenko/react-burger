@@ -1,13 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 // eslint-disable-next-line import/no-extraneous-dependencies
+
 import {
   ADD_INGREDIENT,
   CHANGE_BUN,
   CURRENT_ITEM_CLOSE,
-  CURRENT_ITEM_OPEN,
-  GET_INGREDIENTS__FAILURE,
-  GET_INGREDIENTS__REQUEST,
-  GET_INGREDIENTS__SUCCESS,
+  CURRENT_ITEM_OPEN, GET_INGREDIENTS__FAILURE, GET_INGREDIENTS__REQUEST, GET_INGREDIENTS__SUCCESS,
   POST_ORDER__FAILURE,
   POST_ORDER__REQUEST,
   POST_ORDER__SUCCESS,
@@ -15,8 +13,8 @@ import {
   REORDER_INGREDIENTS,
   RESET_CONSTRUCTOR,
   RESET_TOTAL_PRICE,
-  SET_TOTAL_PRICE,
-} from '../actions/ingredients';
+  SET_TOTAL_PRICE
+} from "../constants/ingredients";
 
 const initialState = {
   ingredients: [],
