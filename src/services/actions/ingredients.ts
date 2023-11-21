@@ -1,6 +1,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { v4 as uuidv4 } from 'uuid';
+import { Dispatch } from 'react';
 import request from '../../utils/apiUtils';
+import { TItemType, TDraggableIngredientItem, THandleItem } from '../../types';
 import {
   ADD_INGREDIENT,
   CHANGE_BUN,
@@ -18,7 +20,7 @@ import {
   SET_TOTAL_PRICE,
 } from '../constants/ingredients';
 
-export const addIngredient = (item) => ({
+export const addIngredient = (item: TItemType) => ({
   type: ADD_INGREDIENT,
   payload: {
     ...item,
@@ -26,22 +28,22 @@ export const addIngredient = (item) => ({
   },
 });
 
-export const removeIngredient = (id) => ({
+export const removeIngredient = (id: string) => ({
   type: REMOVE_INGREDIENT,
   payload: id,
 });
 
-export const changeBun = (item) => ({
+export const changeBun = (item: TItemType) => ({
   type: CHANGE_BUN,
   payload: item,
 });
 
-export const reorderIngredients = (payload) => ({
+export const reorderIngredients = (payload: TDraggableIngredientItem) => ({
   type: REORDER_INGREDIENTS,
   payload,
 });
 
-export const setCurrentItemOpen = (item) => ({
+export const setCurrentItemOpen = (item: THandleItem) => ({
   type: CURRENT_ITEM_OPEN,
   payload: item,
 });
@@ -50,7 +52,7 @@ export const setCurrentItemClose = () => ({
   type: CURRENT_ITEM_CLOSE,
 });
 
-export const setTotalPrice = (price) => ({
+export const setTotalPrice = (price: number) => ({
   type: SET_TOTAL_PRICE,
   payload: price,
 });
@@ -60,7 +62,7 @@ export const resetTotalPrice = () => ({
 });
 
 export function getIngredients() {
-  return function (dispatch) {
+  return function (dispatch: Dispatch<any>) {
     dispatch({ type: GET_INGREDIENTS__REQUEST });
     return request('/ingredients')
       .then((data) => {

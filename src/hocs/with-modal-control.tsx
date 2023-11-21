@@ -1,11 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import {
-  setCurrentItemOpen,
-  setCurrentItemClose,
-} from '../services/actions/ingredients';
+import { setCurrentItemClose, setCurrentItemOpen } from '../services/actions/ingredients';
 import useModal from '../hooks/useModal';
+import { THandleItem } from '../types';
 
 export interface WithModalControlsReturn {
   isVisible: boolean;
@@ -22,7 +20,7 @@ function withModalControl<P extends WithModalControlsReturn>(
     const navigate = useNavigate();
 
     // TODO: remove this any
-    const handleModal = (item: any) => {
+    const handleModal = (item: THandleItem | undefined) => {
       openModal();
       if (item && item.data) {
         dispatch(setCurrentItemOpen(item.data));

@@ -35,7 +35,7 @@ const checkSuccess = (res: ApiResponse) => {
   return Promise.reject(`Ответ не success: ${res}`);
 };
 
-const request = (endpoint: string, options: TRequestOptions) => fetch(`${BASE_URL}${endpoint}`, options)
+const request = (endpoint: string, options?: TRequestOptions) => fetch(`${BASE_URL}${endpoint}`, options)
   .then(checkResponse)
   .then(checkSuccess);
 

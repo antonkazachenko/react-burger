@@ -19,7 +19,7 @@ import {
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 import { WithModalControlsReturn } from '../../hocs/with-modal-control';
 import TItemType from '../../types/ItemType';
-import {RESET_CONSTRUCTOR} from "../../services/constants/ingredients";
+import { RESET_CONSTRUCTOR } from '../../services/constants/ingredients';
 
 type TBurgerConstructorProp = {
   className: string;
