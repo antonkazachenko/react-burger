@@ -35,49 +35,232 @@ import {
   RESET_PASSWORD__SUCCESS,
 } from '../constants/account';
 
-export function resetPasswordReset() {
+export interface ILoginRequestAction {
+    readonly type: typeof LOGIN__REQUEST;
+}
+
+export interface ILoginSuccessAction {
+    readonly type: typeof LOGIN__SUCCESS;
+    readonly payload: {
+        refreshToken: string;
+        accessToken: string;
+    };
+}
+
+export interface ILoginFailureAction {
+    readonly type: typeof LOGIN__FAILURE;
+}
+
+export interface ILoginResetAction {
+    readonly type: typeof LOGIN__RESET;
+}
+
+export interface IRegisterRequestAction {
+    readonly type: typeof REGISTER__REQUEST;
+}
+
+export interface IRegisterSuccessAction {
+    readonly type: typeof REGISTER__SUCCESS;
+    readonly payload: {
+        refreshToken: string;
+        accessToken: string;
+    };
+}
+
+export interface IRegisterFailureAction {
+    readonly type: typeof REGISTER__FAILURE;
+}
+
+export interface IRegisterResetAction {
+    readonly type: typeof REGISTER__RESET;
+}
+
+export interface IEmailCheckRequestAction {
+    readonly type: typeof EMAIL_CHECK__REQUEST;
+}
+
+export interface IEmailCheckSuccessAction {
+    readonly type: typeof EMAIL_CHECK__SUCCESS;
+}
+
+export interface IEmailCheckFailureAction {
+    readonly type: typeof EMAIL_CHECK__FAILURE;
+}
+
+export interface IEmailCheckResetAction {
+    readonly type: typeof EMAIL_CHECK__RESET;
+}
+
+export interface IResetPasswordRequestAction {
+    readonly type: typeof RESET_PASSWORD__REQUEST;
+}
+
+export interface IResetPasswordSuccessAction {
+    readonly type: typeof RESET_PASSWORD__SUCCESS;
+    readonly payload: string;
+}
+
+export interface IResetPasswordFailureAction {
+    readonly type: typeof RESET_PASSWORD__FAILURE;
+}
+
+export interface IResetPasswordResetAction {
+    readonly type: typeof RESET_PASSWORD__RESET;
+}
+
+export interface IRefreshTokenRequestAction {
+    readonly type: typeof REFRESH_TOKEN__REQUEST;
+}
+
+export interface IRefreshTokenSuccessAction {
+    readonly type: typeof REFRESH_TOKEN__SUCCESS;
+    readonly payload: {
+        refreshToken: string;
+        accessToken: string;
+    };
+}
+
+export interface IRefreshTokenFailureAction {
+    readonly type: typeof REFRESH_TOKEN__FAILURE;
+}
+
+export interface IRefreshTokenResetAction {
+    readonly type: typeof REFRESH_TOKEN_RESET;
+}
+
+export interface IGetUserRequestAction {
+    readonly type: typeof GET_USER__REQUEST;
+}
+
+export interface IGetUserSuccessAction {
+    readonly type: typeof GET_USER__SUCCESS;
+    readonly payload: {
+        name: string;
+        email: string;
+    };
+}
+
+export interface IGetUserFailureAction {
+    readonly type: typeof GET_USER__FAILURE;
+}
+
+export interface IGetUserResetAction {
+    readonly type: typeof GET_USER__RESET;
+}
+
+export interface ILogoutRequestAction {
+    readonly type: typeof LOGOUT__REQUEST;
+}
+
+export interface ILogoutSuccessAction {
+    readonly type: typeof LOGOUT__SUCCESS;
+}
+
+export interface ILogoutFailureAction {
+    readonly type: typeof LOGOUT__FAILURE;
+}
+
+export interface ILogoutResetAction {
+    readonly type: typeof LOGOUT__RESET;
+}
+
+export interface IProfileUpdateRequestAction {
+    readonly type: typeof PROFILE_UPDATE__REQUEST;
+}
+
+export interface IProfileUpdateSuccessAction {
+    readonly type: typeof PROFILE_UPDATE__SUCCESS;
+    readonly payload: {
+        name: string;
+        email: string;
+    };
+}
+
+export interface IProfileUpdateFailureAction {
+    readonly type: typeof PROFILE_UPDATE__FAILURE;
+}
+
+export interface IProfileUpdateResetAction {
+    readonly type: typeof PROFILE_UPDATE__RESET;
+}
+
+export type TAccountActions =
+    | ILoginRequestAction
+    | ILoginSuccessAction
+    | ILoginFailureAction
+    | ILoginResetAction
+    | IRegisterRequestAction
+    | IRegisterSuccessAction
+    | IRegisterFailureAction
+    | IRegisterResetAction
+    | IEmailCheckRequestAction
+    | IEmailCheckSuccessAction
+    | IEmailCheckFailureAction
+    | IEmailCheckResetAction
+    | IResetPasswordRequestAction
+    | IResetPasswordSuccessAction
+    | IResetPasswordFailureAction
+    | IResetPasswordResetAction
+    | IRefreshTokenRequestAction
+    | IRefreshTokenSuccessAction
+    | IRefreshTokenFailureAction
+    | IRefreshTokenResetAction
+    | IGetUserRequestAction
+    | IGetUserSuccessAction
+    | IGetUserFailureAction
+    | IGetUserResetAction
+    | ILogoutRequestAction
+    | ILogoutSuccessAction
+    | ILogoutFailureAction
+    | ILogoutResetAction
+    | IProfileUpdateRequestAction
+    | IProfileUpdateSuccessAction
+    | IProfileUpdateFailureAction
+    | IProfileUpdateResetAction;
+
+export function resetPasswordReset(): IResetPasswordResetAction {
   return {
     type: RESET_PASSWORD__RESET,
   };
 }
 
-export function emailCheckReset() {
+export function emailCheckReset(): IEmailCheckResetAction {
   return {
     type: EMAIL_CHECK__RESET,
   };
 }
 
-export function registerReset() {
+export function registerReset(): IRegisterResetAction {
   return {
     type: REGISTER__RESET,
   };
 }
 
-export function refreshTokenReset() {
+export function refreshTokenReset(): IRefreshTokenResetAction {
   return {
     type: REFRESH_TOKEN_RESET,
   };
 }
 
-export function loginReset() {
+export function loginReset(): ILoginResetAction {
   return {
     type: LOGIN__RESET,
   };
 }
 
-export function getUserReset() {
+export function getUserReset(): IGetUserResetAction {
   return {
     type: GET_USER__RESET,
   };
 }
 
-export function logoutReset() {
+export function logoutReset(): ILogoutResetAction {
   return {
     type: LOGOUT__RESET,
   };
 }
 
-export function profileUpdateReset() {
+export function profileUpdateReset(): IProfileUpdateResetAction {
   return {
     type: PROFILE_UPDATE__RESET,
   };

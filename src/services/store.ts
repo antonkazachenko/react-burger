@@ -20,4 +20,6 @@ const enhancer = composeEnhancers(
 
 export const store = createStore(rootReducer, enhancer);
 
+export type AppDispatch = typeof store.dispatch;
+
 export default store;
