@@ -34,6 +34,7 @@ import {
   RESET_PASSWORD__RESET,
   RESET_PASSWORD__SUCCESS,
 } from '../constants/account';
+import { AppDispatch } from '../store';
 
 export interface ILoginRequestAction {
     readonly type: typeof LOGIN__REQUEST;
@@ -230,48 +231,12 @@ export function emailCheckReset(): IEmailCheckResetAction {
   };
 }
 
-export function registerReset(): IRegisterResetAction {
-  return {
-    type: REGISTER__RESET,
-  };
-}
-
-export function refreshTokenReset(): IRefreshTokenResetAction {
-  return {
-    type: REFRESH_TOKEN_RESET,
-  };
-}
-
-export function loginReset(): ILoginResetAction {
-  return {
-    type: LOGIN__RESET,
-  };
-}
-
-export function getUserReset(): IGetUserResetAction {
-  return {
-    type: GET_USER__RESET,
-  };
-}
-
-export function logoutReset(): ILogoutResetAction {
-  return {
-    type: LOGOUT__RESET,
-  };
-}
-
-export function profileUpdateReset(): IProfileUpdateResetAction {
-  return {
-    type: PROFILE_UPDATE__RESET,
-  };
-}
-
 export function refreshTokenRequest() {
-  return function (dispatch) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: REFRESH_TOKEN__REQUEST,
     });
-    request('/auth/refresh-token', {
+    return request('/auth/refresh-token', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -295,7 +260,7 @@ export function refreshTokenRequest() {
 }
 
 export function getUserRequest() {
-  return async function (dispatch) {
+  return async function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER__REQUEST,
     });
@@ -320,7 +285,11 @@ export function getUserRequest() {
   };
 }
 
-export const profileUpdateRequest = (name, email, password) => (dispatch) => {
+export const profileUpdateRequest = (
+  name: string,
+  email: string,
+  password: string,
+) => (dispatch: AppDispatch) => {
   dispatch({
     type: PROFILE_UPDATE__REQUEST,
   });
@@ -346,7 +315,7 @@ export const profileUpdateRequest = (name, email, password) => (dispatch) => {
 };
 
 export function logoutRequest() {
-  return function (dispatch) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGOUT__REQUEST,
     });
@@ -372,8 +341,8 @@ export function logoutRequest() {
   };
 }
 
-export function resetPasswordRequest(password, token) {
-  return function (dispatch) {
+export function resetPasswordRequest(password: string, token: string) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: RESET_PASSWORD__REQUEST,
     });
@@ -398,8 +367,8 @@ export function resetPasswordRequest(password, token) {
   };
 }
 
-export function loginRequest(email, password) {
-  return function (dispatch) {
+export function loginRequest(email: string, password: string) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGIN__REQUEST,
     });
@@ -426,8 +395,8 @@ export function loginRequest(email, password) {
   };
 }
 
-export function emailCheckRequest(email) {
-  return function (dispatch) {
+export function emailCheckRequest(email: string) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: EMAIL_CHECK__REQUEST,
     });
@@ -451,8 +420,8 @@ export function emailCheckRequest(email) {
   };
 }
 
-export function registerRequest(email, password, name) {
-  return function (dispatch) {
+export function registerRequest(email: string, password: string, name: string) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: REGISTER__REQUEST,
     });

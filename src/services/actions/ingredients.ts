@@ -18,9 +18,8 @@ import {
   RESET_TOTAL_PRICE,
   SET_TOTAL_PRICE,
 } from '../constants/ingredients';
-import store, { AppDispatch } from '../store';
-
-export type RootState = ReturnType<typeof store.getState>;
+import { AppDispatch } from '../store';
+import { getCookie } from '../../utils/cookie';
 
 export type TItemTypeWithUniqueId = TItemType & { uniqueId: string };
 
@@ -168,7 +167,7 @@ export function getIngredients() {
   };
 }
 
-export function createOrderRequest(constructorIngredients) {
+export function createOrderRequest(constructorIngredients: string[]) {
   return function (dispatch: AppDispatch) {
     // Start the API call by dispatching a request action
     dispatch({ type: POST_ORDER__REQUEST });
@@ -177,7 +176,7 @@ export function createOrderRequest(constructorIngredients) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        authorization: localStorage.getItem('token'),
+        Authorization: getCookie('accessToken'),
       },
       body: JSON.stringify({
         ingredients: constructorIngredients,

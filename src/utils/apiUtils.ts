@@ -1,6 +1,6 @@
 import BASE_URL from './constants';
 import { setCookie } from './cookie';
-import store from '../services/store';
+import store, { AppDispatch, RootState } from '../services/store';
 
 type Dispatch = typeof store.dispatch;
 
@@ -8,6 +8,7 @@ type TRequestOptions = {
   method: string,
   headers: {
     'Content-Type': string,
+    Authorization?: string,
     authorization?: string,
   },
   body?: string,
@@ -42,17 +43,16 @@ const request = (endpoint: string, options?: TRequestOptions) => fetch(`${BASE_U
 export const fetchWithRefresh = async (
   url: string,
   options: TRequestOptions,
-  refreshToken: string,
+  refreshToken: () => (dispatch: AppDispatch) => void,
   dispatch: Dispatch,
+  getState: () => RootState,
 ) => {
   try {
     return await request(url, options);
   } catch (err) {
     if (getErrorMessage(err) === 'jwt expired') {
-      // TODO: remove this any
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const refreshData = await dispatch(refreshToken());
+      dispatch(refreshToken());
+
       if (!refreshData.success) {
         await Promise.reject(refreshData);
       }
