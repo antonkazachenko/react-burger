@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   BurgerIcon, ListIcon, Logo, ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,7 +7,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import styles from './app-header.module.css';
 import { getUserRequest } from '../../services/actions/account';
 
-function AppHeader() {
+const AppHeader: FC<void> = () => {
   // TODO: remove this any
   const { user } = useSelector((store: any) => store.accountStore);
   const navigate = useNavigate();
@@ -104,6 +104,6 @@ function AppHeader() {
       </div>
     </div>
   );
-}
+};
 
 export default AppHeader;

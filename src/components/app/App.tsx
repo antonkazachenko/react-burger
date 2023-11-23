@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   Routes, Route, useLocation, useNavigate,
 } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import useSelector from '../../hooks/
 import MoonLoader from 'react-spinners/MoonLoader';
 import styles from './App.module.css';
 import { getIngredients, setCurrentItemClose } from '../../services/actions/ingredients';
@@ -15,8 +16,8 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import ProtectedRouteElement from '../protected-route-element/protected-route-element';
 import AppHeader from '../app-header/app-header';
 
-function App() {
-  const { isLoading } = useSelector((state: any) => state.ingredientsStore);
+const App: FC<void> = () => {
+  const { isLoading } = useSelector((state) => state.ingredientsStore);
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -64,19 +65,19 @@ function App() {
           path="/profile"
           element={(
             <ProtectedRouteElement element={<ProfileMainPage />} />
-              )}
+          )}
         />
         <Route
           path="/profile/orders"
           element={(
             <ProtectedRouteElement element={<ProfileOrdersPage />} />
-              )}
+          )}
         />
         <Route
           path="/profile/orders/:id"
           element={(
             <ProtectedRouteElement element={<ProfileMainPage />} />
-              )}
+          )}
         />
       </Routes>
 
@@ -88,12 +89,12 @@ function App() {
               <Modal onClose={handleCloseModal} title="Детали ингредиента">
                 <IngredientDetails />
               </Modal>
-                  )}
+            )}
           />
         </Routes>
       )}
     </>
   );
-}
+};
 
 export default App;
