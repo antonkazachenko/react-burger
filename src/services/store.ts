@@ -1,9 +1,7 @@
 import {
-  Action,
-  ActionCreator,
-  applyMiddleware, combineReducers, compose, createStore, Dispatch,
+  applyMiddleware, combineReducers, compose, createStore,
 } from 'redux';
-import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import thunk, { ThunkDispatch } from 'redux-thunk';
 import ingredientsReducer from './reducers/ingredients';
 import accountReducer from './reducers/account';
 import { TIngredientsActions } from './actions/ingredients';
@@ -35,11 +33,7 @@ type TApplicationActions = TIngredientsActions | TAccountActions;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
 
-export type AppThunk<ReturnType = void> = ThunkAction<
-ReturnType,
-RootState,
-unknown,
-TApplicationActions
->;
+export type AppThunk<ReturnType = void> =
+  (constructorIngredients: string[]) => (dispatch: AppDispatch) => ReturnType;
 
 export default store;

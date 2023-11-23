@@ -1,4 +1,4 @@
-import request, { fetchWithRefresh } from '../../utils/apiUtils';
+import request, { ApiResponse, fetchWithRefresh } from '../../utils/apiUtils';
 import { deleteCookie, getCookie, setCookie } from '../../utils/cookie';
 import {
   EMAIL_CHECK__FAILURE,
@@ -36,20 +36,20 @@ import {
 } from '../constants/account';
 import { AppDispatch } from '../store';
 
+export type TRefreshToken = {
+  refreshToken: string;
+  accessToken: string;
+};
+
+export type TRefreshTokenResponse = { success: boolean } & TRefreshToken;
+
 export interface ILoginRequestAction {
   readonly type: typeof LOGIN__REQUEST;
 }
 
 export interface ILoginSuccessAction {
   readonly type: typeof LOGIN__SUCCESS;
-  readonly payload: {
-    refreshToken: string;
-    accessToken: string;
-    user : {
-      name: string;
-      email: string;
-    }
-  };
+  readonly payload: ApiResponse;
 }
 
 export interface ILoginFailureAction {
@@ -66,14 +66,7 @@ export interface IRegisterRequestAction {
 
 export interface IRegisterSuccessAction {
   readonly type: typeof REGISTER__SUCCESS;
-  readonly payload: {
-    refreshToken: string;
-    accessToken: string;
-    user : {
-      name: string;
-      email: string;
-    }
-  };
+  readonly payload: ApiResponse;
 }
 
 export interface IRegisterFailureAction {
@@ -122,10 +115,7 @@ export interface IRefreshTokenRequestAction {
 
 export interface IRefreshTokenSuccessAction {
   readonly type: typeof REFRESH_TOKEN__SUCCESS;
-  readonly payload: {
-    refreshToken: string;
-    accessToken: string;
-  };
+  readonly payload: ApiResponse
 }
 
 export interface IRefreshTokenFailureAction {
@@ -142,12 +132,7 @@ export interface IGetUserRequestAction {
 
 export interface IGetUserSuccessAction {
   readonly type: typeof GET_USER__SUCCESS;
-  readonly payload: {
-    user: {
-      name: string;
-      email: string;
-    };
-  };
+  readonly payload: ApiResponse;
 }
 
 export interface IGetUserFailureAction {
@@ -180,12 +165,7 @@ export interface IProfileUpdateRequestAction {
 
 export interface IProfileUpdateSuccessAction {
   readonly type: typeof PROFILE_UPDATE__SUCCESS;
-  readonly payload: {
-    user: {
-      name: string;
-      email: string;
-    };
-  };
+  readonly payload: ApiResponse;
 }
 
 export interface IProfileUpdateFailureAction {
@@ -242,11 +222,158 @@ export function emailCheckReset(): IEmailCheckResetAction {
   };
 }
 
+export function refreshTokenRequestAction(): IRefreshTokenRequestAction {
+  return {
+    type: REFRESH_TOKEN__REQUEST,
+  };
+}
+
+export function refreshTokenSuccessAction(data: ApiResponse): IRefreshTokenSuccessAction {
+  return {
+    type: REFRESH_TOKEN__SUCCESS,
+    payload: data,
+  };
+}
+
+export function refreshTokenFailureAction(): IRefreshTokenFailureAction {
+  return {
+    type: REFRESH_TOKEN__FAILURE,
+  };
+}
+
+export function getUserRequestAction(): IGetUserRequestAction {
+  return {
+    type: GET_USER__REQUEST,
+  };
+}
+
+export function getUserSuccessAction(data: ApiResponse): IGetUserSuccessAction {
+  return {
+    type: GET_USER__SUCCESS,
+    payload: data,
+  };
+}
+
+export function getUserFailureAction(): IGetUserFailureAction {
+  return {
+    type: GET_USER__FAILURE,
+  };
+}
+
+export function profileUpdateRequestAction(): IProfileUpdateRequestAction {
+  return {
+    type: PROFILE_UPDATE__REQUEST,
+  };
+}
+
+export function profileUpdateSuccessAction(data: ApiResponse): IProfileUpdateSuccessAction {
+  return {
+    type: PROFILE_UPDATE__SUCCESS,
+    payload: data,
+  };
+}
+
+export function profileUpdateFailureAction(): IProfileUpdateFailureAction {
+  return {
+    type: PROFILE_UPDATE__FAILURE,
+  };
+}
+
+export function profileLogoutRequestAction(): ILogoutRequestAction {
+  return {
+    type: LOGOUT__REQUEST,
+  };
+}
+
+export function profileLogoutSuccessAction(): ILogoutSuccessAction {
+  return {
+    type: LOGOUT__SUCCESS,
+  };
+}
+
+export function profileLogoutFailureAction(): ILogoutFailureAction {
+  return {
+    type: LOGOUT__FAILURE,
+  };
+}
+
+export function resetPasswordRequestAction(): IResetPasswordRequestAction {
+  return {
+    type: RESET_PASSWORD__REQUEST,
+  };
+}
+
+export function resetPasswordSuccessAction(): IResetPasswordSuccessAction {
+  return {
+    type: RESET_PASSWORD__SUCCESS,
+  };
+}
+
+export function resetPasswordFailureAction(): IResetPasswordFailureAction {
+  return {
+    type: RESET_PASSWORD__FAILURE,
+  };
+}
+
+export function loginRequestAction(): ILoginRequestAction {
+  return {
+    type: LOGIN__REQUEST,
+  };
+}
+
+export function loginSuccessAction(data: ApiResponse): ILoginSuccessAction {
+  return {
+    type: LOGIN__SUCCESS,
+    payload: data,
+  };
+}
+
+export function loginFailureAction(): ILoginFailureAction {
+  return {
+    type: LOGIN__FAILURE,
+  };
+}
+
+export function emailCheckRequestAction(): IEmailCheckRequestAction {
+  return {
+    type: EMAIL_CHECK__REQUEST,
+  };
+}
+
+export function emailCheckSuccessAction(): IEmailCheckSuccessAction {
+  return {
+    type: EMAIL_CHECK__SUCCESS,
+  };
+}
+
+export function emailCheckFailureAction(): IEmailCheckFailureAction {
+  return {
+    type: EMAIL_CHECK__FAILURE,
+  };
+}
+
+export function registerRequestAction(): IRegisterRequestAction {
+  return {
+    type: REGISTER__REQUEST,
+  };
+}
+
+export function registerSuccessAction(data: ApiResponse): IRegisterSuccessAction {
+  return {
+    type: REGISTER__SUCCESS,
+    payload: data,
+  };
+}
+
+export function registerFailureAction(): IRegisterFailureAction {
+  return {
+    type: REGISTER__FAILURE,
+  };
+}
+
 export function refreshTokenRequest() {
   return function (dispatch: AppDispatch) {
-    dispatch({
-      type: REFRESH_TOKEN__REQUEST,
-    });
+    dispatch(refreshTokenRequestAction());
     return request('/auth/refresh-token', {
       method: 'POST',
       headers: {
@@ -257,24 +384,17 @@ export function refreshTokenRequest() {
       .then((res) => {
         setCookie('refreshToken', res.refreshToken);
         setCookie('accessToken', res.accessToken);
-        dispatch({
-          type: REFRESH_TOKEN__SUCCESS,
-          payload: res,
-        });
+        dispatch(refreshTokenSuccessAction(res));
       })
       .catch(() => {
-        dispatch({
-          type: REFRESH_TOKEN__FAILURE,
-        });
+        dispatch(refreshTokenFailureAction());
       });
   };
 }
 
 export function getUserRequest() {
   return async function (dispatch: AppDispatch) {
-    dispatch({
-      type: GET_USER__REQUEST,
-    });
+    dispatch(getUserRequestAction());
     await fetchWithRefresh('/auth/user', {
       method: 'GET',
       headers: {
@@ -283,15 +403,10 @@ export function getUserRequest() {
       },
     }, refreshTokenRequest, dispatch)
       .then((res) => {
-        dispatch({
-          type: GET_USER__SUCCESS,
-          payload: res,
-        });
+        dispatch(getUserSuccessAction(res));
       })
       .catch(() => {
-        dispatch({
-          type: GET_USER__FAILURE,
-        });
+        dispatch(getUserFailureAction());
       });
   };
 }
@@ -301,9 +416,7 @@ export const profileUpdateRequest = (
   email: string,
   password: string,
 ) => (dispatch: AppDispatch) => {
-  dispatch({
-    type: PROFILE_UPDATE__REQUEST,
-  });
+  dispatch(profileUpdateRequestAction());
   fetchWithRefresh('/auth/user', {
     method: 'PUT',
     headers: {
@@ -313,23 +426,16 @@ export const profileUpdateRequest = (
     body: JSON.stringify({ name, email, password }),
   }, refreshTokenRequest, dispatch)
     .then((res) => {
-      dispatch({
-        type: PROFILE_UPDATE__SUCCESS,
-        payload: res,
-      });
+      dispatch(profileUpdateSuccessAction(res));
     })
     .catch(() => {
-      dispatch({
-        type: PROFILE_UPDATE__FAILURE,
-      });
+      dispatch(profileUpdateFailureAction());
     });
 };
 
 export function logoutRequest() {
   return function (dispatch: AppDispatch) {
-    dispatch({
-      type: LOGOUT__REQUEST,
-    });
+    dispatch(profileLogoutRequestAction());
     request('/auth/logout', {
       method: 'POST',
       headers: {
@@ -340,23 +446,17 @@ export function logoutRequest() {
       .then(() => {
         deleteCookie('refreshToken');
         deleteCookie('accessToken');
-        dispatch({
-          type: LOGOUT__SUCCESS,
-        });
+        dispatch(profileLogoutSuccessAction());
       })
       .catch(() => {
-        dispatch({
-          type: LOGOUT__FAILURE,
-        });
+        dispatch(profileLogoutFailureAction());
       });
   };
 }
 
 export function resetPasswordRequest(password: string, token: string) {
   return function (dispatch: AppDispatch) {
-    dispatch({
-      type: RESET_PASSWORD__REQUEST,
-    });
+    dispatch(resetPasswordRequestAction());
     fetchWithRefresh('/password-reset/reset', {
       method: 'POST',
       headers: {
@@ -365,23 +465,17 @@ export function resetPasswordRequest(password: string, token: string) {
       body: JSON.stringify({ password, token }),
     }, refreshTokenRequest, dispatch)
       .then(() => {
-        dispatch({
-          type: RESET_PASSWORD__SUCCESS,
-        });
+        dispatch(resetPasswordSuccessAction());
       })
       .catch(() => {
-        dispatch({
-          type: RESET_PASSWORD__FAILURE,
-        });
+        dispatch(resetPasswordFailureAction());
       });
   };
 }
 
 export function loginRequest(email: string, password: string) {
   return function (dispatch: AppDispatch) {
-    dispatch({
-      type: LOGIN__REQUEST,
-    });
+    dispatch(loginRequestAction());
     fetchWithRefresh('/auth/login', {
       method: 'POST',
       headers: {
@@ -392,24 +486,17 @@ export function loginRequest(email: string, password: string) {
       .then((res) => {
         setCookie('refreshToken', res.refreshToken);
         setCookie('accessToken', res.accessToken);
-        dispatch({
-          type: LOGIN__SUCCESS,
-          payload: res,
-        });
+        dispatch(loginSuccessAction(res));
       })
       .catch(() => {
-        dispatch({
-          type: LOGIN__FAILURE,
-        });
+        dispatch(loginFailureAction());
       });
   };
 }
 
 export function emailCheckRequest(email: string) {
   return function (dispatch: AppDispatch) {
-    dispatch({
-      type: EMAIL_CHECK__REQUEST,
-    });
+    dispatch(emailCheckRequestAction());
     request('/password-reset', {
       method: 'POST',
       headers: {
@@ -418,23 +505,17 @@ export function emailCheckRequest(email: string) {
       body: JSON.stringify({ email }),
     })
       .then(() => {
-        dispatch({
-          type: EMAIL_CHECK__SUCCESS,
-        });
+        dispatch(emailCheckSuccessAction());
       })
       .catch(() => {
-        dispatch({
-          type: EMAIL_CHECK__FAILURE,
-        });
+        dispatch(emailCheckFailureAction());
       });
   };
 }
 
 export function registerRequest(email: string, password: string, name: string) {
   return function (dispatch: AppDispatch) {
-    dispatch({
-      type: REGISTER__REQUEST,
-    });
+    dispatch(registerRequestAction());
     request('/auth/register', {
       method: 'POST',
       headers: {
@@ -445,15 +526,10 @@ export function registerRequest(email: string, password: string, name: string) {
       .then((res) => {
         setCookie('refreshToken', res.refreshToken);
         setCookie('accessToken', res.accessToken);
-        dispatch({
-          type: REGISTER__SUCCESS,
-          payload: res,
-        });
+        dispatch(registerSuccessAction(res));
       })
       .catch(() => {
-        dispatch({
-          type: REGISTER__FAILURE,
-        });
+        dispatch(registerFailureAction());
       });
   };
 }

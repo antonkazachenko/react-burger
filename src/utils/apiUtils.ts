@@ -20,7 +20,7 @@ function getErrorMessage(error: unknown) {
 }
 
 // TODO: remove this any
-interface ApiResponse {
+export interface ApiResponse {
   success: boolean;
   [key: string]: any;
 }
