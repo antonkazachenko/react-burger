@@ -11,5 +11,4 @@ export const POST_ORDER__FAILURE = 'POST_ORDER__FAILURE' as const;
 export const CURRENT_ITEM_OPEN = 'CURRENT_ITEM_OPEN' as const;
 export const CURRENT_ITEM_CLOSE = 'CURRENT_ITEM_CLOSE' as const;
 export const SET_TOTAL_PRICE = 'INCREASE_TOTAL_PRICE' as const;
-export const RESET_TOTAL_PRICE = 'DECREASE_TOTAL_PRICE' as const;
 export const RESET_CONSTRUCTOR = 'RESET_CONSTRUCTOR' as const;

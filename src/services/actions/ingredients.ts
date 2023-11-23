@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { v4 as uuidv4 } from 'uuid';
 import request from '../../utils/apiUtils';
-import { TDraggableIngredientItem, TItemType } from '../../types';
+import { TItemType } from '../../types';
 import {
   ADD_INGREDIENT,
   CHANGE_BUN,
@@ -15,80 +15,89 @@ import {
   POST_ORDER__SUCCESS,
   REMOVE_INGREDIENT,
   REORDER_INGREDIENTS,
-  RESET_TOTAL_PRICE,
+  RESET_CONSTRUCTOR,
   SET_TOTAL_PRICE,
 } from '../constants/ingredients';
-import { AppDispatch } from '../store';
+import { AppDispatch, AppThunk } from '../store';
 import { getCookie } from '../../utils/cookie';
 
 export type TItemTypeWithUniqueId = TItemType & { uniqueId: string };
 
+export type TIngredientIndexes = {
+  newIndex: number;
+  oldIndex: number;
+};
+
 export interface IAddIngredientAction {
-    readonly type: typeof ADD_INGREDIENT;
-    readonly payload: TItemTypeWithUniqueId;
+  readonly type: typeof ADD_INGREDIENT;
+  readonly payload: TItemTypeWithUniqueId;
 }
 
 export interface IRemoveIngredientAction {
-    readonly type: typeof REMOVE_INGREDIENT;
-    readonly payload: string;
+  readonly type: typeof REMOVE_INGREDIENT;
+  readonly payload: string;
 }
 
 export interface IChangeBunAction {
-    readonly type: typeof CHANGE_BUN;
-    readonly payload: TItemType;
+  readonly type: typeof CHANGE_BUN;
+  readonly payload: TItemType;
 }
 
 export interface IReorderIngredientsAction {
-    readonly type: typeof REORDER_INGREDIENTS;
-    readonly payload: TDraggableIngredientItem;
+  readonly type: typeof REORDER_INGREDIENTS;
+  readonly payload: TIngredientIndexes;
 }
 
 export interface ISetCurrentItemOpenAction {
-    readonly type: typeof CURRENT_ITEM_OPEN;
-    readonly payload: TItemType;
+  readonly type: typeof CURRENT_ITEM_OPEN;
+  readonly payload: TItemType;
 }
 
 export interface ISetCurrentItemCloseAction {
-    readonly type: typeof CURRENT_ITEM_CLOSE;
+  readonly type: typeof CURRENT_ITEM_CLOSE;
 }
 
 export interface ISetTotalPriceAction {
-    readonly type: typeof SET_TOTAL_PRICE;
-    readonly payload: number;
+  readonly type: typeof SET_TOTAL_PRICE;
+  readonly payload: number;
 }
 
 export interface IGetIngredientsRequestAction {
-    readonly type: typeof GET_INGREDIENTS__REQUEST;
+  readonly type: typeof GET_INGREDIENTS__REQUEST;
 }
 
 export interface IGetIngredientsSuccessAction {
-    readonly type: typeof GET_INGREDIENTS__SUCCESS;
-    readonly payload: TItemType[];
+  readonly type: typeof GET_INGREDIENTS__SUCCESS;
+  readonly payload: TItemType[];
 }
 
 export interface IGetIngredientsFailureAction {
-    readonly type: typeof GET_INGREDIENTS__FAILURE;
-    readonly payload: Error;
+  readonly type: typeof GET_INGREDIENTS__FAILURE;
+  readonly payload: Error;
 }
 
 export interface IPostOrderRequestAction {
-    readonly type: typeof POST_ORDER__REQUEST;
+  readonly type: typeof POST_ORDER__REQUEST;
 }
 
 export interface IPostOrderSuccessAction {
-    readonly type: typeof POST_ORDER__SUCCESS;
-    readonly payload: {
-        success: boolean;
-        name: string;
-        order: {
-            number: number;
-        };
+  readonly type: typeof POST_ORDER__SUCCESS;
+  readonly payload: {
+    success: boolean;
+    name: string;
+    order: {
+      number: number;
     };
+  };
 }
 
 export interface IPostOrderFailureAction {
-    readonly type: typeof POST_ORDER__FAILURE;
-    readonly payload: Error;
+  readonly type: typeof POST_ORDER__FAILURE;
+  readonly payload: Error;
+}
+
+export interface IResetConstructorAction {
+  readonly type: typeof RESET_CONSTRUCTOR;
 }
 
 export type TIngredientsActions =
@@ -104,11 +113,12 @@ export type TIngredientsActions =
     | IGetIngredientsFailureAction
     | IPostOrderRequestAction
     | IPostOrderSuccessAction
-    | IPostOrderFailureAction;
+    | IPostOrderFailureAction
+    | IResetConstructorAction;
 
-export interface IResetTotalPriceAction {
-    readonly type: typeof RESET_TOTAL_PRICE;
-}
+export const resetConstructor = (): IResetConstructorAction => ({
+  type: RESET_CONSTRUCTOR,
+});
 
 export const addIngredient = (item: TItemType): IAddIngredientAction => ({
   type: ADD_INGREDIENT,
@@ -129,7 +139,7 @@ export const changeBun = (item: TItemType): IChangeBunAction => ({
 });
 
 export const reorderIngredients = (
-  payload: TDraggableIngredientItem,
+  payload: TIngredientIndexes,
 ): IReorderIngredientsAction => ({
   type: REORDER_INGREDIENTS,
   payload,
@@ -149,23 +159,33 @@ export const setTotalPrice = (price: number): ISetTotalPriceAction => ({
   payload: price,
 });
 
-export const resetTotalPrice = (): IResetTotalPriceAction => ({
-  type: RESET_TOTAL_PRICE,
+export const getIngredientsRequest = (): IGetIngredientsRequestAction => ({
+  type: GET_INGREDIENTS__REQUEST,
 });
 
-export function getIngredients() {
-  return function (dispatch: AppDispatch) {
-    dispatch({ type: GET_INGREDIENTS__REQUEST });
-    return request('/ingredients')
-      .then((data) => {
-        dispatch({ type: GET_INGREDIENTS__SUCCESS, payload: data });
-      })
-      .catch((err) => {
-        console.log(err);
-        dispatch({ type: GET_INGREDIENTS__FAILURE, payload: err });
-      });
-  };
-}
+export const getIngredientsSuccess = (
+  payload: TItemType[],
+): IGetIngredientsSuccessAction => ({
+  type: GET_INGREDIENTS__SUCCESS,
+  payload,
+});
+
+export const getIngredientsFailure = (payload: Error): IGetIngredientsFailureAction => ({
+  type: GET_INGREDIENTS__FAILURE,
+  payload,
+});
+
+export const getIngredients: AppThunk = () => function (dispatch: AppDispatch) {
+  dispatch(getIngredientsRequest());
+  request('/ingredients')
+    .then((data) => {
+      dispatch(getIngredientsSuccess(data.data));
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(getIngredientsFailure(err));
+    });
+};
 
 export function createOrderRequest(constructorIngredients: string[]) {
   return function (dispatch: AppDispatch) {
@@ -183,11 +203,11 @@ export function createOrderRequest(constructorIngredients: string[]) {
       }),
     })
       .then((res) => {
-        dispatch({ type: POST_ORDER__SUCCESS, payload: res });
+        dispatch<any>({ type: POST_ORDER__SUCCESS, payload: res });
         return res;
       })
       .catch((err) => {
-        dispatch({ type: POST_ORDER__FAILURE, payload: err });
+        dispatch<any>({ type: POST_ORDER__FAILURE, payload: err });
         console.log(err);
       });
   };

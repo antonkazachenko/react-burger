@@ -37,152 +37,163 @@ import {
 import { AppDispatch } from '../store';
 
 export interface ILoginRequestAction {
-    readonly type: typeof LOGIN__REQUEST;
+  readonly type: typeof LOGIN__REQUEST;
 }
 
 export interface ILoginSuccessAction {
-    readonly type: typeof LOGIN__SUCCESS;
-    readonly payload: {
-        refreshToken: string;
-        accessToken: string;
-    };
+  readonly type: typeof LOGIN__SUCCESS;
+  readonly payload: {
+    refreshToken: string;
+    accessToken: string;
+    user : {
+      name: string;
+      email: string;
+    }
+  };
 }
 
 export interface ILoginFailureAction {
-    readonly type: typeof LOGIN__FAILURE;
+  readonly type: typeof LOGIN__FAILURE;
 }
 
 export interface ILoginResetAction {
-    readonly type: typeof LOGIN__RESET;
+  readonly type: typeof LOGIN__RESET;
 }
 
 export interface IRegisterRequestAction {
-    readonly type: typeof REGISTER__REQUEST;
+  readonly type: typeof REGISTER__REQUEST;
 }
 
 export interface IRegisterSuccessAction {
-    readonly type: typeof REGISTER__SUCCESS;
-    readonly payload: {
-        refreshToken: string;
-        accessToken: string;
-    };
+  readonly type: typeof REGISTER__SUCCESS;
+  readonly payload: {
+    refreshToken: string;
+    accessToken: string;
+    user : {
+      name: string;
+      email: string;
+    }
+  };
 }
 
 export interface IRegisterFailureAction {
-    readonly type: typeof REGISTER__FAILURE;
+  readonly type: typeof REGISTER__FAILURE;
 }
 
 export interface IRegisterResetAction {
-    readonly type: typeof REGISTER__RESET;
+  readonly type: typeof REGISTER__RESET;
 }
 
 export interface IEmailCheckRequestAction {
-    readonly type: typeof EMAIL_CHECK__REQUEST;
+  readonly type: typeof EMAIL_CHECK__REQUEST;
 }
 
 export interface IEmailCheckSuccessAction {
-    readonly type: typeof EMAIL_CHECK__SUCCESS;
+  readonly type: typeof EMAIL_CHECK__SUCCESS;
 }
 
 export interface IEmailCheckFailureAction {
-    readonly type: typeof EMAIL_CHECK__FAILURE;
+  readonly type: typeof EMAIL_CHECK__FAILURE;
 }
 
 export interface IEmailCheckResetAction {
-    readonly type: typeof EMAIL_CHECK__RESET;
+  readonly type: typeof EMAIL_CHECK__RESET;
 }
 
 export interface IResetPasswordRequestAction {
-    readonly type: typeof RESET_PASSWORD__REQUEST;
+  readonly type: typeof RESET_PASSWORD__REQUEST;
 }
 
 export interface IResetPasswordSuccessAction {
-    readonly type: typeof RESET_PASSWORD__SUCCESS;
-    readonly payload: string;
+  readonly type: typeof RESET_PASSWORD__SUCCESS;
 }
 
 export interface IResetPasswordFailureAction {
-    readonly type: typeof RESET_PASSWORD__FAILURE;
+  readonly type: typeof RESET_PASSWORD__FAILURE;
 }
 
 export interface IResetPasswordResetAction {
-    readonly type: typeof RESET_PASSWORD__RESET;
+  readonly type: typeof RESET_PASSWORD__RESET;
 }
 
 export interface IRefreshTokenRequestAction {
-    readonly type: typeof REFRESH_TOKEN__REQUEST;
+  readonly type: typeof REFRESH_TOKEN__REQUEST;
 }
 
 export interface IRefreshTokenSuccessAction {
-    readonly type: typeof REFRESH_TOKEN__SUCCESS;
-    readonly payload: {
-        refreshToken: string;
-        accessToken: string;
-    };
+  readonly type: typeof REFRESH_TOKEN__SUCCESS;
+  readonly payload: {
+    refreshToken: string;
+    accessToken: string;
+  };
 }
 
 export interface IRefreshTokenFailureAction {
-    readonly type: typeof REFRESH_TOKEN__FAILURE;
+  readonly type: typeof REFRESH_TOKEN__FAILURE;
 }
 
 export interface IRefreshTokenResetAction {
-    readonly type: typeof REFRESH_TOKEN_RESET;
+  readonly type: typeof REFRESH_TOKEN_RESET;
 }
 
 export interface IGetUserRequestAction {
-    readonly type: typeof GET_USER__REQUEST;
+  readonly type: typeof GET_USER__REQUEST;
 }
 
 export interface IGetUserSuccessAction {
-    readonly type: typeof GET_USER__SUCCESS;
-    readonly payload: {
-        name: string;
-        email: string;
+  readonly type: typeof GET_USER__SUCCESS;
+  readonly payload: {
+    user: {
+      name: string;
+      email: string;
     };
+  };
 }
 
 export interface IGetUserFailureAction {
-    readonly type: typeof GET_USER__FAILURE;
+  readonly type: typeof GET_USER__FAILURE;
 }
 
 export interface IGetUserResetAction {
-    readonly type: typeof GET_USER__RESET;
+  readonly type: typeof GET_USER__RESET;
 }
 
 export interface ILogoutRequestAction {
-    readonly type: typeof LOGOUT__REQUEST;
+  readonly type: typeof LOGOUT__REQUEST;
 }
 
 export interface ILogoutSuccessAction {
-    readonly type: typeof LOGOUT__SUCCESS;
+  readonly type: typeof LOGOUT__SUCCESS;
 }
 
 export interface ILogoutFailureAction {
-    readonly type: typeof LOGOUT__FAILURE;
+  readonly type: typeof LOGOUT__FAILURE;
 }
 
 export interface ILogoutResetAction {
-    readonly type: typeof LOGOUT__RESET;
+  readonly type: typeof LOGOUT__RESET;
 }
 
 export interface IProfileUpdateRequestAction {
-    readonly type: typeof PROFILE_UPDATE__REQUEST;
+  readonly type: typeof PROFILE_UPDATE__REQUEST;
 }
 
 export interface IProfileUpdateSuccessAction {
-    readonly type: typeof PROFILE_UPDATE__SUCCESS;
-    readonly payload: {
-        name: string;
-        email: string;
+  readonly type: typeof PROFILE_UPDATE__SUCCESS;
+  readonly payload: {
+    user: {
+      name: string;
+      email: string;
     };
+  };
 }
 
 export interface IProfileUpdateFailureAction {
-    readonly type: typeof PROFILE_UPDATE__FAILURE;
+  readonly type: typeof PROFILE_UPDATE__FAILURE;
 }
 
 export interface IProfileUpdateResetAction {
-    readonly type: typeof PROFILE_UPDATE__RESET;
+  readonly type: typeof PROFILE_UPDATE__RESET;
 }
 
 export type TAccountActions =
@@ -356,7 +367,6 @@ export function resetPasswordRequest(password: string, token: string) {
       .then(() => {
         dispatch({
           type: RESET_PASSWORD__SUCCESS,
-          payload: password,
         });
       })
       .catch(() => {

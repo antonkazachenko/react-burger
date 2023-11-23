@@ -12,13 +12,36 @@ import {
   REMOVE_INGREDIENT,
   REORDER_INGREDIENTS,
   RESET_CONSTRUCTOR,
-  RESET_TOTAL_PRICE,
-  SET_TOTAL_PRICE
-} from "../constants/ingredients";
+  SET_TOTAL_PRICE,
+} from '../constants/ingredients';
+import assertNever from '../../utils/assertNever';
+import { TIngredientsActions, TItemTypeWithUniqueId } from '../actions/ingredients';
+import { TItemType } from '../../types';
+
+export type TCreatedOrder = {
+  success: boolean;
+  name: string;
+  order: {
+    number: number;
+  };
+};
+
+type TIngredientsState = {
+  ingredients: Array<TItemType>,
+  bunData: TItemType | null,
+  isLoading: boolean,
+  error: null | Error,
+  constructorIngredients: Array<{ ingredient: TItemTypeWithUniqueId }>,
+  createdOrder: null | TCreatedOrder,
+  currentItem: null | TItemType,
+  totalPrice: number,
+  isLoadingOrder: boolean,
+  orderModalVisible: boolean,
+};
 
 const initialState = {
   ingredients: [],
-  bunData: [],
+  bunData: null,
   isLoading: true,
   error: null,
   constructorIngredients: [],
@@ -29,8 +52,10 @@ const initialState = {
   orderModalVisible: false,
 };
 
-// eslint-disable-next-line default-param-last
-const ingredientsReducer = (state = initialState, action) => {
+const ingredientsReducer = (
+  action: TIngredientsActions,
+  state: TIngredientsState = initialState,
+): TIngredientsState => {
   switch (action.type) {
     case GET_INGREDIENTS__REQUEST: {
       return {
@@ -42,7 +67,7 @@ const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        ingredients: action.payload.data,
+        ingredients: action.payload,
       };
     }
     case GET_INGREDIENTS__FAILURE: {
@@ -131,23 +156,17 @@ const ingredientsReducer = (state = initialState, action) => {
         totalPrice: action.payload,
       };
     }
-    case RESET_TOTAL_PRICE: {
-      return {
-        ...state,
-        totalPrice: 0,
-      };
-    }
     case RESET_CONSTRUCTOR: {
       return {
         ...state,
-        bunData: [],
+        bunData: null,
         constructorIngredients: [],
         totalPrice: 0,
         createdOrder: null,
       };
     }
     default: {
-      return state;
+      return assertNever(action);
     }
   }
 };

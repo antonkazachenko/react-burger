@@ -27,8 +27,50 @@ import {
   RESET_PASSWORD__FAILURE,
   RESET_PASSWORD__REQUEST,
   RESET_PASSWORD__RESET,
-  RESET_PASSWORD__SUCCESS
-} from "../constants/account";
+  RESET_PASSWORD__SUCCESS,
+} from '../constants/account';
+import { TAccountActions } from '../actions/account';
+import assertNever from '../../utils/assertNever';
+
+type TAccountState = {
+  emailCheckRequest: {
+    success: boolean;
+    error: boolean;
+  };
+  passwordResetRequest: {
+    success: boolean;
+    error: boolean;
+  };
+  registerRequest: {
+    success: boolean;
+    error: boolean;
+  };
+  refreshTokenRequest: {
+    success: boolean;
+    error: boolean;
+  };
+  loginRequest: {
+    success: boolean;
+    error: boolean;
+  };
+  logoutRequest: {
+    success: boolean;
+    error: boolean;
+  };
+  profileUpdateRequest: {
+    success: boolean;
+    error: boolean;
+  };
+  getUserRequest: {
+    success: boolean;
+    error: boolean;
+  };
+  user: {
+    name: string;
+    email: string;
+    password?: string;
+  };
+};
 
 const initialState = {
   emailCheckRequest: {
@@ -69,8 +111,10 @@ const initialState = {
   },
 };
 
-// eslint-disable-next-line default-param-last
-const accountReducer = (state = initialState, action) => {
+const accountReducer = (
+  action: TAccountActions,
+  state: TAccountState = initialState,
+): TAccountState => {
   switch (action.type) {
     case GET_USER__REQUEST: {
       return {
@@ -324,10 +368,6 @@ const accountReducer = (state = initialState, action) => {
           success: true,
           error: false,
         },
-        user: {
-          ...state.user,
-          password: action.payload,
-        },
       };
     }
     case RESET_PASSWORD__FAILURE: {
@@ -385,7 +425,7 @@ const accountReducer = (state = initialState, action) => {
       };
     }
     default: {
-      return state;
+      return assertNever(action);
     }
   }
 };

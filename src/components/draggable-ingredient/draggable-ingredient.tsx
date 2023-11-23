@@ -8,9 +8,9 @@ import TItemType from '../../types/ItemType';
 import { TDraggableIngredientItem } from '../../types';
 
 type TDraggableIngredientProp = {
-    ingredient: TItemType;
-    handleIngredientRemoval: (id: string | undefined) => void;
-    index: number;
+  ingredient: TItemType;
+  handleIngredientRemoval: (id: string | undefined) => void;
+  index: number;
 }
 
 const DraggableIngredient: FC<TDraggableIngredientProp> = ({

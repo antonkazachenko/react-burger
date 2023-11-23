@@ -1,6 +1,6 @@
 import BASE_URL from './constants';
 import { setCookie } from './cookie';
-import store, { AppDispatch, RootState } from '../services/store';
+import store, { AppDispatch } from '../services/store';
 
 type Dispatch = typeof store.dispatch;
 
@@ -40,19 +40,27 @@ const request = (endpoint: string, options?: TRequestOptions) => fetch(`${BASE_U
   .then(checkResponse)
   .then(checkSuccess);
 
+// TODO: test this
 export const fetchWithRefresh = async (
   url: string,
   options: TRequestOptions,
   refreshToken: () => (dispatch: AppDispatch) => void,
   dispatch: Dispatch,
-  getState: () => RootState,
 ) => {
   try {
     return await request(url, options);
   } catch (err) {
     if (getErrorMessage(err) === 'jwt expired') {
       dispatch(refreshToken());
-
+      const refreshData = await request('/auth/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          token: localStorage.getItem('refreshToken'),
+        }),
+      });
       if (!refreshData.success) {
         await Promise.reject(refreshData);
       }

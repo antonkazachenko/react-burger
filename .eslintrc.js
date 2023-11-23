@@ -6,24 +6,23 @@ module.exports = {
   extends: [
     'airbnb',
     'airbnb/hooks',
-    'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+    'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
   ],
-  parser: '@typescript-eslint/parser', // Specifies the ESLint parser
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 12,
     sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
     },
-    project: './tsconfig.json', // path to your tsconfig.json
+    project: './tsconfig.json',
   },
   plugins: [
     'react',
     '@typescript-eslint',
   ],
   rules: {
-    // Add custom rules here
     'react/jsx-filename-extension': [1, { extensions: ['.jsx', '.tsx'] }],
     'react/prop-types': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
@@ -34,17 +33,26 @@ module.exports = {
     'import/no-named-as-default': 0,
     'import/no-named-as-default-member': 0,
     'react/function-component-definition': 'off',
+    '@typescript-eslint/indent': ['error', 2],
+    'no-tabs': 'error',
+    '@typescript-eslint/no-explicit-any': 'error',
+    '@typescript-eslint/explicit-function-return-type': ['error', {
+      allowExpressions: true,
+    }],
+    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/no-var-requires': 'error',
+    '@typescript-eslint/no-non-null-assertion': 'error',
   },
   settings: {
     react: {
-      version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
+      version: 'detect',
     },
   },
   overrides: [
     {
-      files: ['.eslintrc.js'], // exclude this config file from typescript parsing
+      files: ['.eslintrc.js'],
       parserOptions: {
-        project: null, // don't use any tsconfig for this file
+        project: null,
       },
     },
     {

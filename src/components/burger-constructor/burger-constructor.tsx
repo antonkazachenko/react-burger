@@ -14,12 +14,11 @@ import {
   removeIngredient,
   changeBun,
   setTotalPrice,
-  resetTotalPrice,
+  resetTotalPrice, resetConstructor,
 } from '../../services/actions/ingredients';
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 import { WithModalControlsReturn } from '../../hocs/with-modal-control';
 import TItemType from '../../types/ItemType';
-import { RESET_CONSTRUCTOR } from '../../services/constants/ingredients';
 
 type TBurgerConstructorProp = {
   className: string;
@@ -50,7 +49,7 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
   const handleCloseModalWithReset = () => {
     setIsVisible(false);
     handleCloseModal();
-    dispatch({ type: RESET_CONSTRUCTOR });
+    dispatch(resetConstructor());
   };
 
   const [, dropTarget] = useDrop({
@@ -166,9 +165,9 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
         {
           isVisible
           && (
-          <Modal onClose={handleCloseModalWithReset} className={styles.modalWidth}>
-            <OrderDetails />
-          </Modal>
+            <Modal onClose={handleCloseModalWithReset} className={styles.modalWidth}>
+              <OrderDetails />
+            </Modal>
           )
         }
       </div>
