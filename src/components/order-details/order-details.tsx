@@ -5,7 +5,6 @@ import styles from './order-details.module.css';
 import { ReactComponent as OrderConfirmationTick } from '../../images/orderConfirmedTick.svg';
 
 const OrderDetails: FC<void> = () => {
-  // TODO: remove this any
   const { createdOrder } = useSelector((store) => store.ingredientsStore);
 
   if (!createdOrder) {

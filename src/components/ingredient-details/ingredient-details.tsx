@@ -21,7 +21,6 @@ type TItemType = {
 
 const IngredientDetails: FC<void> = () => {
   const { id } = useParams();
-  // TODO: remove this any
   const data = useSelector((store) => store
     // eslint-disable-next-line no-underscore-dangle
     .ingredientsStore.ingredients.find((item: TItemType) => item._id === id));

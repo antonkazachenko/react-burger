@@ -8,15 +8,11 @@ import styles from './app-header.module.css';
 import { getUserRequest } from '../../services/actions/account';
 
 const AppHeader: FC<void> = () => {
-  // TODO: remove this any
   const { user } = useSelector((store) => store.accountStore);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleAccountClick = (): void => {
-    // TODO: remove this ts-ignore
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     dispatch(getUserRequest());
     if (user.name === '') {
       navigate('/login');
@@ -26,9 +22,6 @@ const AppHeader: FC<void> = () => {
   };
 
   useEffect(() => {
-    // TODO: remove this ts-ignore
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     dispatch(getUserRequest());
   }, [dispatch]);
 

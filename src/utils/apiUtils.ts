@@ -1,8 +1,6 @@
 import BASE_URL from './constants';
 import { setCookie } from './cookie';
-import store, { AppDispatch } from '../services/store';
-
-type Dispatch = typeof store.dispatch;
+import { AppDispatch } from '../services/store';
 
 type TRequestOptions = {
   method: string,
@@ -14,21 +12,21 @@ type TRequestOptions = {
   body?: string,
 }
 
-function getErrorMessage(error: unknown) {
+function getErrorMessage(error: unknown): string {
   if (error instanceof Error) return error.message;
   return String(error);
 }
 
-// TODO: remove this any
 export interface ApiResponse {
   success: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 
-const checkResponse = (res: Response) => (res.ok ? res.json() : res.json()
+const checkResponse = (res: Response): Promise<ApiResponse> => (res.ok ? res.json() : res.json()
   .then((err: Error) => Promise.reject(err)));
 
-const checkSuccess = (res: ApiResponse) => {
+const checkSuccess = (res: ApiResponse): ApiResponse | Promise<never> => {
   if (res && res.success) {
     return res;
   }
@@ -36,7 +34,7 @@ const checkSuccess = (res: ApiResponse) => {
   return Promise.reject(`Ответ не success: ${res}`);
 };
 
-const request = (endpoint: string, options?: TRequestOptions) => fetch(`${BASE_URL}${endpoint}`, options)
+const request = (endpoint: string, options?: TRequestOptions): Promise<ApiResponse> => fetch(`${BASE_URL}${endpoint}`, options)
   .then(checkResponse)
   .then(checkSuccess);
 
@@ -45,8 +43,8 @@ export const fetchWithRefresh = async (
   url: string,
   options: TRequestOptions,
   refreshToken: () => (dispatch: AppDispatch) => void,
-  dispatch: Dispatch,
-) => {
+  dispatch: AppDispatch,
+): Promise<ApiResponse> => {
   try {
     return await request(url, options);
   } catch (err) {

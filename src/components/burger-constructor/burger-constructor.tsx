@@ -32,7 +32,6 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // TODO: remove these any's
   const {
     constructorIngredients,
     bunData,
@@ -70,7 +69,6 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
       totalPriceValue += bunData.price * 2;
     }
     if (constructorIngredients) {
-      // TODO: remove this any
       constructorIngredients.forEach((el: { ingredient: TItemTypeWithUniqueId }) => {
         totalPriceValue += el.ingredient.price;
       });
@@ -97,7 +95,6 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
     ingredientsArray.push(bunData._id);
     // eslint-disable-next-line no-underscore-dangle
     setIsVisible(true);
-    // TODO: remove this any
     dispatch(createOrderRequest(ingredientsArray));
     handleModal();
   };
@@ -108,7 +105,6 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
       </div>
     );
   }
-  // TODO: remove this any
   return (
     <div className={className} ref={dropTarget}>
 

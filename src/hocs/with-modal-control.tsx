@@ -18,8 +18,6 @@ function withModalControl<P extends WithModalControlsReturn>(
     const dispatch = useDispatch();
     const { isModalOpen, openModal, closeModal } = useModal();
     const navigate = useNavigate();
-
-    // TODO: remove this any
     const handleModal = (item: THandleItem | undefined): void => {
       openModal();
       if (item && item.data) {
