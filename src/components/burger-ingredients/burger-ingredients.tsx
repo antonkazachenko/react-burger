@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { useInView } from 'react-intersection-observer';
+import { useSelector } from '../../hooks';
 import styles from './burger-ingredients.module.css';
 import IngredientTabs from '../ingredient-tabs/ingredient-tabs';
 import IngredientSection from '../ingredient-section/ingredient-section';
@@ -12,8 +11,7 @@ type TBurgerIngredientsProp = {
 }
 
 const BurgerIngredients: FC<TBurgerIngredientsProp> = ({ handleModal }) => {
-  // TODO: remove this any
-  const { ingredients } = useSelector((store: any) => store.ingredientsStore);
+  const { ingredients } = useSelector((store) => store.ingredientsStore);
   const [activeTab, setActiveTab] = React.useState('one');
   const bread = ingredients.filter((el: TItemType) => el.type === 'bun');
   const sauces = ingredients.filter((el: TItemType) => el.type === 'sauce');

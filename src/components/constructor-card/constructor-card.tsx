@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
+import { useSelector } from '../../hooks';
 import styles from './constructor-card.module.css';
 import TItemType from '../../types/ItemType';
+import { TItemTypeWithUniqueId } from '../../services/actions/ingredients';
 
 type TConstructorCardProp = {
   item: TItemType;
@@ -16,13 +16,13 @@ type TConstructorCardProp = {
 const ConstructorCard: FC<TConstructorCardProp> = ({
   item, className, price, onClick,
 }) => {
-  // TODO: remove this any
-  const ingredientCount = useSelector((store: any) => {
+  const ingredientCount = useSelector((store) => {
     if (item.type !== 'bun') {
       return store.ingredientsStore.constructorIngredients
-        // TODO: remove this any
-        // eslint-disable-next-line no-underscore-dangle
-        .filter((el: any) => el.ingredient._id === item._id).length;
+        .filter(
+          // eslint-disable-next-line no-underscore-dangle
+          (el: { ingredient: TItemTypeWithUniqueId }) => el.ingredient._id === item._id,
+        ).length;
     }
     return store.ingredientsStore.bunData === item ? 1 : 0;
   });
@@ -36,7 +36,7 @@ const ConstructorCard: FC<TConstructorCardProp> = ({
     item,
   });
 
-  function customClick() {
+  function customClick(): void {
     onClick({ data: item });
   }
 

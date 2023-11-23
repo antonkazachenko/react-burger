@@ -2,9 +2,9 @@ import React, { FC, useEffect, useState } from 'react';
 import {
   Button, ConstructorElement, CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from '../../hooks';
 import styles from './burger-constructor.module.css';
 import OrderDetails from '../order-details/order-details';
 import Modal from '../modal/modal';
@@ -14,7 +14,7 @@ import {
   removeIngredient,
   changeBun,
   setTotalPrice,
-  resetTotalPrice, resetConstructor,
+  resetConstructor, TItemTypeWithUniqueId,
 } from '../../services/actions/ingredients';
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 import { WithModalControlsReturn } from '../../hocs/with-modal-control';
@@ -36,17 +36,17 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
   const {
     constructorIngredients,
     bunData,
-  } = useSelector((store: any) => store.ingredientsStore);
-  const { name } = useSelector((store: any) => store.accountStore.user);
-  const { totalPrice } = useSelector((store: any) => store.ingredientsStore);
+  } = useSelector((store) => store.ingredientsStore);
+  const { name } = useSelector((store) => store.accountStore.user);
+  const { totalPrice } = useSelector((store) => store.ingredientsStore);
 
-  const handleIngredientRemoval = (id: string | undefined) => {
+  const handleIngredientRemoval = (id: string | undefined): void => {
     if (typeof id === 'undefined') { return; }
     // eslint-disable-next-line no-underscore-dangle
     dispatch(removeIngredient(id));
   };
 
-  const handleCloseModalWithReset = () => {
+  const handleCloseModalWithReset = (): void => {
     setIsVisible(false);
     handleCloseModal();
     dispatch(resetConstructor());
@@ -71,18 +71,18 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
     }
     if (constructorIngredients) {
       // TODO: remove this any
-      constructorIngredients.forEach((el: any) => {
+      constructorIngredients.forEach((el: { ingredient: TItemTypeWithUniqueId }) => {
         totalPriceValue += el.ingredient.price;
       });
     }
     if (totalPriceValue === 0) {
-      dispatch(resetTotalPrice());
+      dispatch(setTotalPrice(0));
     } else {
       dispatch(setTotalPrice(totalPriceValue));
     }
   }, [bunData, constructorIngredients, dispatch]);
 
-  const createOrder = () => {
+  const createOrder = (): void => {
     if (!name) {
       navigate('/login', { replace: true });
     }
@@ -98,7 +98,7 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
     // eslint-disable-next-line no-underscore-dangle
     setIsVisible(true);
     // TODO: remove this any
-    dispatch<any>(createOrderRequest(ingredientsArray));
+    dispatch(createOrderRequest(ingredientsArray));
     handleModal();
   };
   if (bunData.length === 0) {
@@ -124,20 +124,22 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
       {
         constructorIngredients && constructorIngredients.length ? (
           <div className={styles.overflow}>
-            {constructorIngredients.map((el: any, index: number) => {
-              if (el.type !== 'bun') {
-                return (
-                  <DraggableIngredient
+            {constructorIngredients.map(
+              (el: { ingredient: TItemTypeWithUniqueId }, index: number) => {
+                if (el.type !== 'bun') {
+                  return (
+                    <DraggableIngredient
                     /* eslint-disable-next-line no-underscore-dangle */
-                    key={el.ingredient.uniqueId}
-                    ingredient={el.ingredient}
-                    handleIngredientRemoval={handleIngredientRemoval}
-                    index={index}
-                  />
-                );
-              }
-              return null;
-            })}
+                      key={el.ingredient.uniqueId}
+                      ingredient={el.ingredient}
+                      handleIngredientRemoval={handleIngredientRemoval}
+                      index={index}
+                    />
+                  );
+                }
+                return null;
+              },
+            )}
           </div>
         ) : null
       }

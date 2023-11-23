@@ -2,18 +2,18 @@ import React, { FC, useEffect } from 'react';
 import {
   BurgerIcon, ListIcon, Logo, ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from '../../hooks';
 import styles from './app-header.module.css';
 import { getUserRequest } from '../../services/actions/account';
 
 const AppHeader: FC<void> = () => {
   // TODO: remove this any
-  const { user } = useSelector((store: any) => store.accountStore);
+  const { user } = useSelector((store) => store.accountStore);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleAccountClick = () => {
+  const handleAccountClick = (): void => {
     // TODO: remove this ts-ignore
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore

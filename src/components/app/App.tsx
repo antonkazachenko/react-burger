@@ -2,9 +2,8 @@ import React, { FC, useEffect } from 'react';
 import {
   Routes, Route, useLocation, useNavigate,
 } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import useSelector from '../../hooks/
 import MoonLoader from 'react-spinners/MoonLoader';
+import { useSelector, useDispatch } from '../../hooks';
 import styles from './App.module.css';
 import { getIngredients, setCurrentItemClose } from '../../services/actions/ingredients';
 import {
@@ -23,7 +22,7 @@ const App: FC<void> = () => {
   const navigate = useNavigate();
   const state = location.state as { backgroundLocation?: Location };
 
-  const handleCloseModal = () => {
+  const handleCloseModal = (): void => {
     dispatch(setCurrentItemClose());
     navigate(-1);
   };

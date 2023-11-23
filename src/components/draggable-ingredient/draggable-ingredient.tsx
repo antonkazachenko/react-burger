@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../hooks';
 import { reorderIngredients } from '../../services/actions/ingredients';
 import styles from './draggable-ingredient.module.css';
 import TItemType from '../../types/ItemType';

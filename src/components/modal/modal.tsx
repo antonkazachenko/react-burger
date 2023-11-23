@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import styles from './modal.module.css';
 
@@ -18,12 +18,11 @@ const Modal: FC<TModalProp> = ({
   onClose, title, className, children,
 }) => {
   const dispatch = useDispatch();
-  // TODO: remove this any
-  const { createdOrder } = useSelector((store: any) => store.ingredientsStore);
-  const handleClose = () => onClose();
+  const { createdOrder } = useSelector((store) => store.ingredientsStore);
+  const handleClose = (): void => onClose();
 
   useEffect(() => {
-    const handleEsc = (event: KeyboardEvent) => {
+    const handleEsc = (event: KeyboardEvent): void => {
       if (event.key === 'Escape') {
         onClose();
       }

@@ -1,7 +1,7 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import MoonLoader from 'react-spinners/MoonLoader';
+import { useSelector } from '../../hooks';
 import styles from '../modal/modal.module.css';
 
 type TItemType = {
@@ -19,10 +19,10 @@ type TItemType = {
   __v: number;
 }
 
-function IngredientDetails() {
+const IngredientDetails: FC<void> = () => {
   const { id } = useParams();
   // TODO: remove this any
-  const data = useSelector((store: any) => store
+  const data = useSelector((store) => store
     // eslint-disable-next-line no-underscore-dangle
     .ingredientsStore.ingredients.find((item: TItemType) => item._id === id));
 
@@ -88,6 +88,6 @@ function IngredientDetails() {
       </div>
     </>
   );
-}
+};
 
 export default IngredientDetails;
