@@ -3,7 +3,7 @@ import {
   ActionCreator,
   applyMiddleware, combineReducers, compose, createStore, Dispatch,
 } from 'redux';
-import thunk, { ThunkAction } from 'redux-thunk';
+import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import ingredientsReducer from './reducers/ingredients';
 import accountReducer from './reducers/account';
 import { TIngredientsActions } from './actions/ingredients';
@@ -30,14 +30,16 @@ const enhancer = composeEnhancers(
 
 export const store = createStore(rootReducer, enhancer);
 
-type TApplicationActions = TIngredientsActions & TAccountActions;
-
-export type AppDispatch = typeof store.dispatch;
+type TApplicationActions = TIngredientsActions | TAccountActions;
 
 export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
 
-export type AppThunk<TReturn = void> = ActionCreator<
-ThunkAction<TReturn, Action, RootState, TApplicationActions>
+export type AppThunk<ReturnType = void> = ThunkAction<
+ReturnType,
+RootState,
+unknown,
+TApplicationActions
 >;
 
 export default store;

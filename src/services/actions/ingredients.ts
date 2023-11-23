@@ -100,6 +100,26 @@ export interface IResetConstructorAction {
   readonly type: typeof RESET_CONSTRUCTOR;
 }
 
+export interface ICreatedOrderRequestAction {
+  readonly type: typeof POST_ORDER__REQUEST;
+}
+
+export interface ICreatedOrderSuccessAction {
+  readonly type: typeof POST_ORDER__SUCCESS;
+  readonly payload: {
+    success: boolean;
+    name: string;
+    order: {
+      number: number;
+    };
+  };
+}
+
+export interface ICreatedOrderFailureAction {
+  readonly type: typeof POST_ORDER__FAILURE;
+  readonly payload: Error;
+}
+
 export type TIngredientsActions =
     | IAddIngredientAction
     | IRemoveIngredientAction
@@ -175,6 +195,23 @@ export const getIngredientsFailure = (payload: Error): IGetIngredientsFailureAct
   payload,
 });
 
+const createdOrderRequest = (): ICreatedOrderRequestAction => ({
+  type: POST_ORDER__REQUEST,
+});
+
+const createdOrderSuccess = (
+  payload: {
+    success: boolean;
+    name: string;
+    order: {
+      number: number;
+    };
+  },
+): ICreatedOrderSuccessAction => ({
+  type: POST_ORDER__SUCCESS,
+  payload,
+});
+
 export const getIngredients: AppThunk = () => function (dispatch: AppDispatch) {
   dispatch(getIngredientsRequest());
   request('/ingredients')
@@ -187,28 +224,31 @@ export const getIngredients: AppThunk = () => function (dispatch: AppDispatch) {
     });
 };
 
-export function createOrderRequest(constructorIngredients: string[]) {
-  return function (dispatch: AppDispatch) {
-    // Start the API call by dispatching a request action
-    dispatch({ type: POST_ORDER__REQUEST });
+export const postOrderRequest = (): IPostOrderRequestAction => ({
+  type: POST_ORDER__REQUEST,
+});
 
-    return request('/orders', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: getCookie('accessToken'),
-      },
-      body: JSON.stringify({
-        ingredients: constructorIngredients,
-      }),
+export const createOrderRequest: AppThunk = (
+  constructorIngredients: string[],
+) => function (dispatch: AppDispatch) {
+  // Start the API call by dispatching a request action
+  dispatch(createdOrderRequest());
+
+  return request('/orders', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: getCookie('accessToken'),
+    },
+    body: JSON.stringify({
+      ingredients: constructorIngredients,
+    }),
+  })
+    .then((res) => {
+      dispatch(createdOrderSuccess(res.data));
     })
-      .then((res) => {
-        dispatch<any>({ type: POST_ORDER__SUCCESS, payload: res });
-        return res;
-      })
-      .catch((err) => {
-        dispatch<any>({ type: POST_ORDER__FAILURE, payload: err });
-        console.log(err);
-      });
-  };
-}
+    .catch((err) => {
+      dispatch(postOrderRequest());
+      console.log(err);
+    });
+};
