@@ -1,27 +1,26 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
   Button, EmailInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useForm } from '../../hooks';
 import styles from './forgot-password-page.module.css';
 import { emailCheckRequest, emailCheckReset, getUserRequest } from '../../services/actions/account';
-import useForm from '../../hooks/useForm';
 
-function ForgotPasswordPage() {
+const ForgotPasswordPage: FC<void> = () => {
   const { values, handleChange } = useForm({ email: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { success } = useSelector((store: any) => store.accountStore.emailCheckRequest);
+  const { success } = useSelector((store) => store.accountStore.emailCheckRequest);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
-    dispatch<any>(emailCheckRequest(values.email));
+    dispatch(emailCheckRequest(values.email));
   };
 
   React.useEffect(() => {
-    dispatch<any>(getUserRequest());
+    dispatch(getUserRequest());
     if (success) {
       dispatch(emailCheckReset());
       navigate('/reset-password', { state: { from: '/forgot-password' }, replace: true });
@@ -61,6 +60,6 @@ function ForgotPasswordPage() {
       </div>
     </div>
   );
-}
+};
 
 export default ForgotPasswordPage;

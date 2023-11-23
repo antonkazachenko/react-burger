@@ -1,30 +1,26 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
   Button, EmailInput, Input, PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useForm } from '../../hooks';
 import styles from './register-page.module.css';
 import { getUserRequest, registerRequest } from '../../services/actions/account';
-import useForm from '../../hooks/useForm';
 
-function RegisterPage() {
+const RegisterPage: FC<void> = () => {
   const { values, handleChange } = useForm({ name: '', email: '', password: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // TODO: remove any
-  const { user } = useSelector((state: any) => state.accountStore);
+  const { user } = useSelector((state) => state.accountStore);
 
-  const handleOnSubmit = (e: React.FormEvent) => {
+  const handleOnSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
-    // TODO: remove any
-    dispatch<any>(registerRequest(values.email, values.password, values.name));
+    dispatch(registerRequest(values.email, values.password, values.name));
   };
 
   React.useEffect(() => {
-    // TODO: remove any
-    dispatch<any>(getUserRequest());
+    dispatch(getUserRequest());
     if (user.name !== '') {
       navigate('/', { replace: true });
     }
@@ -80,6 +76,6 @@ function RegisterPage() {
       </div>
     </div>
   );
-}
+};
 
 export default RegisterPage;

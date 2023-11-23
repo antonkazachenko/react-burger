@@ -13,7 +13,7 @@ type TFormFunctions = {
 function useForm(inputValues: TFormValues = {}): TFormFunctions {
   const [values, setValues] = useState<TFormValues>(inputValues);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { value, name } = event.target;
     setValues({ ...values, [name]: value });
   };

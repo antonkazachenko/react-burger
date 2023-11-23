@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../hooks';
 import styles from './profile-orders-page.module.css';
 import { logoutRequest } from '../../services/actions/account';
 
-function ProfileOrdersPage() {
+const ProfileOrdersPage: FC<void> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    dispatch<any>(logoutRequest());
+  const handleLogout = (): void => {
+    dispatch(logoutRequest());
     navigate('/', { replace: true });
   };
 
@@ -46,6 +46,6 @@ function ProfileOrdersPage() {
       </div>
     </div>
   );
-}
+};
 
 export default ProfileOrdersPage;

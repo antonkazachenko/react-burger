@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setCurrentItemClose, setCurrentItemOpen } from '../services/actions/ingredients';
-import useModal from '../hooks/useModal';
+import { useModal } from '../hooks';
 import { THandleItem } from '../types';
 
 export interface WithModalControlsReturn {
@@ -20,13 +20,13 @@ function withModalControl<P extends WithModalControlsReturn>(
     const navigate = useNavigate();
 
     // TODO: remove this any
-    const handleModal = (item: THandleItem | undefined) => {
+    const handleModal = (item: THandleItem | undefined): void => {
       openModal();
       if (item && item.data) {
         dispatch(setCurrentItemOpen(item.data));
       }
     };
-    const handleCloseModal = () => {
+    const handleCloseModal = (): void => {
       closeModal();
       dispatch(setCurrentItemClose());
       if (window.location.pathname !== '/') {
@@ -36,7 +36,7 @@ function withModalControl<P extends WithModalControlsReturn>(
 
     return (
       <Component
-            /* eslint-disable-next-line react/jsx-props-no-spreading */
+        /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...props as P}
         handleModal={handleModal}
         handleCloseModal={handleCloseModal}

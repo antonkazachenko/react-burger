@@ -1,18 +1,17 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useForm } from '../../hooks';
 import styles from './profile-main-page.module.css';
 import { logoutRequest } from '../../services/actions/account';
-import useForm from '../../hooks/useForm';
 
-function ProfileMainPage() {
-  const { user } = useSelector((store: any) => store.accountStore);
+const ProfileMainPage: FC<void> = () => {
+  const { user } = useSelector((store) => store.accountStore);
   const { values, handleChange } = useForm({ name: user.name, email: user.email, password: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleLogout = () => {
-    dispatch<any>(logoutRequest());
+  const handleLogout = (): void => {
+    dispatch(logoutRequest());
     navigate('/', { replace: true });
   };
 
@@ -84,6 +83,6 @@ function ProfileMainPage() {
       </div>
     </div>
   );
-}
+};
 
 export default ProfileMainPage;
