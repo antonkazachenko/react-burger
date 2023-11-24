@@ -30,7 +30,7 @@ export const store = createStore(rootReducer, enhancer);
 
 type TApplicationActions = TIngredientsActions | TAccountActions;
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
 
 export type AppThunk<ReturnType = void> =
