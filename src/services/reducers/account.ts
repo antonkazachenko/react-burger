@@ -30,7 +30,6 @@ import {
   RESET_PASSWORD__SUCCESS,
 } from '../constants/account';
 import { TAccountActions } from '../actions/account';
-import assertNever from '../../utils/assertNever';
 
 type TAccountState = {
   emailCheckRequest: {
@@ -112,8 +111,9 @@ const initialState = {
 };
 
 const accountReducer = (
-  action: TAccountActions,
+  // eslint-disable-next-line default-param-last
   state: TAccountState = initialState,
+  action: TAccountActions,
 ): TAccountState => {
   switch (action.type) {
     case GET_USER__REQUEST: {
@@ -425,7 +425,7 @@ const accountReducer = (
       };
     }
     default: {
-      return assertNever(action);
+      return state;
     }
   }
 };

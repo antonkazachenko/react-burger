@@ -16,7 +16,6 @@ import {
 } from '../constants/ingredients';
 import { TIngredientsActions, TItemTypeWithUniqueId } from '../actions/ingredients';
 import { TItemType } from '../../types';
-import assertNever from '../../utils/assertNever';
 
 export type TCreatedOrder = {
   success: boolean;
@@ -53,8 +52,9 @@ const initialState = {
 };
 
 const ingredientsReducer = (
-  action: TIngredientsActions,
+  // eslint-disable-next-line default-param-last
   state: TIngredientsState = initialState,
+  action: TIngredientsActions,
 ): TIngredientsState => {
   switch (action.type) {
     case GET_INGREDIENTS__REQUEST: {
@@ -166,7 +166,7 @@ const ingredientsReducer = (
       };
     }
     default: {
-      return assertNever(action);
+      return state;
     }
   }
 };

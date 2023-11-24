@@ -10,6 +10,14 @@ const NonModalIngredientPage: FC<object> = () => {
   // eslint-disable-next-line no-underscore-dangle
     .ingredientsStore.ingredients.find((item: TItemType) => item._id === id));
 
+  if (!data) {
+    return (
+      <div className="text text_type_main-medium">
+        Ингредиент не найден
+      </div>
+    );
+  }
+
   return (
     <>
       <div className={`mt-30 ${styles.flex}`}>

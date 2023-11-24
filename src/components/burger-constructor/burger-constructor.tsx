@@ -54,7 +54,6 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
   const [, dropTarget] = useDrop({
     accept: ['bun', 'sauce'],
     drop(item: TItemType) {
-      if ((bunData.length === 0) && (item.type !== 'bun')) { return; }
       if (item && item.type === 'bun') {
         dispatch(changeBun(item));
       } else {
@@ -85,11 +84,12 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
       navigate('/login', { replace: true });
     }
     const ingredientsArray = [];
+    if (!bunData) { return; }
     // eslint-disable-next-line no-underscore-dangle
     ingredientsArray.push(bunData._id);
-    constructorIngredients.forEach((el: TItemType) => {
+    constructorIngredients.forEach((el) => {
       // eslint-disable-next-line no-underscore-dangle
-      ingredientsArray.push(el._id);
+      ingredientsArray.push(el.ingredient._id);
     });
     // eslint-disable-next-line no-underscore-dangle
     ingredientsArray.push(bunData._id);
@@ -98,7 +98,7 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
     dispatch(createOrderRequest(ingredientsArray));
     handleModal();
   };
-  if (bunData.length === 0) {
+  if (bunData === null) {
     return (
       <div className={styles.dropZone} ref={dropTarget}>
         <p className="text text_type_main-large mt-10">Перенесите булку в правую часть экрана</p>
