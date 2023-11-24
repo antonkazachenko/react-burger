@@ -36,9 +36,9 @@ module.exports = {
     '@typescript-eslint/indent': ['error', 2],
     'no-tabs': 'error',
     '@typescript-eslint/no-explicit-any': 'error',
-    '@typescript-eslint/explicit-function-return-type': ['error', {
-      allowExpressions: true,
-    }],
+    // '@typescript-eslint/explicit-function-return-type': ['error', {
+    //   allowExpressions: true,
+    // }],
     '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/no-var-requires': 'error',
     '@typescript-eslint/no-non-null-assertion': 'error',

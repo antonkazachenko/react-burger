@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from '../../hooks';
 import styles from './app-header.module.css';
 import { getUserRequest } from '../../services/actions/account';
 
-const AppHeader: FC<void> = () => {
+const AppHeader: FC<object> = () => {
   const { user } = useSelector((store) => store.accountStore);
   const navigate = useNavigate();
   const dispatch = useDispatch();

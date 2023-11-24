@@ -7,7 +7,7 @@ import { useDispatch, useSelector, useForm } from '../../hooks';
 import styles from './sign-in.module.css';
 import { getUserRequest, loginRequest } from '../../services/actions/account';
 
-const SignIn: FC<void> = () => {
+const SignIn: FC<object> = () => {
   const { values, handleChange } = useForm({ email: '', password: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();

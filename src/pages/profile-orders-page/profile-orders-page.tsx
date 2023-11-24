@@ -4,7 +4,7 @@ import { useDispatch } from '../../hooks';
 import styles from './profile-orders-page.module.css';
 import { logoutRequest } from '../../services/actions/account';
 
-const ProfileOrdersPage: FC<void> = () => {
+const ProfileOrdersPage: FC<object> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

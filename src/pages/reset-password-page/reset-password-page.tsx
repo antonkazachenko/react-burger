@@ -8,7 +8,7 @@ import styles from './reset-password-page.module.css';
 // eslint-disable-next-line import/named
 import { getUserRequest, resetPasswordRequest, resetPasswordReset } from '../../services/actions/account';
 
-const ResetPasswordPage: FC<void> = () => {
+const ResetPasswordPage: FC<object> = () => {
   const { values, handleChange } = useForm({ password: '', emailCode: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();

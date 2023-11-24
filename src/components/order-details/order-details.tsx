@@ -4,7 +4,7 @@ import { useSelector } from '../../hooks';
 import styles from './order-details.module.css';
 import { ReactComponent as OrderConfirmationTick } from '../../images/orderConfirmedTick.svg';
 
-const OrderDetails: FC<void> = () => {
+const OrderDetails: FC<object> = () => {
   const { createdOrder } = useSelector((store) => store.ingredientsStore);
 
   if (!createdOrder) {

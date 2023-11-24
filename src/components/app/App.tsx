@@ -15,7 +15,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import ProtectedRouteElement from '../protected-route-element/protected-route-element';
 import AppHeader from '../app-header/app-header';
 
-const App: FC<void> = () => {
+const App: FC<object> = () => {
   const { isLoading } = useSelector((state) => state.ingredientsStore);
   const dispatch = useDispatch();
   const location = useLocation();

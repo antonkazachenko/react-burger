@@ -5,7 +5,7 @@ import { useDispatch, useSelector, useForm } from '../../hooks';
 import styles from './profile-main-page.module.css';
 import { logoutRequest } from '../../services/actions/account';
 
-const ProfileMainPage: FC<void> = () => {
+const ProfileMainPage: FC<object> = () => {
   const { user } = useSelector((store) => store.accountStore);
   const { values, handleChange } = useForm({ name: user.name, email: user.email, password: '' });
   const dispatch = useDispatch();

@@ -19,7 +19,7 @@ type TItemType = {
   __v: number;
 }
 
-const IngredientDetails: FC<void> = () => {
+const IngredientDetails: FC<object> = () => {
   const { id } = useParams();
   const data = useSelector((store) => store
     // eslint-disable-next-line no-underscore-dangle

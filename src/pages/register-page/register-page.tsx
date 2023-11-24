@@ -8,7 +8,7 @@ import { useDispatch, useSelector, useForm } from '../../hooks';
 import styles from './register-page.module.css';
 import { getUserRequest, registerRequest } from '../../services/actions/account';
 
-const RegisterPage: FC<void> = () => {
+const RegisterPage: FC<object> = () => {
   const { values, handleChange } = useForm({ name: '', email: '', password: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();

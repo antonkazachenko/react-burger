@@ -9,7 +9,7 @@ import BurgerConstructor from '../../components/burger-constructor/burger-constr
 const BurgerIngredientsWithModal = withModalControl(BurgerIngredients);
 const BurgerConstructorWithModal = withModalControl(BurgerConstructor);
 
-const MainPage: FC<void> = () => (
+const MainPage: FC<object> = () => (
   <>
     { /* eslint-disable-next-line react/jsx-no-constructed-context-values */ }
     <div className={styles.app}>

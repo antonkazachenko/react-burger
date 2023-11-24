@@ -8,7 +8,7 @@ import { useDispatch, useSelector, useForm } from '../../hooks';
 import styles from './forgot-password-page.module.css';
 import { emailCheckRequest, emailCheckReset, getUserRequest } from '../../services/actions/account';
 
-const ForgotPasswordPage: FC<void> = () => {
+const ForgotPasswordPage: FC<object> = () => {
   const { values, handleChange } = useForm({ email: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();

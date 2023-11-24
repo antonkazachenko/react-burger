@@ -14,9 +14,9 @@ import {
   RESET_CONSTRUCTOR,
   SET_TOTAL_PRICE,
 } from '../constants/ingredients';
-import assertNever from '../../utils/assertNever';
 import { TIngredientsActions, TItemTypeWithUniqueId } from '../actions/ingredients';
 import { TItemType } from '../../types';
+import assertNever from '../../utils/assertNever';
 
 export type TCreatedOrder = {
   success: boolean;
