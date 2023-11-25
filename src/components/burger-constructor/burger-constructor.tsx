@@ -56,7 +56,7 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
     drop(item: TItemType) {
       if (item && item.type === 'bun') {
         dispatch(changeBun(item));
-      } else {
+      } else if (bunData !== null) {
         dispatch(addIngredient(item));
       }
     },
