@@ -93,7 +93,6 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
     });
     // eslint-disable-next-line no-underscore-dangle
     ingredientsArray.push(bunData._id);
-    // eslint-disable-next-line no-underscore-dangle
     setIsVisible(true);
     dispatch(createOrderRequest(ingredientsArray));
     handleModal();

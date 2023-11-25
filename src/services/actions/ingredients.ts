@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { v4 as uuidv4 } from 'uuid';
-import request from '../../utils/apiUtils';
+import request, { ApiResponse } from '../../utils/apiUtils';
 import { TItemType } from '../../types';
 import {
   ADD_INGREDIENT,
@@ -110,7 +110,20 @@ export interface ICreatedOrderSuccessAction {
     success: boolean;
     name: string;
     order: {
+      ingredients: TItemType[];
+      _id: string;
+      owner: {
+        name: string;
+        email: string;
+        createdAt: string;
+        updatedAt: string;
+      };
+      status: string;
       number: number;
+      createdAt: string;
+      updatedAt: string;
+      name: string;
+      price: number;
     };
   };
 }
@@ -199,19 +212,14 @@ const createdOrderRequest = (): ICreatedOrderRequestAction => ({
   type: POST_ORDER__REQUEST,
 });
 
-const createdOrderSuccess = (
-  payload: {
-    success: boolean;
-    name: string;
-    order: {
-      number: number;
-    };
-  },
-): ICreatedOrderSuccessAction => ({
+const createdOrderSuccess = (apiResponse: ApiResponse): ICreatedOrderSuccessAction => ({
   type: POST_ORDER__SUCCESS,
-  payload,
+  payload: {
+    success: apiResponse.success,
+    name: apiResponse.name,
+    order: apiResponse.order,
+  },
 });
-
 export const getIngredients: AppThunk = () => function (dispatch: AppDispatch) {
   dispatch(getIngredientsRequest());
   request('/ingredients')
@@ -245,7 +253,7 @@ export const createOrderRequest: AppThunk = (
     }),
   })
     .then((res) => {
-      dispatch(createdOrderSuccess(res.data));
+      dispatch(createdOrderSuccess(res));
     })
     .catch((err) => {
       dispatch(postOrderRequest());

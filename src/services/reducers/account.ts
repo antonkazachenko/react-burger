@@ -425,6 +425,8 @@ const accountReducer = (
       };
     }
     default: {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-underscore-dangle
+      const _exhaustiveCheck: never = action;
       return state;
     }
   }
