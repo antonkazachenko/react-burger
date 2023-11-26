@@ -1,0 +1,14 @@
+.app {
+    margin: 0 auto;
+    max-width: 1240px;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabWidth {
+    width: 50%;
+}
+
+.flex {
+    display: flex;
+}

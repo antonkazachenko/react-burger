@@ -14,6 +14,7 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import ProtectedRouteElement from '../protected-route-element/protected-route-element';
 import AppHeader from '../app-header/app-header';
+import OrderFeedPage from '../../pages/order-feed-page/order-feed-page';
 
 const App: FC<object> = () => {
   const { isLoading } = useSelector((state) => state.ingredientsStore);
@@ -56,6 +57,7 @@ const App: FC<object> = () => {
         <Route path="/register" element={<ProtectedRouteElement element={<RegisterPage />} anonymous />} />
         <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPasswordPage />} anonymous />} />
         <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPasswordPage />} anonymous />} />
+        <Route path="/feed" element={<ProtectedRouteElement element={<OrderFeedPage />} anonymous />} />
         <Route
           path="/ingredients/:id"
           element={(<NonModalIngredientPage />)}
