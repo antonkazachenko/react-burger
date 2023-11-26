@@ -8,8 +8,14 @@ const OrderFeedDetails = () => {
   const imageUrl2 = data[1]?.image;
   return (
     <div>
-      <div className="mt-10 mb-6">
+      <div className="mt-10 mb-3">
         <p className="text text_type_main-medium">Death Star Starship Main бургер</p>
+      </div>
+      <div className="mb-15">
+        <p className={`${styles.statusColor} text text_type_main-default`}>Выполнен</p>
+      </div>
+      <div className="mb-6">
+        <p className="text text_type_main-medium">Состав:</p>
       </div>
       <div className={styles.cardFooter}>
         <div className={styles.imagesContainer}>
