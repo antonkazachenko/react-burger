@@ -12,10 +12,11 @@ type TModalProp = {
   children: React.ReactNode;
   title?: string;
   className?: string;
+  orderFeed?: boolean;
 }
 
 const Modal: FC<TModalProp> = ({
-  onClose, title, className, children,
+  onClose, title, className, children, orderFeed,
 }) => {
   const dispatch = useDispatch();
   const { createdOrder } = useSelector((store) => store.ingredientsStore);
@@ -34,6 +35,31 @@ const Modal: FC<TModalProp> = ({
     };
   }, [dispatch, onClose]);
 
+  const renderHeaderContent = () => {
+    if (title) {
+      return (
+        <div className={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
+          <h2 className="text text_type_main-large">{title}</h2>
+          {/* eslint-disable-next-line max-len */}
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+          <a onClick={onClose}><CloseIcon type="primary" /></a>
+        </div>
+      );
+    } if (orderFeed) {
+      // Content for orderFeed === true
+      return <div>yrdy</div>;
+    } if (createdOrder) {
+      return (
+        <div className={`${styles.exitCross} mr-10 mt-15`}>
+          {/* eslint-disable-next-line max-len */}
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+          <a onClick={handleClose}><CloseIcon type="primary" /></a>
+        </div>
+      );
+    }
+    return <div className={`${styles.exitCross} mr-10 mt-15`} />;
+  };
+
   if (!modalRoot) {
     return null;
   }
@@ -43,27 +69,7 @@ const Modal: FC<TModalProp> = ({
       <>
         <ModalOverlay onClose={title ? onClose : handleClose} />
         <div className={`${styles.modal} ${className}`}>
-          {/* eslint-disable-next-line no-nested-ternary */}
-          {title
-            ? (
-              <div className={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
-                <h2 className="text text_type_main-large">{title}</h2>
-                {/* eslint-disable-next-line max-len */}
-                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-                <a onClick={onClose}><CloseIcon type="primary" /></a>
-              </div>
-            )
-            : (
-              createdOrder ? (
-                <div className={`${styles.exitCross} mr-10 mt-15`}>
-                  {/* eslint-disable-next-line max-len */}
-                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-                  <a onClick={handleClose}><CloseIcon type="primary" /></a>
-                </div>
-              ) : (
-                <div className={`${styles.exitCross} mr-10 mt-15`} />
-              )
-            )}
+          {renderHeaderContent()}
           {children}
         </div>
       </>
@@ -75,6 +81,7 @@ const Modal: FC<TModalProp> = ({
 Modal.defaultProps = {
   title: '',
   className: '',
+  orderFeed: false,
 };
 
 export default Modal;

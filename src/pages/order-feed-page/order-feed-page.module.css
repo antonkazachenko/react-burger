@@ -9,6 +9,11 @@
     width: 50%;
 }
 
+.overflow {
+    overflow-y: auto;
+    height: 80vh;
+}
+
 .flex {
     display: flex;
 }
