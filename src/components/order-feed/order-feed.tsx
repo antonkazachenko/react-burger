@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './order-feed.module.css';
 import data from '../../utils/data'; // Import data
@@ -7,6 +7,22 @@ const OrderFeed = () => {
   // Ensure data[0] and data[1] and their images exist
   const imageUrl = data[0]?.image;
   const imageUrl2 = data[1]?.image;
+
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = `
+      .${styles.cardImageWithOpacity}::before {
+        background-image: url('${imageUrl}');
+      }
+    `;
+    document.head.appendChild(style);
+
+    return () => {
+      // Clean up the style tag on component unmount
+      document.head.removeChild(style);
+    };
+  }, [imageUrl]);
 
   return (
     <div className={`${styles.card} mt-5`}>
@@ -25,7 +41,17 @@ const OrderFeed = () => {
               backgroundImage: `url(${imageUrl})`,
               backgroundPosition: 'center',
               backgroundSize: 'cover',
+              zIndex: 5,
+            }}
+          />
+          <div
+            className={styles.cardImages}
+            style={{
+              backgroundImage: `url(${imageUrl})`,
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
               zIndex: 4,
+              marginLeft: '-15px',
             }}
           />
           <div
@@ -58,6 +84,9 @@ const OrderFeed = () => {
               marginLeft: '-15px',
             }}
           />
+          <div className={`${styles.cardImageWithOpacity} ${styles.cardImages}`}>
+            <p className={`${styles.extraIngredientsTextColor} text text_type_digits-default`}>+3</p>
+          </div>
         </div>
         <div className={styles.cardPrice}>
           <p className="text text_type_digits-default mr-2">480</p>
