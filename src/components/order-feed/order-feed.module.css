@@ -1,5 +1,10 @@
+.modalWidth {
+    width: 32vw;
+}
+
 .imagesContainer {
     display: flex;
+    justify-content: space-between;
 }
 
 .cardHeader {
@@ -30,6 +35,7 @@
 .cardFooter {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .cardPrice {
@@ -65,4 +71,20 @@
 
 .statusColor {
     color: #0CC;
+}
+
+.ingredientName {
+    display: flex;
+    align-items: center;
+}
+
+.overflow {
+    overflow-y: auto;
+    height: 24vh;
+    padding-right: 24px;
+    margin-bottom: 40px;
+}
+
+.ingredientWidth {
+    width: 16vw
 }

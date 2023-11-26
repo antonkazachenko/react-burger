@@ -111,7 +111,7 @@ const OrderFeed: FC<TOrderFeedProp & WithModalControlsReturn> = ({
         </div>
       </div>
       {isVisible && (
-        <Modal onClose={handleCloseModal} title="#2414532" orderFeed>
+        <Modal onClose={handleCloseModal} title="#2414532" orderFeed className={styles.modalWidth}>
           <OrderFeedDetails />
         </Modal>
       )}

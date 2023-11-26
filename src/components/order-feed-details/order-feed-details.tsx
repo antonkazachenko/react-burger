@@ -5,9 +5,8 @@ import data from '../../utils/data';
 
 const OrderFeedDetails = () => {
   const imageUrl = data[0]?.image;
-  const imageUrl2 = data[1]?.image;
   return (
-    <div>
+    <div className="ml-10 mr-10">
       <div className="mt-10 mb-3">
         <p className="text text_type_main-medium">Death Star Starship Main бургер</p>
       </div>
@@ -17,63 +16,122 @@ const OrderFeedDetails = () => {
       <div className="mb-6">
         <p className="text text_type_main-medium">Состав:</p>
       </div>
-      <div className={styles.cardFooter}>
+      <div className={styles.overflow}>
         <div className={styles.imagesContainer}>
-          <div
-            className={styles.cardImages}
-            style={{
-              backgroundImage: `url(${imageUrl})`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              zIndex: 5,
-            }}
-          />
-          <div
-            className={styles.cardImages}
-            style={{
-              backgroundImage: `url(${imageUrl})`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              zIndex: 4,
-              marginLeft: '-15px',
-            }}
-          />
-          <div
-            className={styles.cardImages}
-            style={{
-              backgroundImage: `url(${imageUrl})`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              zIndex: 3,
-              marginLeft: '-15px',
-            }}
-          />
-          <div
-            className={styles.cardImages}
-            style={{
-              backgroundImage: `url(${imageUrl})`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              zIndex: 2,
-              marginLeft: '-15px',
-            }}
-          />
-          <div
-            className={styles.cardImages}
-            style={{
-              backgroundImage: `url(${imageUrl2})`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              zIndex: 1,
-              marginLeft: '-15px',
-            }}
-          />
-          <div className={`${styles.cardImageWithOpacity} ${styles.cardImages}`}>
-            <p className={`${styles.extraIngredientsTextColor} text text_type_digits-default`}>+3</p>
+          <div className={styles.ingredientName}>
+            <div
+              className={styles.cardImages}
+              style={{
+                backgroundImage: `url(${imageUrl})`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                zIndex: 5,
+              }}
+            />
+            <p className={`${styles.ingredientWidth} text text_type_main-default ml-4`}>Флюоресцентная булка R2-D3</p>
+          </div>
+          <div className={styles.ingredientName}>
+            <p className="text text_type_digits-medium mr-2 ml-4">500</p>
+            <CurrencyIcon type="primary" />
           </div>
         </div>
-        <div className={styles.cardPrice}>
-          <p className="text text_type_digits-default mr-2">480</p>
+        <div className={`${styles.imagesContainer} mt-4`}>
+          <div className={styles.ingredientName}>
+            <div
+              className={styles.cardImages}
+              style={{
+                backgroundImage: `url(${imageUrl})`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                zIndex: 5,
+              }}
+            />
+            <p className={`${styles.ingredientWidth} text text_type_main-default ml-4`}>Флюоресцентная булка R2-D3</p>
+          </div>
+          <div className={styles.ingredientName}>
+            <p className="text text_type_digits-medium mr-2 ml-4">500</p>
+            <CurrencyIcon type="primary" />
+          </div>
+        </div>
+        <div className={`${styles.imagesContainer} mt-4`}>
+          <div className={styles.ingredientName}>
+            <div
+              className={styles.cardImages}
+              style={{
+                backgroundImage: `url(${imageUrl})`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                zIndex: 5,
+              }}
+            />
+            <p className={`${styles.ingredientWidth} text text_type_main-default ml-4`}>Флюоресцентная булка R2-D3</p>
+          </div>
+          <div className={styles.ingredientName}>
+            <p className="text text_type_digits-medium mr-2 ml-4">500</p>
+            <CurrencyIcon type="primary" />
+          </div>
+        </div>
+        <div className={`${styles.imagesContainer} mt-4`}>
+          <div className={styles.ingredientName}>
+            <div
+              className={styles.cardImages}
+              style={{
+                backgroundImage: `url(${imageUrl})`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                zIndex: 5,
+              }}
+            />
+            <p className={`${styles.ingredientWidth} text text_type_main-default ml-4`}>Флюоресцентная булка R2-D3</p>
+          </div>
+          <div className={styles.ingredientName}>
+            <p className="text text_type_digits-medium mr-2 ml-4">500</p>
+            <CurrencyIcon type="primary" />
+          </div>
+        </div>
+        <div className={`${styles.imagesContainer} mt-4`}>
+          <div className={styles.ingredientName}>
+            <div
+              className={styles.cardImages}
+              style={{
+                backgroundImage: `url(${imageUrl})`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                zIndex: 5,
+              }}
+            />
+            <p className={`${styles.ingredientWidth} text text_type_main-default ml-4`}>Флюоресцентная булка R2-D3</p>
+          </div>
+          <div className={styles.ingredientName}>
+            <p className="text text_type_digits-medium mr-2 ml-4">500</p>
+            <CurrencyIcon type="primary" />
+          </div>
+        </div>
+        <div className={`${styles.imagesContainer} mt-4`}>
+          <div className={styles.ingredientName}>
+            <div
+              className={styles.cardImages}
+              style={{
+                backgroundImage: `url(${imageUrl})`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                zIndex: 5,
+              }}
+            />
+            <p className={`${styles.ingredientWidth} text text_type_main-default ml-4`}>Флюоресцентная булка R2-D3</p>
+          </div>
+          <div className={styles.ingredientName}>
+            <p className="text text_type_digits-medium mr-2 ml-4">500</p>
+            <CurrencyIcon type="primary" />
+          </div>
+        </div>
+      </div>
+      <div className={styles.cardFooter}>
+        <div>
+          <p className="text text_type_main-default text_color_inactive">Вчера, 13:50</p>
+        </div>
+        <div className={`${styles.ingredientName} mb-5`}>
+          <p className="text text_type_digits-medium mr-2 ml-4">500</p>
           <CurrencyIcon type="primary" />
         </div>
       </div>

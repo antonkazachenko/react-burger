@@ -36,7 +36,7 @@ const Modal: FC<TModalProp> = ({
   }, [dispatch, onClose]);
 
   const renderHeaderContent = () => {
-    if (title) {
+    if (title && !orderFeed) {
       return (
         <div className={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
           <h2 className="text text_type_main-large">{title}</h2>
@@ -47,7 +47,14 @@ const Modal: FC<TModalProp> = ({
       );
     } if (orderFeed) {
       // Content for orderFeed === true
-      return <div>yrdy</div>;
+      return (
+        <div className={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
+          <h2 className="text text_type_digits-default">{title}</h2>
+          {/* eslint-disable-next-line max-len */}
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+          <a onClick={onClose}><CloseIcon type="primary" /></a>
+        </div>
+      );
     } if (createdOrder) {
       return (
         <div className={`${styles.exitCross} mr-10 mt-15`}>
