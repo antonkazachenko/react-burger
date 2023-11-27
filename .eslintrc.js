@@ -42,6 +42,8 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/no-var-requires': 'error',
     '@typescript-eslint/no-non-null-assertion': 'error',
+    'no-param-reassign': 'off',
+
   },
   settings: {
     react: {
