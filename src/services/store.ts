@@ -1,7 +1,8 @@
 import {
-  applyMiddleware, combineReducers, compose, createStore,
+  combineReducers, compose,
 } from 'redux';
-import thunk, { ThunkDispatch } from 'redux-thunk';
+import { ThunkDispatch } from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
 import ingredientsReducer from './reducers/ingredients';
 import accountReducer from './reducers/account';
 import { TIngredientsActions } from './actions/ingredients';
@@ -34,9 +35,10 @@ declare global {
   }
 }
 
-const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-  ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-  : compose;
+// const composeEnhancers = typeof window
+// === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+//   ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+//   : compose;
 
 const rootReducer = combineReducers({
   ingredientsStore: ingredientsReducer,
@@ -45,12 +47,15 @@ const rootReducer = combineReducers({
 });
 
 const wsMiddleware = socketMiddleware(orderFeedWsActions);
+//
+// const enhancer = composeEnhancers(
+//   applyMiddleware(thunk, wsMiddleware),
+// );
 
-const enhancer = composeEnhancers(
-  applyMiddleware(thunk),
-);
-
-export const store = createStore(rootReducer, enhancer);
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(wsMiddleware),
+});
 
 type TApplicationActions = TIngredientsActions | TAccountActions;
 
