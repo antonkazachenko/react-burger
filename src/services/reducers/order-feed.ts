@@ -8,20 +8,13 @@ import {
   orderFeedOpen,
 } from '../actions/order-feed';
 
-type TOrder = {
+export type TOrder = {
   ingredients: string[];
   _id: string;
   status: string;
   number: number;
   createdAt: string;
   updatedAt: string;
-};
-
-type TServerResponse = {
-  success: boolean;
-  orders: TOrder[];
-  total: number;
-  totalToday: number;
 };
 
 type TOrderFeedState = {
@@ -55,10 +48,9 @@ const orderFeedReducer = createReducer(initialState, (builder) => {
       state.error = action.payload;
     })
     .addCase(orderFeedMessage, (state, action) => {
-      const response: TServerResponse = action.payload;
-      state.orders = response.orders;
-      state.total = response.total;
-      state.totalToday = response.totalToday;
+      state.orders = action.payload.orders;
+      state.total = action.payload.total;
+      state.totalToday = action.payload.totalToday;
     });
 });
 
