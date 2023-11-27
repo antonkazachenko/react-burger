@@ -16,7 +16,7 @@ import {
   orderFeedOpen as onOpenOrderFeed,
   orderFeedConnecting as onCloseOrderFeed,
   orderFeedError as onErrorOrderFeed,
-  orderFeedMessage as onMessageOrderFeed,
+  orderFeedMessage as onMessageOrderFeed, OrderFeedActions,
 } from './actions/order-feed';
 
 const orderFeedWsActions = {
@@ -57,7 +57,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(wsMiddleware),
 });
 
-type TApplicationActions = TIngredientsActions | TAccountActions;
+type TApplicationActions = TIngredientsActions | TAccountActions | OrderFeedActions;
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
