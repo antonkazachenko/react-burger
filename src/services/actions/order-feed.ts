@@ -11,13 +11,6 @@ import {
   ORDER_FEED_MESSAGE,
 } from '../constants/order-feed';
 
-interface IOrderFeedConnect {
-  readonly type: typeof ORDER_FEED_CONNECT;
-  payload: {
-    url: string;
-  };
-}
-
 type TServerResponse = {
   success: boolean;
   orders: TOrder[];
