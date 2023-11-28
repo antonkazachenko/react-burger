@@ -1,7 +1,7 @@
 import { TItemType } from './index';
 
 type THandleItem = {
-    data: TItemType;
+  data: TItemType;
 };
 
 export default THandleItem;

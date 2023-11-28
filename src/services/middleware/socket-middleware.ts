@@ -33,7 +33,6 @@ RootState
     } = wsActions;
 
     if (wsConnect.match(action)) {
-      console.log('connect');
       url = action.payload;
       socket = new WebSocket(url);
       isConnected = true;
@@ -45,8 +44,11 @@ RootState
         dispatch(onOpen());
       };
 
-      socket.onerror = () => {
-        console.log('error');
+      socket.onclose = (event) => {
+        if (event.code !== 1000) {
+          dispatch(onError(event.code.toString()));
+        }
+        dispatch(onClose());
       };
 
       socket.onmessage = (event) => {
@@ -57,10 +59,8 @@ RootState
 
       socket.onclose = (event) => {
         if (event.code !== 1000) {
-          console.log('error');
           dispatch(onError(event.code.toString()));
         }
-        console.log('close');
         dispatch(onClose());
 
         if (isConnected) {
@@ -72,12 +72,10 @@ RootState
       };
 
       if (wsSendMessage && wsSendMessage.match(action)) {
-        console.log('send');
         socket.send(JSON.stringify(action.payload));
       }
 
       if (wsDisconnect.match(action)) {
-        console.log('disconnect');
         clearTimeout(reconnectTimer);
         isConnected = false;
         reconnectTimer = 0;

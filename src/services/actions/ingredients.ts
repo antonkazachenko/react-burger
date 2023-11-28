@@ -227,7 +227,6 @@ export const getIngredients: AppThunk = () => function (dispatch: AppDispatch) {
       dispatch(getIngredientsSuccess(data.data));
     })
     .catch((err) => {
-      console.log(err);
       dispatch(getIngredientsFailure(err));
     });
 };
@@ -255,8 +254,7 @@ export const createOrderRequest: AppThunk = (
     .then((res) => {
       dispatch(createdOrderSuccess(res));
     })
-    .catch((err) => {
+    .catch(() => {
       dispatch(postOrderRequest());
-      console.log(err);
     });
 };
