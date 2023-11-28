@@ -21,12 +21,16 @@ const OrderFeedPage: FC = () => {
     return orderIngredients.reduce((acc, item) => acc + item.price, 0);
   };
 
-  const findIngredientImages = (order: TOrder) => {
-    // eslint-disable-next-line no-underscore-dangle
-    const orderIngredients = ingredients.filter((item) => order.ingredients.includes(item._id));
-    return orderIngredients.map((item) => item.image);
-  };
+  // FOR DISTINCT PICTURES
+  // eslint-disable-next-line no-underscore-dangle
+  // const orderIngredients = ingredients.filter((item) => order.ingredients.includes(item._id));
+  // return orderIngredients.map((item) => item.image);
 
+  const findIngredientImages = (order: TOrder) => order.ingredients.map((ingredientId) => {
+    // eslint-disable-next-line no-underscore-dangle
+    const ingredient = ingredients.find((item) => item._id === ingredientId);
+    return ingredient ? ingredient.image : '';
+  });
   useEffect(() => {
     dispatch(orderFeedConnect('wss://norma.nomoreparties.space/orders/all'));
     return () => {
@@ -49,6 +53,7 @@ const OrderFeedPage: FC = () => {
               orderName={order.name}
               orderPrice={calculateTotalPrice(order)}
               ingredientImages={findIngredientImages(order)}
+              orders={orders}
             />
           ))}
         </div>

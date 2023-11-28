@@ -80,11 +80,24 @@
 
 .overflow {
     overflow-y: auto;
-    height: 24vh;
+    height: 25vh;
     padding-right: 24px;
     margin-bottom: 40px;
 }
 
 .ingredientWidth {
     width: 16vw
+}
+
+/* order-feed.module.css */
+.dynamic-background::before {
+    /* Your common styles for the ::before pseudo-element here */
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
 }

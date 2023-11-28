@@ -1,10 +1,10 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './order-feed.module.css';
-import data from '../../utils/data'; // Import data
 import Modal from '../modal/modal';
 import OrderFeedDetails from '../order-feed-details/order-feed-details';
 import { WithModalControlsReturn } from '../../hocs/with-modal-control';
+import { TOrder } from '../../services/reducers/order-feed';
 
 type TOrderFeedProp = {
   handleModal: () => void;
@@ -14,6 +14,7 @@ type TOrderFeedProp = {
   orderName: string;
   orderPrice: number;
   ingredientImages: string[];
+  orders: TOrder[];
 }
 
 const OrderFeed: FC<TOrderFeedProp & WithModalControlsReturn> = ({
@@ -24,28 +25,29 @@ const OrderFeed: FC<TOrderFeedProp & WithModalControlsReturn> = ({
   orderName,
   orderPrice,
   ingredientImages,
+  orders,
 }) => {
-  // Ensure data[0] and data[1] and their images exist
-  const imageUrl = data[0]?.image;
+  const [dynamicBeforeStyle, setDynamicBeforeStyle] = useState('');
 
   useEffect(() => {
-    const style = document.createElement('style');
-    style.type = 'text/css';
-    style.innerHTML = `
-      .${styles.cardImageWithOpacity}::before {
-        background-image: url('${imageUrl}');
-      }
-    `;
-    document.head.appendChild(style);
+    if (ingredientImages.length > 5) {
+      const randomUrl = ingredientImages.slice(5)[0];
+      const uniqueClassName = `card-${orderNumber}-image-opacity`;
 
-    return () => {
-      // Clean up the style tag on component unmount
-      document.head.removeChild(style);
-    };
-  }, [imageUrl]);
+      const styleContent = `
+        .${uniqueClassName}::before {
+          background-image: url('${randomUrl}');
+          // other styles for the ::before pseudo-element
+        }
+      `;
+
+      setDynamicBeforeStyle(styleContent);
+    }
+  }, [ingredientImages, orderNumber]);
 
   return (
     <>
+      {dynamicBeforeStyle && <style>{dynamicBeforeStyle}</style>}
       {/* eslint-disable-next-line max-len */}
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
       <div className={`${styles.card} mt-5 mb-4 mr-2`} onClick={handleModal}>
@@ -75,10 +77,10 @@ const OrderFeed: FC<TOrderFeedProp & WithModalControlsReturn> = ({
               ))
             }
             {ingredientImages.length > 5 && (
-              <div className={`${styles.cardImageWithOpacity} ${styles.cardImages}`}>
+              <div className={`${styles.cardImageWithOpacity} ${styles.cardImages} card-${orderNumber}-image-opacity`}>
                 <p className={`${styles.extraIngredientsTextColor} text text_type_digits-default`}>
                   +
-                  {ingredientImages.length - 6}
+                  {ingredientImages.length - 5}
                 </p>
               </div>
             )}
@@ -90,8 +92,13 @@ const OrderFeed: FC<TOrderFeedProp & WithModalControlsReturn> = ({
         </div>
       </div>
       {isVisible && (
-        <Modal onClose={handleCloseModal} title="#2414532" orderFeed className={styles.modalWidth}>
-          <OrderFeedDetails />
+        <Modal onClose={handleCloseModal} title={`#${orderNumber}`} orderFeed className={styles.modalWidth}>
+          <OrderFeedDetails
+            orderData={orders.filter(
+              (order) => order.number === orderNumber,
+            )[0]}
+            orderPrice={orderPrice}
+          />
         </Modal>
       )}
     </>
