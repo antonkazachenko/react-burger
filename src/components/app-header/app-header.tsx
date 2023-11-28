@@ -56,14 +56,27 @@ const AppHeader: FC<object> = () => {
             </div>
             <div className={`${styles.flexCentered} mt-4 mb-4 p-5`}>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a href="#" className={`${styles.navLink} ${styles.secondary}`}>
-                <div className={`${styles.secondary} mr-2`}>
-                  <ListIcon type="secondary" />
-                </div>
-                <p className={`text text_type_main-default ${styles.secondary}`}>
-                  Лента заказов
-                </p>
-              </a>
+              <NavLink to="/feed" replace className={styles.navLink}>
+                {(window.location.pathname === '/feed') ? (
+                  <>
+                    <div className="mr-2">
+                      <ListIcon type="primary" />
+                    </div>
+                    <p className="text text_type_main-default">
+                      Лента заказов
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <div className="mr-2">
+                      <ListIcon type="secondary" />
+                    </div>
+                    <p className={`text text_type_main-default ${styles.secondary}`}>
+                      Лента заказов
+                    </p>
+                  </>
+                )}
+              </NavLink>
             </div>
           </nav>
           <div className={styles.logo}>

@@ -47,7 +47,7 @@ const rootReducer = combineReducers({
 });
 
 const wsMiddleware = socketMiddleware(orderFeedWsActions);
-//
+
 // const enhancer = composeEnhancers(
 //   applyMiddleware(thunk, wsMiddleware),
 // );

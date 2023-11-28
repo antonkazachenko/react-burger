@@ -10,6 +10,7 @@ import {
 
 export type TOrder = {
   ingredients: string[];
+  name: string;
   _id: string;
   status: string;
   number: number;
