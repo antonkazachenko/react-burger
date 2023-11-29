@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../hooks';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import styles from './modal.module.css';
@@ -19,6 +20,7 @@ const Modal: FC<TModalProp> = ({
   onClose, title, className, children, orderFeed,
 }) => {
   const dispatch = useDispatch();
+  const { number } = useParams();
   const { createdOrder } = useSelector((store) => store.ingredientsStore);
   const handleClose = (): void => onClose();
 
@@ -49,7 +51,7 @@ const Modal: FC<TModalProp> = ({
       // Content for orderFeed === true
       return (
         <div className={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
-          <h2 className="text text_type_digits-default">{title}</h2>
+          <h2 className="text text_type_digits-default">{`#${number}`}</h2>
           {/* eslint-disable-next-line max-len */}
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
           <a onClick={onClose}><CloseIcon type="primary" /></a>

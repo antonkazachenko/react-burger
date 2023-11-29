@@ -15,6 +15,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import ProtectedRouteElement from '../protected-route-element/protected-route-element';
 import AppHeader from '../app-header/app-header';
 import OrderFeedPage from '../../pages/order-feed-page/order-feed-page';
+import OrderFeedDetails from '../order-feed-details/order-feed-details';
 
 const App: FC<object> = () => {
   const { isLoading } = useSelector((state) => state.ingredientsStore);
@@ -95,8 +96,8 @@ const App: FC<object> = () => {
           <Route
             path="/feed/:number"
             element={(
-              <Modal onClose={handleCloseModal} title="Детали заказа">
-                <OrderFeedPage />
+              <Modal onClose={handleCloseModal} orderFeed className={styles.modalWidth}>
+                <OrderFeedDetails />
               </Modal>
             )}
           />

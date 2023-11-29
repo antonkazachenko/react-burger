@@ -1,33 +1,22 @@
 import React, { FC, useEffect, useState } from 'react';
-import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './order-feed.module.css';
-import Modal from '../modal/modal';
-import OrderFeedDetails from '../order-feed-details/order-feed-details';
 import { WithModalControlsReturn } from '../../hocs/with-modal-control';
-import { TOrder } from '../../services/reducers/order-feed';
 
 type TOrderFeedProp = {
   handleModal: () => void;
-  handleCloseModal: () => void;
-  isVisible: boolean;
   orderNumber: number;
   orderName: string;
   orderPrice: number;
   ingredientImages: string[];
-  orders: TOrder[];
-  createdAt: string;
 }
 
 const OrderFeed: FC<TOrderFeedProp & WithModalControlsReturn> = ({
   handleModal,
-  handleCloseModal,
-  isVisible,
   orderNumber,
   orderName,
   orderPrice,
   ingredientImages,
-  orders,
-  createdAt,
 }) => {
   const [dynamicBeforeStyle, setDynamicBeforeStyle] = useState('');
 
@@ -55,9 +44,7 @@ const OrderFeed: FC<TOrderFeedProp & WithModalControlsReturn> = ({
       <div className={`${styles.card} mt-5 mb-4 mr-2`} onClick={handleModal}>
         <div className={styles.cardHeader}>
           <p className="text text_type_digits-default">{`#${orderNumber}`}</p>
-          <p className={`text text_type_main-small ${styles.date}`}>
-            <FormattedDate date={new Date(createdAt)} />
-          </p>
+          <p className={`text text_type_main-small ${styles.date}`}>Сегодня, 16:20</p>
         </div>
         <div className="mt-6 mb-6">
           <p className="text text_type_main-medium">{orderName}</p>
@@ -95,16 +82,6 @@ const OrderFeed: FC<TOrderFeedProp & WithModalControlsReturn> = ({
           </div>
         </div>
       </div>
-      {isVisible && (
-        <Modal onClose={handleCloseModal} title={`#${orderNumber}`} orderFeed className={styles.modalWidth}>
-          <OrderFeedDetails
-            orderData={orders.filter(
-              (order) => order.number === orderNumber,
-            )[0]}
-            orderPrice={orderPrice}
-          />
-        </Modal>
-      )}
     </>
   );
 };

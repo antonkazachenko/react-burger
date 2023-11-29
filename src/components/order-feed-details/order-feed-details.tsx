@@ -1,16 +1,23 @@
 import React, { FC } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useParams } from 'react-router-dom';
 import styles from '../order-feed/order-feed.module.css';
-import { TOrder } from '../../services/reducers/order-feed';
 import { useSelector } from '../../hooks';
+import { TOrder } from '../../services/reducers/order-feed';
 
-type TOrderFeedProp = {
-  orderData: TOrder;
-  orderPrice: number;
-}
-
-const OrderFeedDetails: FC<TOrderFeedProp> = ({ orderData, orderPrice }) => {
+const OrderFeedDetails: FC<object> = () => {
+  const { number } = useParams();
+  const { orders } = useSelector((store) => store.orderFeedStore);
   const { ingredients } = useSelector((store) => store.ingredientsStore);
+  const orderData = orders.filter(
+    (order) => order.number === parseInt(number as string, 10),
+  )[0];
+  const calculateTotalPrice = (order: TOrder) => {
+    // eslint-disable-next-line no-underscore-dangle
+    const orderIngredients = ingredients.filter((item) => order.ingredients.includes(item._id));
+    return orderIngredients.reduce((acc, item) => acc + item.price, 0);
+  };
+
   return (
     <div className="ml-10 mr-10">
       <div className="mt-10 mb-3">
@@ -54,7 +61,7 @@ const OrderFeedDetails: FC<TOrderFeedProp> = ({ orderData, orderPrice }) => {
           <p className="text text_type_main-default text_color_inactive">Вчера, 13:50</p>
         </div>
         <div className={`${styles.ingredientName} mb-5`}>
-          <p className="text text_type_digits-medium mr-2 ml-4">{orderPrice}</p>
+          <p className="text text_type_digits-medium mr-2 ml-4">{calculateTotalPrice(orderData)}</p>
           <CurrencyIcon type="primary" />
         </div>
       </div>

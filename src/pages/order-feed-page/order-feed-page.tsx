@@ -1,5 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './order-feed-page.module.css';
 import OrderFeed from '../../components/order-feed/order-feed';
 import FeedData from '../../components/feed-data/feed-data';
@@ -14,7 +15,7 @@ const OrderFeedPage: FC = () => {
   const dispatch = useDispatch();
   const { orders } = useSelector((store) => store.orderFeedStore);
   const { ingredients } = useSelector((store) => store.ingredientsStore);
-
+  const location = useLocation();
   const calculateTotalPrice = (order: TOrder) => {
     // eslint-disable-next-line no-underscore-dangle
     const orderIngredients = ingredients.filter((item) => order.ingredients.includes(item._id));
@@ -46,16 +47,17 @@ const OrderFeedPage: FC = () => {
       <div className={styles.flex}>
         <div className={`${styles.tabWidth} ${styles.overflow}`}>
           { orders.map((order: TOrder) => (
-            <OrderFeedWithModalControl
+            // eslint-disable-next-line no-underscore-dangle
+            <Link to={`/feed/${order.number}`} key={order._id} state={{ backgroundLocation: location }} className={styles.link}>
+              <OrderFeedWithModalControl
               /* eslint-disable-next-line no-underscore-dangle */
-              key={order._id}
-              orderNumber={order.number}
-              orderName={order.name}
-              orderPrice={calculateTotalPrice(order)}
-              ingredientImages={findIngredientImages(order)}
-              orders={orders}
-              createdAt={order.createdAt}
-            />
+                key={order._id}
+                orderNumber={order.number}
+                orderName={order.name}
+                orderPrice={calculateTotalPrice(order)}
+                ingredientImages={findIngredientImages(order)}
+              />
+            </Link>
           ))}
         </div>
         <div className={`${styles.tabWidth} ml-15`}>
