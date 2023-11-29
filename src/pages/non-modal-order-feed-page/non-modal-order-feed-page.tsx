@@ -1,23 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useParams } from 'react-router-dom';
+import MoonLoader from 'react-spinners/MoonLoader';
 import styles from '../../components/order-feed/order-feed.module.css';
 import { TOrder } from '../../services/reducers/order-feed';
-import { useSelector } from '../../hooks';
+import { useDispatch, useSelector } from '../../hooks';
+import { getOrderByID } from '../../services/actions/order-feed';
+import RequestStatus from '../../types/requestStatus';
 
 const NonModalOrderFeedPage = () => {
   const { number } = useParams();
   const { ingredients } = useSelector((store) => store.ingredientsStore);
-  const { orders } = useSelector((store) => store.orderFeedStore);
-  const orderData = orders.filter(
-    (order) => order.number === parseInt(number as string, 10),
-  )[0];
+  const { orderPage } = useSelector((store) => store.orderFeedStore);
+  const { orderPageStatus } = useSelector((store) => store.orderFeedStore);
+  const orderData = orderPage[0];
+  const dispatch = useDispatch();
 
   const calculateTotalPrice = (order: TOrder) => {
     // eslint-disable-next-line no-underscore-dangle
     const orderIngredients = ingredients.filter((item) => order.ingredients.includes(item._id));
     return orderIngredients.reduce((acc, item) => acc + item.price, 0);
   };
+
+  useEffect(() => {
+    if (number !== undefined) dispatch(getOrderByID(number));
+  }, [dispatch, number]);
+
+  if (orderPageStatus !== RequestStatus.SUCCEEDED) {
+    return (
+      <div className={styles.spinner}>
+        <MoonLoader
+          color="rgb(133, 133, 173, 1)"
+          cssOverride={{}}
+          loading
+          size={100}
+          speedMultiplier={1}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="ml-10 mr-10">
