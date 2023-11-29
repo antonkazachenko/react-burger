@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './order-feed.module.css';
 import Modal from '../modal/modal';
 import OrderFeedDetails from '../order-feed-details/order-feed-details';
@@ -15,6 +15,7 @@ type TOrderFeedProp = {
   orderPrice: number;
   ingredientImages: string[];
   orders: TOrder[];
+  createdAt: string;
 }
 
 const OrderFeed: FC<TOrderFeedProp & WithModalControlsReturn> = ({
@@ -26,6 +27,7 @@ const OrderFeed: FC<TOrderFeedProp & WithModalControlsReturn> = ({
   orderPrice,
   ingredientImages,
   orders,
+  createdAt,
 }) => {
   const [dynamicBeforeStyle, setDynamicBeforeStyle] = useState('');
 
@@ -53,7 +55,9 @@ const OrderFeed: FC<TOrderFeedProp & WithModalControlsReturn> = ({
       <div className={`${styles.card} mt-5 mb-4 mr-2`} onClick={handleModal}>
         <div className={styles.cardHeader}>
           <p className="text text_type_digits-default">{`#${orderNumber}`}</p>
-          <p className={`text text_type_main-small ${styles.date}`}>Сегодня, 16:20</p>
+          <p className={`text text_type_main-small ${styles.date}`}>
+            <FormattedDate date={new Date(createdAt)} />
+          </p>
         </div>
         <div className="mt-6 mb-6">
           <p className="text text_type_main-medium">{orderName}</p>

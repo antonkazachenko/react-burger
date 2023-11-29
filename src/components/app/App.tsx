@@ -92,6 +92,14 @@ const App: FC<object> = () => {
               </Modal>
             )}
           />
+          <Route
+            path="/feed/:number"
+            element={(
+              <Modal onClose={handleCloseModal} title="Детали заказа">
+                <OrderFeedPage />
+              </Modal>
+            )}
+          />
         </Routes>
       )}
     </>

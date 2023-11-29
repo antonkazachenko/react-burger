@@ -27,7 +27,9 @@ function withModalControl<P extends WithModalControlsReturn>(
     const handleCloseModal = (): void => {
       closeModal();
       dispatch(setCurrentItemClose());
-      if (window.location.pathname !== '/') {
+      if (window.location.pathname.includes('feed')) {
+        navigate('/feed');
+      } else if (window.location.pathname !== '/') {
         navigate('/');
       }
     };
