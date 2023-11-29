@@ -6,8 +6,11 @@ import ProfileOrdersPage from './profile-orders-page/profile-orders-page';
 import NonModalIngredientPage from './non-modal-ingredient-page/non-modal-ingredient-page';
 import MainPage from './main-page/main-page';
 import ForgotPasswordPage from './forgot-password-page/forgot-password-page';
+import OrderFeedPage from './order-feed-page/order-feed-page';
+import NonModalOrderFeedPage from './non-modal-order-feed-page/non-modal-order-feed-page';
 
 export {
   ResetPasswordPage, SignIn, RegisterPage, ProfileMainPage,
-  ProfileOrdersPage, NonModalIngredientPage, MainPage, ForgotPasswordPage,
+  ProfileOrdersPage, NonModalIngredientPage, MainPage, ForgotPasswordPage, OrderFeedPage,
+  NonModalOrderFeedPage,
 };

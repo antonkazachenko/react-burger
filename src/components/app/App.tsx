@@ -8,13 +8,12 @@ import styles from './App.module.css';
 import { getIngredients, setCurrentItemClose } from '../../services/actions/ingredients';
 import {
   MainPage, SignIn, RegisterPage, ForgotPasswordPage, ResetPasswordPage,
-  NonModalIngredientPage, ProfileMainPage, ProfileOrdersPage,
+  NonModalIngredientPage, ProfileMainPage, ProfileOrdersPage, OrderFeedPage, NonModalOrderFeedPage,
 } from '../../pages';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import ProtectedRouteElement from '../protected-route-element/protected-route-element';
 import AppHeader from '../app-header/app-header';
-import OrderFeedPage from '../../pages/order-feed-page/order-feed-page';
 import OrderFeedDetails from '../order-feed-details/order-feed-details';
 
 const App: FC<object> = () => {
@@ -59,6 +58,7 @@ const App: FC<object> = () => {
         <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPasswordPage />} anonymous />} />
         <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPasswordPage />} anonymous />} />
         <Route path="/feed" element={<ProtectedRouteElement element={<OrderFeedPage />} anonymous />} />
+        <Route path="/feed/:number" element={<NonModalOrderFeedPage />} />
         <Route
           path="/ingredients/:id"
           element={(<NonModalIngredientPage />)}
