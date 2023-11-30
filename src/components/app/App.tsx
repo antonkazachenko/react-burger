@@ -57,7 +57,7 @@ const App: FC<object> = () => {
         <Route path="/register" element={<ProtectedRouteElement element={<RegisterPage />} anonymous />} />
         <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPasswordPage />} anonymous />} />
         <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPasswordPage />} anonymous />} />
-        <Route path="/feed" element={<ProtectedRouteElement element={<OrderFeedPage />} anonymous />} />
+        <Route path="/feed" element={<OrderFeedPage />} />
         <Route path="/feed/:number" element={<NonModalOrderFeedPage />} />
         <Route
           path="/ingredients/:id"
