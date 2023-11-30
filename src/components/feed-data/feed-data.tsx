@@ -3,27 +3,41 @@ import styles from './feed-data.module.css';
 import { useSelector } from '../../hooks';
 
 const FeedData = () => {
-  const { total, totalToday } = useSelector((state) => state.orderFeedStore);
+  const { total, totalToday, orders } = useSelector((state) => state.orderFeedStore);
+
+  const getOrdersByStatus = (status: string, start: number, end: number) => orders
+    .filter((order) => order.status === status)
+    .slice(start, end)
+    .map((order) => (
+      // eslint-disable-next-line no-underscore-dangle
+      <p key={order._id} className={`text text_type_digits-default mb-2 ${styles.readyColor}`}>
+        {order.number}
+      </p>
+    ));
 
   return (
     <div>
       <div className={`${styles.flex} mb-15`}>
         <div className={`mr-9 ${styles.statusWidth}`}>
           <p className="text text_type_main-medium mb-6">Готовы:</p>
-          <div>
-            <p className={`text text_type_digits-default mb-2 ${styles.readyColor}`}>034533</p>
-            <p className={`text text_type_digits-default mb-2 ${styles.readyColor}`}>034533</p>
-            <p className={`text text_type_digits-default mb-2 ${styles.readyColor}`}>034533</p>
-            <p className={`text text_type_digits-default mb-2 ${styles.readyColor}`}>034533</p>
-            <p className={`text text_type_digits-default ${styles.readyColor}`}>034533</p>
+          <div className={styles.flex}>
+            <div>
+              {getOrdersByStatus('done', 0, 5)}
+            </div>
+            <div className="ml-4">
+              {getOrdersByStatus('done', 5, 10)}
+            </div>
           </div>
         </div>
         <div className={styles.statusWidth}>
           <p className="text text_type_main-medium mb-6">В работе:</p>
           <div>
-            <p className="text text_type_digits-default mb-2">034538</p>
-            <p className="text text_type_digits-default mb-2">034541</p>
-            <p className="text text_type_digits-default mb-2">034542</p>
+            <div>
+              {getOrdersByStatus('pending', 0, 5)}
+            </div>
+            <div className="ml-4">
+              {getOrdersByStatus('pending', 5, 10)}
+            </div>
           </div>
         </div>
       </div>

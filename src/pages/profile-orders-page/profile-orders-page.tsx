@@ -43,8 +43,8 @@ const ProfileOrdersPage: FC<object> = () => {
               Выйти
             </p>
           </Link>
-          <UserOrdersFeed />
         </div>
+        <div className="ml-15 mt-10"><UserOrdersFeed /></div>
       </div>
     </div>
   );
