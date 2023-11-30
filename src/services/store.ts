@@ -8,7 +8,7 @@ import accountReducer from './reducers/account';
 import { TIngredientsActions } from './actions/ingredients';
 import { TAccountActions } from './actions/account';
 import orderFeedReducer from './reducers/order-feed';
-import { socketMiddleware } from './middleware/socket-middleware';
+import { socketMiddleware, TBaseWsActionTypes, TExtendedWsActionTypes } from './middleware/socket-middleware';
 import {
   orderFeedConnect as wsConnectOrderFeed,
   orderFeedDisconnect as wsDisconnectOrderFeed,
@@ -67,8 +67,8 @@ const rootReducer = combineReducers({
   orderFeedStore: orderFeedReducer,
 });
 
-const wsMiddleware = socketMiddleware(orderFeedWsActions);
-const wsMiddlewareUserOrderFeed = socketMiddleware(userOrderFeedWsActions);
+const wsMiddlewareUserOrderFeed = socketMiddleware<TExtendedWsActionTypes>(userOrderFeedWsActions);
+const wsMiddleware = socketMiddleware<TBaseWsActionTypes>(orderFeedWsActions);
 
 // const enhancer = composeEnhancers(
 //   applyMiddleware(thunk, wsMiddleware),
@@ -76,7 +76,8 @@ const wsMiddlewareUserOrderFeed = socketMiddleware(userOrderFeedWsActions);
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(wsMiddleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware()
+    .concat(wsMiddleware, wsMiddlewareUserOrderFeed),
 });
 
 type TApplicationActions = TIngredientsActions | TAccountActions | OrderFeedActions;

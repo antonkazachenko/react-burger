@@ -1,8 +1,15 @@
-import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, AsyncThunk } from '@reduxjs/toolkit';
+import {
+  ActionCreatorWithoutPayload,
+  ActionCreatorWithPayload,
+  AnyAction,
+  AsyncThunk,
+  AsyncThunkAction,
+  Dispatch as ReduxDispatch,
+} from '@reduxjs/toolkit';
 import { Middleware } from 'redux';
 import { RootState } from '../store';
 
-export type TwsActionTypes = {
+export type TBaseWsActionTypes = {
   wsConnect: ActionCreatorWithPayload<string>,
   wsDisconnect: ActionCreatorWithoutPayload,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -13,15 +20,18 @@ export type TwsActionTypes = {
   onError: ActionCreatorWithPayload<string>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onMessage: ActionCreatorWithPayload<any>,
+}
+
+export type TExtendedWsActionTypes = TBaseWsActionTypes & {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   refreshToken?: AsyncThunk<void, void, any>,
 }
 
-export const socketMiddleware = (wsActions: TwsActionTypes):
-Middleware<
-object,
-RootState
-> => (store) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Dispatch = <T extends AnyAction | AsyncThunkAction<any, any, any>>(action: T) => T;
+
+// eslint-disable-next-line max-len
+export const socketMiddleware = <T extends TBaseWsActionTypes | TExtendedWsActionTypes>(wsActions: T): Middleware<object, RootState, ReduxDispatch<AnyAction>> => (store) => {
   let socket: WebSocket | null = null;
   let isConnected = false;
   let reconnectTimer = 0;
@@ -32,7 +42,6 @@ RootState
     const {
       wsConnect, wsDisconnect, wsSendMessage, onOpen,
       onClose, onError, onMessage, wsConnecting,
-      refreshToken,
     } = wsActions;
 
     if (wsConnect.match(action)) {
@@ -58,10 +67,13 @@ RootState
         const { data } = event;
         const parsedData = JSON.parse(data);
         dispatch(onMessage(parsedData));
-        if (parsedData.error === 'Invalid or missing token' && refreshToken) {
-          dispatch(refreshToken());
-        } else {
-          dispatch(onMessage(parsedData));
+        if ('refreshToken' in wsActions && parsedData.error === 'Invalid or missing token') {
+          if (wsActions.refreshToken) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            store.dispatch(wsActions.refreshToken() as any);
+          }
+        } else if (wsActions.onMessage) {
+          store.dispatch(wsActions.onMessage(parsedData));
         }
       };
 
