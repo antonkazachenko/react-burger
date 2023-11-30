@@ -20,3 +20,13 @@
     margin: 0 auto;
     max-width: 1240px;
 }
+
+.cardFlex {
+    flex: 1
+}
+
+.overflow {
+    overflow-y: auto;
+    height: 80vh;
+    padding-right: 8px
+}

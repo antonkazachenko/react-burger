@@ -44,7 +44,14 @@ const ProfileOrdersPage: FC<object> = () => {
             </p>
           </Link>
         </div>
-        <div className="ml-15 mt-10"><UserOrdersFeed /></div>
+        <div className={`${styles.cardFlex} ${styles.overflow} ml-15 mt-10`}>
+          <UserOrdersFeed />
+          <UserOrdersFeed />
+          <UserOrdersFeed />
+          <UserOrdersFeed />
+          <UserOrdersFeed />
+          <UserOrdersFeed />
+        </div>
       </div>
     </div>
   );
