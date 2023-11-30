@@ -20,7 +20,7 @@ export type TOrder = {
   updatedAt: string;
 };
 
-type TOrderFeedState = {
+export type TOrderFeedState = {
   status: WebsocketStatus;
   orderPageStatus: RequestStatus;
   orders: TOrder[];

@@ -18,6 +18,16 @@ import {
   orderFeedError as onErrorOrderFeed,
   orderFeedMessage as onMessageOrderFeed, OrderFeedActions,
 } from './actions/order-feed';
+import {
+  userOrderFeedConnect as wsConnectUserOrderFeed,
+  userOrderFeedDisconnect as wsDisconnectUserOrderFeed,
+  userOrderFeedConnecting as wsConnectingUserOrderFeed,
+  userOrderFeedOpen as onOpenUserOrderFeed,
+  userOrderFeedConnecting as onCloseUserOrderFeed,
+  userOrderFeedError as onErrorUserOrderFeed,
+  userOrderFeedMessage as onMessageUserOrderFeed,
+  refreshToken as refreshTokenUserOrderFeed,
+} from './actions/user-order-feed';
 
 const orderFeedWsActions = {
   wsConnect: wsConnectOrderFeed,
@@ -27,6 +37,17 @@ const orderFeedWsActions = {
   onClose: onCloseOrderFeed,
   onError: onErrorOrderFeed,
   onMessage: onMessageOrderFeed,
+};
+
+const userOrderFeedWsActions = {
+  wsConnect: wsConnectUserOrderFeed,
+  wsDisconnect: wsDisconnectUserOrderFeed,
+  wsConnecting: wsConnectingUserOrderFeed,
+  onOpen: onOpenUserOrderFeed,
+  onClose: onCloseUserOrderFeed,
+  onError: onErrorUserOrderFeed,
+  onMessage: onMessageUserOrderFeed,
+  refreshToken: refreshTokenUserOrderFeed,
 };
 
 declare global {
@@ -47,6 +68,7 @@ const rootReducer = combineReducers({
 });
 
 const wsMiddleware = socketMiddleware(orderFeedWsActions);
+const wsMiddlewareUserOrderFeed = socketMiddleware(userOrderFeedWsActions);
 
 // const enhancer = composeEnhancers(
 //   applyMiddleware(thunk, wsMiddleware),

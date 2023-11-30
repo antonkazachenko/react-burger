@@ -1,4 +1,4 @@
-import { ActionCreatorWithoutPayload, ActionCreatorWithPayload } from '@reduxjs/toolkit';
+import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, AsyncThunk } from '@reduxjs/toolkit';
 import { Middleware } from 'redux';
 import { RootState } from '../store';
 
@@ -13,6 +13,8 @@ export type TwsActionTypes = {
   onError: ActionCreatorWithPayload<string>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onMessage: ActionCreatorWithPayload<any>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  refreshToken?: AsyncThunk<void, void, any>,
 }
 
 export const socketMiddleware = (wsActions: TwsActionTypes):
@@ -30,6 +32,7 @@ RootState
     const {
       wsConnect, wsDisconnect, wsSendMessage, onOpen,
       onClose, onError, onMessage, wsConnecting,
+      refreshToken,
     } = wsActions;
 
     if (wsConnect.match(action)) {
@@ -55,6 +58,11 @@ RootState
         const { data } = event;
         const parsedData = JSON.parse(data);
         dispatch(onMessage(parsedData));
+        if (parsedData.error === 'Invalid or missing token' && refreshToken) {
+          dispatch(refreshToken());
+        } else {
+          dispatch(onMessage(parsedData));
+        }
       };
 
       socket.onclose = (event) => {

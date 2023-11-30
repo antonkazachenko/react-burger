@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from '../../hooks';
 import styles from './profile-orders-page.module.css';
 import { logoutRequest } from '../../services/actions/account';
+import UserOrdersFeed from '../../components/user-orders-feed/user-orders-feed';
 
 const ProfileOrdersPage: FC<object> = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const ProfileOrdersPage: FC<object> = () => {
               Выйти
             </p>
           </Link>
+          <UserOrdersFeed />
         </div>
       </div>
     </div>
