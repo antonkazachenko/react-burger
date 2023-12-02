@@ -64,6 +64,10 @@ const App: FC<object> = () => {
           element={(<NonModalIngredientPage />)}
         />
         <Route
+          path="/profile/orders/:number"
+          element={<NonModalOrderFeedPage />}
+        />
+        <Route
           path="/profile"
           element={(
             <ProtectedRouteElement element={<ProfileMainPage />} />
@@ -85,6 +89,14 @@ const App: FC<object> = () => {
 
       {state?.backgroundLocation && (
         <Routes>
+          <Route
+            path="/profile/orders/:number"
+            element={(
+              <Modal onClose={handleCloseModal} orderFeed className={styles.modalWidth}>
+                <OrderFeedDetails />
+              </Modal>
+            )}
+          />
           <Route
             path="/ingredients/:id"
             element={(

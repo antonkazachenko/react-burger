@@ -25,8 +25,9 @@ import {
   userOrderFeedOpen as onOpenUserOrderFeed,
   userOrderFeedConnecting as onCloseUserOrderFeed,
   userOrderFeedError as onErrorUserOrderFeed,
-  userOrderFeedMessage as onMessageUserOrderFeed,
+  userOrderFeedMessage as onMessageUserOrderFeed, UserOrderFeedActions,
 } from './actions/user-order-feed';
+import userOrderFeedReducer from './reducers/user_order_feed';
 
 const orderFeedWsActions = {
   wsConnect: wsConnectOrderFeed,
@@ -58,6 +59,7 @@ const rootReducer = combineReducers({
   ingredientsStore: ingredientsReducer,
   accountStore: accountReducer,
   orderFeedStore: orderFeedReducer,
+  userOrderFeedStore: userOrderFeedReducer,
 });
 
 const wsMiddlewareUserOrderFeed = socketMiddleware(userOrderFeedWsActions, true);
@@ -69,7 +71,10 @@ export const store = configureStore({
     .concat(wsMiddleware, wsMiddlewareUserOrderFeed),
 });
 
-type TApplicationActions = TIngredientsActions | TAccountActions | OrderFeedActions;
+type TApplicationActions = TIngredientsActions
+| TAccountActions
+| OrderFeedActions
+| UserOrderFeedActions;
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
