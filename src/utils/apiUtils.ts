@@ -38,6 +38,18 @@ const request = (endpoint: string, options?: TRequestOptions): Promise<ApiRespon
   .then(checkResponse)
   .then(checkSuccess);
 
+export async function refreshTokenRequest() {
+  return request('/auth/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      token: localStorage.getItem('refreshToken'),
+    }),
+  });
+}
+
 // TODO: test this
 export const fetchWithRefresh = async (
   url: string,
@@ -50,15 +62,7 @@ export const fetchWithRefresh = async (
   } catch (err) {
     if (getErrorMessage(err) === 'jwt expired') {
       dispatch(refreshToken());
-      const refreshData = await request('/auth/token', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          token: localStorage.getItem('refreshToken'),
-        }),
-      });
+      const refreshData = await refreshTokenRequest();
       if (!refreshData.success) {
         await Promise.reject(refreshData);
       }

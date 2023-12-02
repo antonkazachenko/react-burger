@@ -3,7 +3,6 @@ import WebsocketStatus from '../../types/websocket';
 import RequestStatus from '../../types/requestStatus';
 import { TOrderFeedState } from './order-feed';
 import {
-  refreshToken,
   userOrderFeedClose,
   userOrderFeedConnect,
   userOrderFeedConnecting,
@@ -26,15 +25,6 @@ const initialState: TOrderFeedState & { refreshTokenStatus: RequestStatus } = {
 
 const userOrderFeedReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(refreshToken.pending, (state) => {
-      state.refreshTokenStatus = RequestStatus.LOADING;
-    })
-    .addCase(refreshToken.fulfilled, (state) => {
-      state.refreshTokenStatus = RequestStatus.SUCCEEDED;
-    })
-    .addCase(refreshToken.rejected, (state) => {
-      state.refreshTokenStatus = RequestStatus.FAILED;
-    })
     .addCase(userOrderFeedConnecting, (state) => {
       state.status = WebsocketStatus.CONNECTING;
     })

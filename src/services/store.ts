@@ -8,7 +8,7 @@ import accountReducer from './reducers/account';
 import { TIngredientsActions } from './actions/ingredients';
 import { TAccountActions } from './actions/account';
 import orderFeedReducer from './reducers/order-feed';
-import { socketMiddleware, TBaseWsActionTypes, TExtendedWsActionTypes } from './middleware/socket-middleware';
+import { socketMiddleware } from './middleware/socket-middleware';
 import {
   orderFeedConnect as wsConnectOrderFeed,
   orderFeedDisconnect as wsDisconnectOrderFeed,
@@ -26,7 +26,6 @@ import {
   userOrderFeedConnecting as onCloseUserOrderFeed,
   userOrderFeedError as onErrorUserOrderFeed,
   userOrderFeedMessage as onMessageUserOrderFeed,
-  refreshToken as refreshTokenUserOrderFeed,
 } from './actions/user-order-feed';
 
 const orderFeedWsActions = {
@@ -47,7 +46,6 @@ const userOrderFeedWsActions = {
   onClose: onCloseUserOrderFeed,
   onError: onErrorUserOrderFeed,
   onMessage: onMessageUserOrderFeed,
-  refreshToken: refreshTokenUserOrderFeed,
 };
 
 declare global {
@@ -56,23 +54,14 @@ declare global {
   }
 }
 
-// const composeEnhancers = typeof window
-// === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-//   ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-//   : compose;
-
 const rootReducer = combineReducers({
   ingredientsStore: ingredientsReducer,
   accountStore: accountReducer,
   orderFeedStore: orderFeedReducer,
 });
 
-const wsMiddlewareUserOrderFeed = socketMiddleware<TExtendedWsActionTypes>(userOrderFeedWsActions);
-const wsMiddleware = socketMiddleware<TBaseWsActionTypes>(orderFeedWsActions);
-
-// const enhancer = composeEnhancers(
-//   applyMiddleware(thunk, wsMiddleware),
-// );
+const wsMiddlewareUserOrderFeed = socketMiddleware(userOrderFeedWsActions, true);
+const wsMiddleware = socketMiddleware(orderFeedWsActions, false);
 
 export const store = configureStore({
   reducer: rootReducer,

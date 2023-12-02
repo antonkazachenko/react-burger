@@ -1,15 +1,9 @@
-import {
-  ActionCreatorWithoutPayload,
-  ActionCreatorWithPayload,
-  AnyAction,
-  AsyncThunk,
-  AsyncThunkAction,
-  Dispatch as ReduxDispatch,
-} from '@reduxjs/toolkit';
+import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, AsyncThunk } from '@reduxjs/toolkit';
 import { Middleware } from 'redux';
 import { RootState } from '../store';
+import { refreshTokenRequest } from '../../utils/apiUtils';
 
-export type TBaseWsActionTypes = {
+export type TwsActionTypes = {
   wsConnect: ActionCreatorWithPayload<string>,
   wsDisconnect: ActionCreatorWithoutPayload,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -20,23 +14,19 @@ export type TBaseWsActionTypes = {
   onError: ActionCreatorWithPayload<string>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onMessage: ActionCreatorWithPayload<any>,
-}
-
-export type TExtendedWsActionTypes = TBaseWsActionTypes & {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   refreshToken?: AsyncThunk<void, void, any>,
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Dispatch = <T extends AnyAction | AsyncThunkAction<any, any, any>>(action: T) => T;
-
-// eslint-disable-next-line max-len
-export const socketMiddleware = <T extends TBaseWsActionTypes | TExtendedWsActionTypes>(wsActions: T): Middleware<object, RootState, ReduxDispatch<AnyAction>> => (store) => {
+export const socketMiddleware = (wsActions: TwsActionTypes, withTokenRefresh: boolean):
+Middleware<
+object,
+RootState
+> => (store) => {
   let socket: WebSocket | null = null;
   let isConnected = false;
   let reconnectTimer = 0;
   let url = '';
-
   return (next) => (action) => {
     const { dispatch } = store;
     const {
@@ -50,31 +40,44 @@ export const socketMiddleware = <T extends TBaseWsActionTypes | TExtendedWsActio
       isConnected = true;
       dispatch(wsConnecting());
     }
-
     if (socket) {
       socket.onopen = () => {
         dispatch(onOpen());
       };
-
       socket.onclose = (event) => {
         if (event.code !== 1000) {
           dispatch(onError(event.code.toString()));
         }
         dispatch(onClose());
       };
-
       socket.onmessage = (event) => {
         const { data } = event;
         const parsedData = JSON.parse(data);
-        dispatch(onMessage(parsedData));
-        if ('refreshToken' in wsActions && parsedData.error === 'Invalid or missing token') {
-          if (wsActions.refreshToken) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            store.dispatch(wsActions.refreshToken() as any);
-          }
-        } else if (wsActions.onMessage) {
-          store.dispatch(wsActions.onMessage(parsedData));
+        if (
+          withTokenRefresh
+          && parsedData.message === 'Invalid or missing token'
+        ) {
+          refreshTokenRequest()
+            .then((refreshData) => {
+              const wssUrl = new URL(url);
+              wssUrl.searchParams.set(
+                'token',
+                refreshData.accessToken.replace('Bearer ', ''),
+              );
+              dispatch({
+                type: wsConnect,
+                payload: wssUrl,
+              });
+            })
+            .catch((err) => {
+              dispatch({ type: onError, payload: err });
+            });
+
+          dispatch(wsDisconnect());
+
+          return;
         }
+        dispatch(onMessage(parsedData));
       };
 
       socket.onclose = (event) => {
@@ -82,7 +85,6 @@ export const socketMiddleware = <T extends TBaseWsActionTypes | TExtendedWsActio
           dispatch(onError(event.code.toString()));
         }
         dispatch(onClose());
-
         if (isConnected) {
           dispatch(wsConnecting());
           reconnectTimer = window.setTimeout(() => {
@@ -90,11 +92,9 @@ export const socketMiddleware = <T extends TBaseWsActionTypes | TExtendedWsActio
           }, 3000);
         }
       };
-
       if (wsSendMessage && wsSendMessage.match(action)) {
         socket.send(JSON.stringify(action.payload));
       }
-
       if (wsDisconnect.match(action)) {
         clearTimeout(reconnectTimer);
         isConnected = false;
@@ -103,7 +103,6 @@ export const socketMiddleware = <T extends TBaseWsActionTypes | TExtendedWsActio
         dispatch(onClose());
       }
     }
-
     next(action);
   };
 };
