@@ -25,7 +25,9 @@ const App: FC<object> = () => {
 
   const handleCloseModal = (): void => {
     dispatch(setCurrentItemClose());
-    navigate(-1);
+    if (state?.backgroundLocation) {
+      navigate(state.backgroundLocation.pathname);
+    }
   };
 
   useEffect(() => {

@@ -2,29 +2,35 @@ import React, { FC, useEffect } from 'react';
 import {
   Link, NavLink, useLocation, useNavigate,
 } from 'react-router-dom';
-import { useDispatch } from '../../hooks';
+import { useDispatch, useSelector } from '../../hooks';
 import styles from './profile-orders-page.module.css';
 import { logoutRequest } from '../../services/actions/account';
 import UserOrdersFeed from '../../components/user-orders-feed/user-orders-feed';
 import withModalControl from '../../hocs/with-modal-control';
 import { getCookie } from '../../utils/cookie';
 import { userOrderFeedConnect, userOrderFeedDisconnect } from '../../services/actions/user-order-feed';
-// import { TOrder } from '../../services/reducers/order-feed';
+import { TOrder } from '../../services/reducers/order-feed';
 
 const UserOrdersFeedWithModal = withModalControl(UserOrdersFeed);
 
 const ProfileOrdersPage: FC<object> = () => {
   const dispatch = useDispatch();
-  // const { orders } = useSelector((store) => store.userOrderFeedStore);
+  const { orders } = useSelector((store) => store.userOrderFeedStore);
+  const { ingredients } = useSelector((store) => store.ingredientsStore);
   const navigate = useNavigate();
   const location = useLocation();
 
-  // useEffect(() => {
-  //     dispatch(orderFeedConnect('wss://norma.nomoreparties.space/orders/all'));
-  //     return () => {
-  //       dispatch(orderFeedDisconnect());
-  //     };
-  //   }, [dispatch]);
+  const calculateTotalPrice = (order: TOrder) => {
+    // eslint-disable-next-line no-underscore-dangle
+    const orderIngredients = ingredients.filter((item) => order.ingredients.includes(item._id));
+    return orderIngredients.reduce((acc, item) => acc + item.price, 0);
+  };
+
+  const findIngredientImages = (order: TOrder) => order.ingredients.map((ingredientId) => {
+    // eslint-disable-next-line no-underscore-dangle
+    const ingredient = ingredients.find((item) => item._id === ingredientId);
+    return ingredient ? ingredient.image : '';
+  });
 
   useEffect(() => {
     const accessToken = getCookie('accessToken');
@@ -78,14 +84,19 @@ const ProfileOrdersPage: FC<object> = () => {
           </Link>
         </div>
         <div className={`${styles.cardFlex} ${styles.overflow} ml-15 mt-10`}>
-          <Link to={`profile/orders/${27905}`} state={{ backgroundLocation: location }}>
-            <UserOrdersFeedWithModal />
-          </Link>
-          <UserOrdersFeedWithModal />
-          <UserOrdersFeedWithModal />
-          <UserOrdersFeedWithModal />
-          <UserOrdersFeedWithModal />
-          <UserOrdersFeedWithModal />
+          {orders.map((order: TOrder) => (
+            // eslint-disable-next-line no-underscore-dangle
+            <Link className={styles.link} to={`/profile/orders/${order.number}`} replace state={{ from: 'profileOrders', backgroundLocation: location }} key={order._id}>
+              <UserOrdersFeedWithModal
+                /* eslint-disable-next-line no-underscore-dangle */
+                key={order._id}
+                orderNumber={order.number}
+                orderName={order.name}
+                orderPrice={calculateTotalPrice(order)}
+                ingredientImages={findIngredientImages(order)}
+              />
+            </Link>
+          ))}
         </div>
       </div>
     </div>

@@ -32,6 +32,7 @@ const OrderFeedPage: FC = () => {
     const ingredient = ingredients.find((item) => item._id === ingredientId);
     return ingredient ? ingredient.image : '';
   });
+
   useEffect(() => {
     dispatch(orderFeedConnect('wss://norma.nomoreparties.space/orders/all'));
     return () => {
@@ -48,7 +49,7 @@ const OrderFeedPage: FC = () => {
         <div className={`${styles.tabWidth} ${styles.overflow}`}>
           { orders.map((order: TOrder) => (
             // eslint-disable-next-line no-underscore-dangle
-            <Link to={`/feed/${order.number}`} key={order._id} state={{ backgroundLocation: location }} className={styles.link}>
+            <Link to={`/feed/${order.number}`} key={order._id} state={{ from: 'orderFeed', backgroundLocation: location }} className={styles.link}>
               <OrderFeedWithModalControl
               /* eslint-disable-next-line no-underscore-dangle */
                 key={order._id}

@@ -1,22 +1,31 @@
 import React, { FC } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import styles from '../order-feed/order-feed.module.css';
 import { useSelector } from '../../hooks';
 import { TOrder } from '../../services/reducers/order-feed';
 
 const OrderFeedDetails: FC<object> = () => {
   const { number } = useParams();
-  const { orders } = useSelector((store) => store.orderFeedStore);
+  const location = useLocation();
+  const navigationSource = location.state?.from;
+
+  const orderFeedOrders = useSelector((store) => store.orderFeedStore.orders);
+  const userOrderFeedOrders = useSelector((store) => store.userOrderFeedStore.orders);
+  const orders = navigationSource === 'orderFeed' ? orderFeedOrders : userOrderFeedOrders;
+
   const { ingredients } = useSelector((store) => store.ingredientsStore);
-  const orderData = orders.filter(
-    (order) => order.number === parseInt(number as string, 10),
-  )[0];
+  const orderData = orders.find((order) => order.number === parseInt(number as string, 10));
+
   const calculateTotalPrice = (order: TOrder) => {
     // eslint-disable-next-line no-underscore-dangle
     const orderIngredients = ingredients.filter((item) => order.ingredients.includes(item._id));
     return orderIngredients.reduce((acc, item) => acc + item.price, 0);
   };
+
+  if (!orderData) {
+    return <div>Order not found</div>;
+  }
 
   return (
     <div className="ml-10 mr-10">
