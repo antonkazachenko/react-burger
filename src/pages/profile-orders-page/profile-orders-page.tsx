@@ -92,6 +92,7 @@ const ProfileOrdersPage: FC<object> = () => {
                 key={order._id}
                 orderNumber={order.number}
                 orderName={order.name}
+                statusName={order.status}
                 orderPrice={calculateTotalPrice(order)}
                 ingredientImages={findIngredientImages(order)}
               />

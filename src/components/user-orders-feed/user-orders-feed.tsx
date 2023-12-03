@@ -8,6 +8,7 @@ type TUserOrdersFeedProps = {
   orderName: string;
   orderPrice: number;
   ingredientImages: string[];
+  statusName: string
 };
 
 const UserOrdersFeed: FC<TUserOrdersFeedProps & WithModalControlsReturn> = ({
@@ -15,6 +16,7 @@ const UserOrdersFeed: FC<TUserOrdersFeedProps & WithModalControlsReturn> = ({
   orderNumber,
   orderName,
   orderPrice,
+  statusName,
   ingredientImages,
 }) => {
   const [dynamicBeforeStyle, setDynamicBeforeStyle] = useState('');
@@ -35,6 +37,32 @@ const UserOrdersFeed: FC<TUserOrdersFeedProps & WithModalControlsReturn> = ({
     }
   }, [ingredientImages, orderNumber]);
 
+  const handleStatus = (status: string) => {
+    switch (status) {
+      case 'done':
+        return 'Выполнен';
+      case 'pending':
+        return 'Готовится';
+      case 'created':
+        return 'Создан';
+      default:
+        return 'Неизвестно';
+    }
+  };
+
+  const handleStatusColor = (status: string) => {
+    switch (status) {
+      case 'done':
+        return styles.doneColor;
+      case 'pending':
+        return styles.pendingColor;
+      case 'created':
+        return styles.createdColor;
+      default:
+        return styles.doneColor;
+    }
+  };
+
   return (
     <>
       {dynamicBeforeStyle && <style>{dynamicBeforeStyle}</style>}
@@ -45,8 +73,13 @@ const UserOrdersFeed: FC<TUserOrdersFeedProps & WithModalControlsReturn> = ({
           <p className="text text_type_digits-default">{`#${orderNumber}`}</p>
           <p className={`text text_type_main-small ${styles.date}`}>Сегодня, 16:20</p>
         </div>
-        <div className="mt-6 mb-6">
+        <div className="mt-6 mb-2">
           <p className="text text_type_main-medium">{orderName}</p>
+        </div>
+        <div className="mb-6">
+          <p className={`${handleStatusColor(statusName)} text text_type_main-default`}>
+            { handleStatus(statusName) }
+          </p>
         </div>
         <div className={styles.cardFooter}>
           <div className={styles.imagesContainer}>

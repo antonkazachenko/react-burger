@@ -23,6 +23,32 @@ const OrderFeedDetails: FC<object> = () => {
     return orderIngredients.reduce((acc, item) => acc + item.price, 0);
   };
 
+  const handleStatus = (status: string) => {
+    switch (status) {
+      case 'done':
+        return 'Выполнен';
+      case 'pending':
+        return 'Готовится';
+      case 'created':
+        return 'Создан';
+      default:
+        return 'Неизвестно';
+    }
+  };
+
+  const handleStatusColor = (status: string) => {
+    switch (status) {
+      case 'done':
+        return styles.doneColor;
+      case 'pending':
+        return styles.pendingColor;
+      case 'created':
+        return styles.createdColor;
+      default:
+        return styles.doneColor;
+    }
+  };
+
   if (!orderData) {
     return <div>Order not found</div>;
   }
@@ -33,7 +59,9 @@ const OrderFeedDetails: FC<object> = () => {
         <p className="text text_type_main-medium">{orderData.name}</p>
       </div>
       <div className="mb-15">
-        <p className={`${styles.statusColor} text text_type_main-default`}>{orderData.status}</p>
+        <p className={`${handleStatusColor(orderData.status)} text text_type_main-default`}>
+          { handleStatus(orderData.status) }
+        </p>
       </div>
       <div className="mb-6">
         <p className="text text_type_main-medium">Состав:</p>
