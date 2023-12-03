@@ -5,6 +5,10 @@ import styles from '../order-feed/order-feed.module.css';
 import { useSelector } from '../../hooks';
 import { TOrder } from '../../services/reducers/order-feed';
 
+type TCounterAcc = {
+  [key: string]: number;
+};
+
 const OrderFeedDetails: FC<object> = () => {
   const { number } = useParams();
   const location = useLocation();
@@ -49,9 +53,19 @@ const OrderFeedDetails: FC<object> = () => {
     }
   };
 
+  const countIngredients = (ingredientsArray: string[]) => ingredientsArray
+    .reduce((acc: TCounterAcc, ingredient) => {
+    // eslint-disable-next-line no-underscore-dangle
+      acc[ingredient] = (acc[ingredient] || 0) + 1;
+      return acc;
+    }, {});
+
   if (!orderData) {
     return <div>Order not found</div>;
   }
+
+  const uniqueIngredient = Array.from(new Set(orderData.ingredients));
+  const ingredientCounts = countIngredients(orderData.ingredients);
 
   return (
     <div className="ml-10 mr-10">
@@ -68,29 +82,36 @@ const OrderFeedDetails: FC<object> = () => {
       </div>
       <div className={styles.overflow}>
         {
-          orderData.ingredients.map((item, index) => (
-            // eslint-disable-next-line react/jsx-key
-            <div className={`${styles.imagesContainer} ${index !== 0 ? 'mt-4' : ''}`}>
-              <div className={styles.ingredientName}>
-                <div
-                  className={styles.cardImages}
-                  style={{
-                    // eslint-disable-next-line no-underscore-dangle
-                    backgroundImage: `url(${ingredients.find((ingredient) => ingredient._id === item)?.image})`,
-                    backgroundPosition: 'center',
-                    backgroundSize: 'cover',
-                  }}
-                />
-                {/* eslint-disable-next-line no-underscore-dangle */}
-                <p className="text text_type_main-default ml-4">{ingredients.find((ingredient) => ingredient._id === item)?.name}</p>
+          uniqueIngredient.map((item, index) => {
+            // eslint-disable-next-line no-underscore-dangle
+            const ingredient = ingredients.find((ingredientItem) => ingredientItem._id === item);
+            const count = ingredientCounts[item];
+            const multiplier = count > 1 ? `${count} x ` : '';
+
+            return (
+              // eslint-disable-next-line no-underscore-dangle
+              <div key={ingredient?._id} className={`${styles.imagesContainer} ${index !== 0 ? 'mt-4' : ''}`}>
+                <div className={styles.ingredientName}>
+                  <div
+                    className={styles.cardImages}
+                    style={{
+                      backgroundImage: `url(${ingredient?.image})`,
+                      backgroundPosition: 'center',
+                      backgroundSize: 'cover',
+                    }}
+                  />
+                  <p className="text text_type_main-default ml-4">{ingredient?.name}</p>
+                </div>
+                <div className={styles.ingredientName}>
+                  <p className="text text_type_digits-medium mr-2 ml-4">
+                    {multiplier}
+                    {ingredient?.price}
+                  </p>
+                  <CurrencyIcon type="primary" />
+                </div>
               </div>
-              <div className={styles.ingredientName}>
-                {/* eslint-disable-next-line no-underscore-dangle */}
-                <p className="text text_type_digits-medium mr-2 ml-4">{ingredients.find((ingredient) => ingredient._id === item)?.price}</p>
-                <CurrencyIcon type="primary" />
-              </div>
-            </div>
-          ))
+            );
+          })
         }
       </div>
       <div className={styles.cardFooter}>
