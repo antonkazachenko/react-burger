@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation, useParams } from 'react-router-dom';
+import MoonLoader from 'react-spinners/MoonLoader';
 import styles from '../order-feed/order-feed.module.css';
 import { useSelector } from '../../hooks';
 import { TOrder } from '../../services/reducers/order-feed';
@@ -61,7 +62,17 @@ const OrderFeedDetails: FC<object> = () => {
     }, {});
 
   if (!orderData) {
-    return <div>Order not found</div>;
+    return (
+      <div className={`${styles.spinner}`}>
+        <MoonLoader
+          color="rgb(133, 133, 173, 1)"
+          cssOverride={{}}
+          loading
+          size={100}
+          speedMultiplier={1}
+        />
+      </div>
+    );
   }
 
   const uniqueIngredient = Array.from(new Set(orderData.ingredients));

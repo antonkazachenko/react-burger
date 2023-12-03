@@ -78,6 +78,14 @@
     color: #F2F2F3;
 }
 
+.spinner {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .ingredientName {
     display: flex;
     align-items: center;

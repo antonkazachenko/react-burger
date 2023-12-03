@@ -73,8 +73,13 @@
     color: #F2F2F3;
 }
 
-.statusColor {
+.doneColor {
     color: #0CC;
+}
+
+.pendingColor,
+.createdColor {
+    color: #F2F2F3;
 }
 
 .cardFlex {

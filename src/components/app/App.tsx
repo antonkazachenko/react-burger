@@ -94,9 +94,12 @@ const App: FC<object> = () => {
           <Route
             path="/profile/orders/:number"
             element={(
-              <Modal onClose={handleCloseModal} orderFeed className={styles.modalWidth}>
-                <OrderFeedDetails />
-              </Modal>
+              <ProtectedRouteElement element={(
+                <Modal onClose={handleCloseModal} orderFeed className={styles.modalWidth}>
+                  <OrderFeedDetails />
+                </Modal>
+              )}
+              />
             )}
           />
           <Route
