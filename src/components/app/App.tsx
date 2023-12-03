@@ -95,7 +95,7 @@ const App: FC<object> = () => {
             path="/profile/orders/:number"
             element={(
               <ProtectedRouteElement element={(
-                <Modal onClose={handleCloseModal} orderFeed className={styles.modalWidth}>
+                <Modal onClose={handleCloseModal} className={styles.modalWidth} headerClass={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
                   <OrderFeedDetails />
                 </Modal>
               )}
@@ -105,7 +105,7 @@ const App: FC<object> = () => {
           <Route
             path="/ingredients/:id"
             element={(
-              <Modal onClose={handleCloseModal} title="Детали ингредиента">
+              <Modal onClose={handleCloseModal} title="Детали ингредиента" className={styles.modalWidth} headerClass={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
                 <IngredientDetails />
               </Modal>
             )}
@@ -113,7 +113,7 @@ const App: FC<object> = () => {
           <Route
             path="/feed/:number"
             element={(
-              <Modal onClose={handleCloseModal} orderFeed className={styles.modalWidth}>
+              <Modal onClose={handleCloseModal} className={styles.modalWidth} headerClass={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
                 <OrderFeedDetails />
               </Modal>
             )}

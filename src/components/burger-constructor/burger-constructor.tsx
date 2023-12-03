@@ -162,7 +162,7 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
         {
           isVisible
           && (
-            <Modal onClose={handleCloseModalWithReset} className={styles.modalWidth}>
+            <Modal onClose={handleCloseModalWithReset} className={styles.modalWidth} headerClass={`${styles.exitCross} mr-10 mt-15`}>
               <OrderDetails />
             </Modal>
           )
