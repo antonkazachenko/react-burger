@@ -43,16 +43,12 @@ string,
 }
 >(
   'orderFeed/getOrderById',
-  async (orderNumber, { rejectWithValue }) => {
-    try {
-      const response: ApiResponse = await request(`/orders/${orderNumber}`);
-      return {
-        success: response.success,
-        orders: response.orders,
-      };
-    } catch (err) {
-      return rejectWithValue(err);
-    }
+  async (orderNumber) => {
+    const response: ApiResponse = await request(`/orders/${orderNumber}`);
+    return {
+      success: response.success,
+      orders: response.orders,
+    };
   },
 );
 

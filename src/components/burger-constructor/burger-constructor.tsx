@@ -120,9 +120,8 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
         constructorIngredients && constructorIngredients.length ? (
           <div className={styles.overflow}>
             {constructorIngredients.map(
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              (el: any, index: number) => {
-                if (el.type !== 'bun') {
+              (el, index) => {
+                if (el.ingredient.type !== 'bun') {
                   return (
                     <DraggableIngredient
                     /* eslint-disable-next-line no-underscore-dangle */

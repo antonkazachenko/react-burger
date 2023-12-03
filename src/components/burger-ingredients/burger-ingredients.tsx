@@ -4,7 +4,6 @@ import { useSelector } from '../../hooks';
 import styles from './burger-ingredients.module.css';
 import IngredientTabs from '../ingredient-tabs/ingredient-tabs';
 import IngredientSection from '../ingredient-section/ingredient-section';
-import TItemType from '../../types/ItemType';
 
 type TBurgerIngredientsProp = {
   handleModal: () => void;
@@ -13,9 +12,9 @@ type TBurgerIngredientsProp = {
 const BurgerIngredients: FC<TBurgerIngredientsProp> = ({ handleModal }) => {
   const { ingredients } = useSelector((store) => store.ingredientsStore);
   const [activeTab, setActiveTab] = React.useState('one');
-  const bread = ingredients.filter((el: TItemType) => el.type === 'bun');
-  const sauces = ingredients.filter((el: TItemType) => el.type === 'sauce');
-  const main = ingredients.filter((el: TItemType) => el.type === 'main');
+  const bread = ingredients.filter((el) => el.type === 'bun');
+  const sauces = ingredients.filter((el) => el.type === 'sauce');
+  const main = ingredients.filter((el) => el.type === 'main');
 
   const [breadRef, breadInView] = useInView({ threshold: 0.02 });
   const [saucesRef, saucesInView] = useInView({ threshold: 0.33 });

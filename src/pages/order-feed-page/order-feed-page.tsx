@@ -47,7 +47,7 @@ const OrderFeedPage: FC = () => {
       </div>
       <div className={styles.flex}>
         <div className={`${styles.tabWidth} ${styles.overflow}`}>
-          { orders.map((order: TOrder) => (
+          { orders.map((order) => (
             // eslint-disable-next-line no-underscore-dangle
             <Link to={`/feed/${order.number}`} key={order._id} state={{ from: 'orderFeed', backgroundLocation: location }} className={styles.link}>
               <OrderFeedWithModalControl

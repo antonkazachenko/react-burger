@@ -84,7 +84,7 @@ const ProfileOrdersPage: FC<object> = () => {
           </Link>
         </div>
         <div className={`${styles.cardFlex} ${styles.overflow} ml-15 mt-10`}>
-          {orders.map((order: TOrder) => (
+          {orders.map((order) => (
             // eslint-disable-next-line no-underscore-dangle
             <Link className={styles.link} to={`/profile/orders/${order.number}`} replace state={{ from: 'profileOrders', backgroundLocation: location }} key={order._id}>
               <UserOrdersFeedWithModal
