@@ -22,10 +22,10 @@ const FeedData = () => {
           <p className="text text_type_main-medium mb-6">Готовы:</p>
           <div className={styles.flex}>
             <div>
-              {getOrdersByStatus('done', 0, 5)}
+              {getOrdersByStatus('done', 0, 10)}
             </div>
             <div className="ml-4">
-              {getOrdersByStatus('done', 5, 10)}
+              {getOrdersByStatus('done', 10, 20)}
             </div>
           </div>
         </div>
@@ -33,10 +33,10 @@ const FeedData = () => {
           <p className="text text_type_main-medium mb-6">В работе:</p>
           <div>
             <div>
-              {getOrdersByStatus('pending', 0, 5)}
+              {getOrdersByStatus('pending', 0, 10)}
             </div>
             <div className="ml-4">
-              {getOrdersByStatus('pending', 5, 10)}
+              {getOrdersByStatus('pending', 10, 20)}
             </div>
           </div>
         </div>
