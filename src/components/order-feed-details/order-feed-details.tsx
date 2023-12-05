@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation, useParams } from 'react-router-dom';
 import MoonLoader from 'react-spinners/MoonLoader';
 import styles from '../order-feed/order-feed.module.css';
@@ -127,7 +127,9 @@ const OrderFeedDetails: FC<object> = () => {
       </div>
       <div className={styles.cardFooter}>
         <div>
-          <p className="text text_type_main-default text_color_inactive">Вчера, 13:50</p>
+          <p className="text text_type_main-default text_color_inactive">
+            <FormattedDate date={new Date(orderData.createdAt)} />
+          </p>
         </div>
         <div className={`${styles.ingredientName} mb-5`}>
           <p className="text text_type_digits-medium mr-2 ml-4">{calculateTotalPrice(orderData)}</p>

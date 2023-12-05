@@ -8,6 +8,10 @@ import { useDispatch, useSelector } from '../../hooks';
 import { getOrderByID } from '../../services/actions/order-feed';
 import RequestStatus from '../../types/requestStatus';
 
+type TCounterAcc = {
+  [key: string]: number;
+};
+
 const NonModalOrderFeedPage = () => {
   const { number } = useParams();
   const { ingredients } = useSelector((store) => store.ingredientsStore);
@@ -15,6 +19,13 @@ const NonModalOrderFeedPage = () => {
   const { orderPageStatus } = useSelector((store) => store.orderFeedStore);
   const orderData = orderPage[0];
   const dispatch = useDispatch();
+
+  const countIngredients = (ingredientsArray: string[]) => ingredientsArray
+    .reduce((acc: TCounterAcc, ingredient) => {
+      // eslint-disable-next-line no-underscore-dangle
+      acc[ingredient] = (acc[ingredient] || 0) + 1;
+      return acc;
+    }, {});
 
   const calculateTotalPrice = (order: TOrder) => {
     // eslint-disable-next-line no-underscore-dangle
@@ -65,7 +76,10 @@ const NonModalOrderFeedPage = () => {
       </div>
     );
   }
-  // TODO: fix margins to adaptivity
+
+  const uniqueIngredient = Array.from(new Set(orderData.ingredients));
+  const ingredientCounts = countIngredients(orderData.ingredients);
+
   return (
     <div className={styles.cardFlex}>
       <div className={styles.orderNumberMargin}>
@@ -86,37 +100,36 @@ const NonModalOrderFeedPage = () => {
         </div>
         <div className={styles.overflow}>
           {
-            orderData.ingredients.map((item, index) => (
-              // eslint-disable-next-line react/jsx-key
-              <div className={`${styles.imagesContainer} ${index !== 0 ? 'mt-4' : ''}`}>
-                <div className={styles.ingredientName}>
-                  <div
-                    className={styles.cardImages}
-                    style={{
-                      // eslint-disable-next-line no-underscore-dangle
-                      backgroundImage: `url(${ingredients.find((ingredient) => ingredient._id === item)?.image})`,
-                      backgroundPosition: 'center',
-                      backgroundSize: 'cover',
-                    }}
-                  />
-                  <p
-                    className="text text_type_main-default ml-4"
-                  >
-                    {/* eslint-disable-next-line no-underscore-dangle */}
-                    {ingredients.find((ingredient) => ingredient._id === item)?.name}
-                  </p>
+            uniqueIngredient.map((item, index) => {
+              // eslint-disable-next-line no-underscore-dangle
+              const ingredient = ingredients.find((ingredientItem) => ingredientItem._id === item);
+              const count = ingredientCounts[item];
+              const multiplier = count > 1 ? `${count} x ` : '';
+
+              return (
+              // eslint-disable-next-line no-underscore-dangle
+                <div key={ingredient?._id} className={`${styles.imagesContainer} ${index !== 0 ? 'mt-4' : ''}`}>
+                  <div className={styles.ingredientName}>
+                    <div
+                      className={styles.cardImages}
+                      style={{
+                        backgroundImage: `url(${ingredient?.image})`,
+                        backgroundPosition: 'center',
+                        backgroundSize: 'cover',
+                      }}
+                    />
+                    <p className="text text_type_main-default ml-4">{ingredient?.name}</p>
+                  </div>
+                  <div className={styles.ingredientName}>
+                    <p className="text text_type_digits-medium mr-2 ml-4">
+                      {multiplier}
+                      {ingredient?.price}
+                    </p>
+                    <CurrencyIcon type="primary" />
+                  </div>
                 </div>
-                <div className={styles.ingredientName}>
-                  <p
-                    className="text text_type_digits-medium mr-2 ml-4"
-                  >
-                    {/* eslint-disable-next-line no-underscore-dangle */}
-                    {ingredients.find((ingredient) => ingredient._id === item)?.price}
-                  </p>
-                  <CurrencyIcon type="primary" />
-                </div>
-              </div>
-            ))
+              );
+            })
           }
         </div>
         <div className={styles.cardFooter}>

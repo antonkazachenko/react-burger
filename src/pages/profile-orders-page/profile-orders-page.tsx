@@ -95,6 +95,7 @@ const ProfileOrdersPage: FC<object> = () => {
                 statusName={order.status}
                 orderPrice={calculateTotalPrice(order)}
                 ingredientImages={findIngredientImages(order)}
+                date={order.createdAt}
               />
             </Link>
           ))}

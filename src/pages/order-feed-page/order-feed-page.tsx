@@ -57,6 +57,7 @@ const OrderFeedPage: FC = () => {
                 orderName={order.name}
                 orderPrice={calculateTotalPrice(order)}
                 ingredientImages={findIngredientImages(order)}
+                date={order.createdAt}
               />
             </Link>
           ))}

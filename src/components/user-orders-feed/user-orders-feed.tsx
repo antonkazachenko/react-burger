@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './user-orders-feed.module.css';
 import { WithModalControlsReturn } from '../../hocs/with-modal-control';
 
@@ -8,7 +8,8 @@ type TUserOrdersFeedProps = {
   orderName: string;
   orderPrice: number;
   ingredientImages: string[];
-  statusName: string
+  statusName: string;
+  date: string;
 };
 
 const UserOrdersFeed: FC<TUserOrdersFeedProps & WithModalControlsReturn> = ({
@@ -18,6 +19,7 @@ const UserOrdersFeed: FC<TUserOrdersFeedProps & WithModalControlsReturn> = ({
   orderPrice,
   statusName,
   ingredientImages,
+  date,
 }) => {
   const [dynamicBeforeStyle, setDynamicBeforeStyle] = useState('');
 
@@ -71,7 +73,9 @@ const UserOrdersFeed: FC<TUserOrdersFeedProps & WithModalControlsReturn> = ({
       <div className={`${styles.card} mt-5 mb-4 mr-2`} onClick={handleModal}>
         <div className={styles.cardHeader}>
           <p className="text text_type_digits-default">{`#${orderNumber}`}</p>
-          <p className={`text text_type_main-small ${styles.date}`}>Сегодня, 16:20</p>
+          <p className={`text text_type_main-small ${styles.date}`}>
+            <FormattedDate date={new Date(date)} />
+          </p>
         </div>
         <div className="mt-6 mb-2">
           <p className="text text_type_main-medium">{orderName}</p>
