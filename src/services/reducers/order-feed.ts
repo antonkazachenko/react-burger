@@ -8,6 +8,8 @@ import {
   orderFeedMessage,
   orderFeedOpen,
   getOrderByID,
+  addModalNumber,
+  deleteModalNumber,
 } from '../actions/order-feed';
 
 export type TOrder = {
@@ -31,7 +33,7 @@ export type TOrderFeedState = {
   totalToday: number;
 }
 
-const initialState: TOrderFeedState = {
+const initialState: TOrderFeedState & { modalNumber: number } = {
   status: WebsocketStatus.OFFLINE,
   orderPageStatus: RequestStatus.IDLE,
   orders: [],
@@ -39,6 +41,7 @@ const initialState: TOrderFeedState = {
   error: '',
   total: 0,
   totalToday: 0,
+  modalNumber: 0,
 };
 
 const orderFeedReducer = createReducer(initialState, (builder) => {
@@ -70,6 +73,12 @@ const orderFeedReducer = createReducer(initialState, (builder) => {
     .addCase(getOrderByID.rejected, (state, action) => {
       state.error = (action.payload as Error).message;
       state.orderPageStatus = RequestStatus.FAILED;
+    })
+    .addCase(addModalNumber, (state, action) => {
+      state.modalNumber = action.payload;
+    })
+    .addCase(deleteModalNumber, (state) => {
+      state.modalNumber = 0;
     });
 });
 

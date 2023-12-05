@@ -9,6 +9,8 @@ import {
   ORDER_FEED_ERROR,
   ORDER_FEED_MESSAGE,
   ORDER_FEED_OPEN,
+  ADD_MODAL_NUMBER,
+  DELETE_MODAL_NUMBER,
 } from '../constants/order-feed';
 import request, { ApiResponse } from '../../utils/apiUtils';
 
@@ -30,6 +32,11 @@ export const orderFeedClose = createAction(ORDER_FEED_CLOSE);
 export const orderFeedOpen = createAction(ORDER_FEED_OPEN);
 export const orderFeedConnecting = createAction(ORDER_FEED_CONNECTING);
 export const orderFeedError = createAction<string, typeof ORDER_FEED_ERROR>(ORDER_FEED_ERROR);
+
+export const addModalNumber = createAction<number, typeof ADD_MODAL_NUMBER>(ADD_MODAL_NUMBER);
+
+export const deleteModalNumber = createAction(DELETE_MODAL_NUMBER);
+
 export const orderFeedMessage = createAction<
 TServerResponse,
 typeof ORDER_FEED_MESSAGE
@@ -61,4 +68,6 @@ export type OrderFeedActions = ReturnType<typeof orderFeedConnect>
 | ReturnType<typeof orderFeedMessage>
 | ReturnType<typeof getOrderByID.pending>
 | ReturnType<typeof getOrderByID.fulfilled>
-| ReturnType<typeof getOrderByID.rejected>;
+| ReturnType<typeof getOrderByID.rejected>
+| ReturnType<typeof addModalNumber>
+| ReturnType<typeof deleteModalNumber>;

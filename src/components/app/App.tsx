@@ -15,6 +15,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import ProtectedRouteElement from '../protected-route-element/protected-route-element';
 import AppHeader from '../app-header/app-header';
 import OrderFeedDetails from '../order-feed-details/order-feed-details';
+import { deleteModalNumber } from '../../services/actions/order-feed';
 
 const App: FC<object> = () => {
   const { isLoading } = useSelector((state) => state.ingredientsStore);
@@ -22,9 +23,13 @@ const App: FC<object> = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const state = location.state as { backgroundLocation?: Location };
+  const { modalNumber } = useSelector((store) => store.orderFeedStore);
 
   const handleCloseModal = (): void => {
     dispatch(setCurrentItemClose());
+    if (modalNumber) {
+      dispatch(deleteModalNumber());
+    }
     if (state?.backgroundLocation) {
       navigate(state.backgroundLocation.pathname);
     }
@@ -95,7 +100,7 @@ const App: FC<object> = () => {
             path="/profile/orders/:number"
             element={(
               <ProtectedRouteElement element={(
-                <Modal onClose={handleCloseModal} className={styles.modalWidth} headerClass={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
+                <Modal onClose={handleCloseModal} title="10" className={styles.modalWidth} headerClass={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
                   <OrderFeedDetails />
                 </Modal>
               )}
@@ -105,7 +110,7 @@ const App: FC<object> = () => {
           <Route
             path="/ingredients/:id"
             element={(
-              <Modal onClose={handleCloseModal} title="Детали ингредиента" className={styles.modalWidth} headerClass={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
+              <Modal onClose={handleCloseModal} defaultTitle title="Детали ингредиента" className={styles.modalWidth} headerClass={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
                 <IngredientDetails />
               </Modal>
             )}
@@ -113,7 +118,7 @@ const App: FC<object> = () => {
           <Route
             path="/feed/:number"
             element={(
-              <Modal onClose={handleCloseModal} className={styles.modalWidth} headerClass={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
+              <Modal onClose={handleCloseModal} title={`#${modalNumber}`} className={styles.modalWidth} headerClass={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
                 <OrderFeedDetails />
               </Modal>
             )}

@@ -1,7 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useParams } from 'react-router-dom';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import styles from './modal.module.css';
 
@@ -13,12 +12,12 @@ type TModalProp = {
   title?: string;
   className?: string;
   headerClass: string;
+  defaultTitle?: boolean;
 }
 
 const Modal: FC<TModalProp> = ({
-  onClose, title, className, children, headerClass,
+  onClose, title, className, children, headerClass, defaultTitle,
 }) => {
-  const { number } = useParams();
   const handleClose = (): void => onClose();
 
   useEffect(() => {
@@ -45,8 +44,8 @@ const Modal: FC<TModalProp> = ({
         <div className={`${styles.modal} ${className}`}>
           <div className={headerClass}>
             {
-              (number !== undefined) ? (
-                <h2 className="text text_type_digits-default">{`#${number}`}</h2>
+              (defaultTitle) ? (
+                <h2 className="text text_type_digits-default">{title}</h2>
               )
                 : <h2 className="text text_type_main-large">{title}</h2>
             }
@@ -65,6 +64,7 @@ const Modal: FC<TModalProp> = ({
 Modal.defaultProps = {
   title: '',
   className: '',
+  defaultTitle: false,
 };
 
 export default Modal;

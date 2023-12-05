@@ -84,7 +84,7 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
       navigate('/login', { replace: true });
     }
     const ingredientsArray = [];
-    if (!bunData) { return; }
+    if (!bunData || !name) { return; }
     // eslint-disable-next-line no-underscore-dangle
     ingredientsArray.push(bunData._id);
     constructorIngredients.forEach((el) => {
