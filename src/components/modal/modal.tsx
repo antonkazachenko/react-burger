@@ -44,7 +44,7 @@ const Modal: FC<TModalProp> = ({
         <div className={`${styles.modal} ${className}`}>
           <div className={headerClass}>
             {
-              (defaultTitle) ? (
+              (!defaultTitle) ? (
                 <h2 className="text text_type_digits-default">{title}</h2>
               )
                 : <h2 className="text text_type_main-large">{title}</h2>
