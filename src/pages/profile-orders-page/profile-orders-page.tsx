@@ -10,7 +10,6 @@ import UserOrdersFeed from '../../components/user-orders-feed/user-orders-feed';
 import withModalControl from '../../hocs/with-modal-control';
 import { getCookie } from '../../utils/cookie';
 import {
-  addUserModalNumber,
   userOrderFeedConnect,
   userOrderFeedDisconnect,
 } from '../../services/actions/user-order-feed';
@@ -57,10 +56,6 @@ const ProfileOrdersPage: FC<object> = () => {
   const handleLogout = (): void => {
     dispatch(logoutRequest());
     navigate('/', { replace: true });
-  };
-
-  const trackOrderNumber = (orderNumber: number) => {
-    dispatch(addUserModalNumber(orderNumber));
   };
 
   if (status !== WebsocketStatus.ONLINE) {
@@ -141,7 +136,7 @@ const ProfileOrdersPage: FC<object> = () => {
         <div className={`${styles.cardFlex} ${styles.overflow} ml-15 mt-10`}>
           {orders.map((order) => (
             // eslint-disable-next-line no-underscore-dangle
-            <Link className={styles.link} onClick={() => trackOrderNumber(order.number)} to={`/profile/orders/${order.number}`} replace state={{ from: 'profileOrders', backgroundLocation: location }} key={order._id}>
+            <Link className={styles.link} to={`/profile/orders/${order.number}`} replace state={{ from: 'profileOrders', backgroundLocation: location }} key={order._id}>
               <UserOrdersFeedWithModal
                 /* eslint-disable-next-line no-underscore-dangle */
                 key={order._id}

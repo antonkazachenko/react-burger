@@ -6,7 +6,7 @@ import styles from './order-feed-page.module.css';
 import OrderFeed from '../../components/order-feed/order-feed';
 import FeedData from '../../components/feed-data/feed-data';
 import withModalControl from '../../hocs/with-modal-control';
-import { addModalNumber, orderFeedConnect, orderFeedDisconnect } from '../../services/actions/order-feed';
+import { orderFeedConnect, orderFeedDisconnect } from '../../services/actions/order-feed';
 import { useSelector } from '../../hooks';
 import { TOrder } from '../../services/reducers/order-feed';
 import WebsocketStatus from '../../types/websocket';
@@ -34,10 +34,6 @@ const OrderFeedPage: FC = () => {
     const ingredient = ingredients.find((item) => item._id === ingredientId);
     return ingredient ? ingredient.image : '';
   });
-
-  const trackOrderNumber = (orderNumber: number) => {
-    dispatch(addModalNumber(orderNumber));
-  };
 
   useEffect(() => {
     dispatch(orderFeedConnect('wss://norma.nomoreparties.space/orders/all'));
@@ -69,7 +65,7 @@ const OrderFeedPage: FC = () => {
         <div className={`${styles.tabWidth} ${styles.overflow}`}>
           { orders.map((order) => (
             // eslint-disable-next-line no-underscore-dangle
-            <Link onClick={() => trackOrderNumber(order.number)} to={`/feed/${order.number}`} key={order._id} state={{ from: 'orderFeed', backgroundLocation: location }} className={styles.link}>
+            <Link to={`/feed/${order.number}`} key={order._id} state={{ from: 'orderFeed', backgroundLocation: location }} className={styles.link}>
               <OrderFeedWithModalControl
               /* eslint-disable-next-line no-underscore-dangle */
                 key={order._id}

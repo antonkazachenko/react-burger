@@ -10,8 +10,6 @@ import {
   userOrderFeedError,
   userOrderFeedMessage,
   userOrderFeedOpen,
-  addUserModalNumber,
-  deleteUserModalNumber,
 } from '../actions/user-order-feed';
 
 const initialState: TOrderFeedState &
@@ -52,12 +50,6 @@ const userOrderFeedReducer = createReducer(initialState, (builder) => {
       state.orders = action.payload.orders;
       state.total = action.payload.total;
       state.totalToday = action.payload.totalToday;
-    })
-    .addCase(addUserModalNumber, (state, action) => {
-      state.userModalNumber = action.payload;
-    })
-    .addCase(deleteUserModalNumber, (state) => {
-      state.userModalNumber = 0;
     });
 });
 

@@ -8,8 +8,6 @@ import {
   orderFeedMessage,
   orderFeedOpen,
   getOrderByID,
-  addModalNumber,
-  deleteModalNumber,
 } from '../actions/order-feed';
 
 export type TOrder = {
@@ -73,12 +71,6 @@ const orderFeedReducer = createReducer(initialState, (builder) => {
     .addCase(getOrderByID.rejected, (state, action) => {
       state.error = (action.payload as Error).message;
       state.orderPageStatus = RequestStatus.FAILED;
-    })
-    .addCase(addModalNumber, (state, action) => {
-      state.modalNumber = action.payload;
-    })
-    .addCase(deleteModalNumber, (state) => {
-      state.modalNumber = 0;
     });
 });
 
