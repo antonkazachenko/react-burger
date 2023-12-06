@@ -7,6 +7,8 @@ import {
   USER_ORDER_FEED_ERROR,
   USER_ORDER_FEED_MESSAGE,
   USER_ORDER_FEED_OPEN,
+  ADD_USER_MODAL_NUMBER,
+  DELETE_USER_MODAL_NUMBER,
 } from '../constants/user-order-feed';
 import { TOrder } from '../reducers/order-feed';
 
@@ -34,10 +36,19 @@ TServerResponse,
   typeof USER_ORDER_FEED_MESSAGE
 >(USER_ORDER_FEED_MESSAGE);
 
+export const addUserModalNumber = createAction<
+number,
+typeof ADD_USER_MODAL_NUMBER
+>(ADD_USER_MODAL_NUMBER);
+
+export const deleteUserModalNumber = createAction(DELETE_USER_MODAL_NUMBER);
+
 export type UserOrderFeedActions = ReturnType<typeof userOrderFeedConnect>
 | ReturnType<typeof userOrderFeedDisconnect>
 | ReturnType<typeof userOrderFeedClose>
 | ReturnType<typeof userOrderFeedOpen>
 | ReturnType<typeof userOrderFeedConnecting>
 | ReturnType<typeof userOrderFeedError>
-| ReturnType<typeof userOrderFeedMessage>;
+| ReturnType<typeof userOrderFeedMessage>
+| ReturnType<typeof addUserModalNumber>
+| ReturnType<typeof deleteUserModalNumber>;

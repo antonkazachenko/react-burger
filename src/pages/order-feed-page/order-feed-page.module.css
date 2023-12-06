@@ -22,3 +22,10 @@
     text-decoration: none;
     color: inherit;
 }
+
+.spinner {
+    display: flex;
+    height: 80vh;
+    justify-content: center;
+    align-items: center;
+}

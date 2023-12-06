@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
+import MoonLoader from 'react-spinners/MoonLoader';
 import styles from './order-feed-page.module.css';
 import OrderFeed from '../../components/order-feed/order-feed';
 import FeedData from '../../components/feed-data/feed-data';
@@ -8,12 +9,13 @@ import withModalControl from '../../hocs/with-modal-control';
 import { addModalNumber, orderFeedConnect, orderFeedDisconnect } from '../../services/actions/order-feed';
 import { useSelector } from '../../hooks';
 import { TOrder } from '../../services/reducers/order-feed';
+import WebsocketStatus from '../../types/websocket';
 
 const OrderFeedWithModalControl = withModalControl(OrderFeed);
 
 const OrderFeedPage: FC = () => {
   const dispatch = useDispatch();
-  const { orders } = useSelector((store) => store.orderFeedStore);
+  const { orders, status } = useSelector((store) => store.orderFeedStore);
   const { ingredients } = useSelector((store) => store.ingredientsStore);
   const location = useLocation();
   const calculateTotalPrice = (order: TOrder) => {
@@ -43,6 +45,20 @@ const OrderFeedPage: FC = () => {
       dispatch(orderFeedDisconnect());
     };
   }, [dispatch]);
+
+  if (status !== WebsocketStatus.ONLINE) {
+    return (
+      <div className={styles.spinner}>
+        <MoonLoader
+          color="rgb(133, 133, 173, 1)"
+          cssOverride={{}}
+          loading
+          size={100}
+          speedMultiplier={1}
+        />
+      </div>
+    );
+  }
 
   return (
     <main className={styles.app}>

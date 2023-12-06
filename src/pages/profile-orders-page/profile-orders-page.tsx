@@ -2,20 +2,26 @@ import React, { FC, useEffect } from 'react';
 import {
   Link, NavLink, useLocation, useNavigate,
 } from 'react-router-dom';
+import MoonLoader from 'react-spinners/MoonLoader';
 import { useDispatch, useSelector } from '../../hooks';
 import styles from './profile-orders-page.module.css';
 import { logoutRequest } from '../../services/actions/account';
 import UserOrdersFeed from '../../components/user-orders-feed/user-orders-feed';
 import withModalControl from '../../hocs/with-modal-control';
 import { getCookie } from '../../utils/cookie';
-import { userOrderFeedConnect, userOrderFeedDisconnect } from '../../services/actions/user-order-feed';
+import {
+  addUserModalNumber,
+  userOrderFeedConnect,
+  userOrderFeedDisconnect,
+} from '../../services/actions/user-order-feed';
 import { TOrder } from '../../services/reducers/order-feed';
+import WebsocketStatus from '../../types/websocket';
 
 const UserOrdersFeedWithModal = withModalControl(UserOrdersFeed);
 
 const ProfileOrdersPage: FC<object> = () => {
   const dispatch = useDispatch();
-  const { orders } = useSelector((store) => store.userOrderFeedStore);
+  const { orders, status } = useSelector((store) => store.userOrderFeedStore);
   const { ingredients } = useSelector((store) => store.ingredientsStore);
   const navigate = useNavigate();
   const location = useLocation();
@@ -53,6 +59,55 @@ const ProfileOrdersPage: FC<object> = () => {
     navigate('/', { replace: true });
   };
 
+  const trackOrderNumber = (orderNumber: number) => {
+    dispatch(addUserModalNumber(orderNumber));
+  };
+
+  if (status !== WebsocketStatus.ONLINE) {
+    return (
+      <div className={styles.app}>
+        <div className={styles.flex}>
+          <div>
+            <NavLink
+              className={`${styles.menuTab} mt-30 ${styles.linkDecoration}`}
+              to="/profile"
+            >
+              {({ isActive }) => (
+                <p className={`text text_type_main-large ${(isActive && !window.location.href.includes('orders')) ? styles.activeColor : 'text_color_inactive'}`}>
+                  Профиль
+                </p>
+              )}
+            </NavLink>
+            <NavLink
+              className={`${styles.menuTab} ${styles.linkDecoration}`}
+              to="/profile/orders"
+            >
+              {({ isActive }) => (
+                <p className={`text text_type_main-large ${isActive ? styles.activeColor : 'text_color_inactive'}`}>
+                  История заказов
+                </p>
+              )}
+            </NavLink>
+            <Link onClick={handleLogout} className={`${styles.menuTab} ${styles.linkDecoration}`} to="/" replace>
+              <p className="text text_type_main-large text_color_inactive">
+                Выйти
+              </p>
+            </Link>
+          </div>
+          <div className={styles.spinner}>
+            <MoonLoader
+              color="rgb(133, 133, 173, 1)"
+              cssOverride={{}}
+              loading
+              size={100}
+              speedMultiplier={1}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.app}>
       <div className={styles.flex}>
@@ -86,7 +141,7 @@ const ProfileOrdersPage: FC<object> = () => {
         <div className={`${styles.cardFlex} ${styles.overflow} ml-15 mt-10`}>
           {orders.map((order) => (
             // eslint-disable-next-line no-underscore-dangle
-            <Link className={styles.link} to={`/profile/orders/${order.number}`} replace state={{ from: 'profileOrders', backgroundLocation: location }} key={order._id}>
+            <Link className={styles.link} onClick={() => trackOrderNumber(order.number)} to={`/profile/orders/${order.number}`} replace state={{ from: 'profileOrders', backgroundLocation: location }} key={order._id}>
               <UserOrdersFeedWithModal
                 /* eslint-disable-next-line no-underscore-dangle */
                 key={order._id}

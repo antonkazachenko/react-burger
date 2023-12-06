@@ -10,9 +10,12 @@ import {
   userOrderFeedError,
   userOrderFeedMessage,
   userOrderFeedOpen,
+  addUserModalNumber,
+  deleteUserModalNumber,
 } from '../actions/user-order-feed';
 
-const initialState: TOrderFeedState & { refreshTokenStatus: RequestStatus } = {
+const initialState: TOrderFeedState &
+{ refreshTokenStatus: RequestStatus; userModalNumber: number; } = {
   status: WebsocketStatus.OFFLINE,
   orderPageStatus: RequestStatus.IDLE,
   refreshTokenStatus: RequestStatus.IDLE,
@@ -21,6 +24,7 @@ const initialState: TOrderFeedState & { refreshTokenStatus: RequestStatus } = {
   error: '',
   total: 0,
   totalToday: 0,
+  userModalNumber: 0,
 };
 
 const userOrderFeedReducer = createReducer(initialState, (builder) => {
@@ -48,6 +52,12 @@ const userOrderFeedReducer = createReducer(initialState, (builder) => {
       state.orders = action.payload.orders;
       state.total = action.payload.total;
       state.totalToday = action.payload.totalToday;
+    })
+    .addCase(addUserModalNumber, (state, action) => {
+      state.userModalNumber = action.payload;
+    })
+    .addCase(deleteUserModalNumber, (state) => {
+      state.userModalNumber = 0;
     });
 });
 
