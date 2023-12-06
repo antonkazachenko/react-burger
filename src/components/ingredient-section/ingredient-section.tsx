@@ -5,10 +5,10 @@ import ConstructorCard from '../constructor-card/constructor-card';
 import TItemType from '../../types/ItemType';
 
 type TIngredientSection = {
-    items : Array<TItemType>;
-    title: string;
-    classes: Array<string>;
-    handleModal: () => void;
+  items : Array<TItemType>;
+  title: string;
+  classes: Array<string>;
+  handleModal: () => void;
 }
 
 const IngredientSection: FC<TIngredientSection> = ({
@@ -36,7 +36,7 @@ const IngredientSection: FC<TIngredientSection> = ({
                 onClick={handleModal}
                 item={el}
                 price={el.price}
-                    /* eslint-disable-next-line no-underscore-dangle */
+                /* eslint-disable-next-line no-underscore-dangle */
                 key={el._id}
               />
             </Link>

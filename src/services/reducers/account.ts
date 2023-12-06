@@ -1,37 +1,75 @@
 import {
-  EMAIL_CHECK__FAILURE,
-  EMAIL_CHECK__REQUEST,
-  EMAIL_CHECK__SUCCESS,
-  EMAIL_CHECK__RESET,
-  REGISTER__FAILURE,
-  REGISTER__REQUEST,
-  REGISTER__SUCCESS,
-  REGISTER__RESET,
-  RESET_PASSWORD__FAILURE,
-  RESET_PASSWORD__REQUEST,
-  RESET_PASSWORD__SUCCESS,
-  RESET_PASSWORD__RESET,
-  REFRESH_TOKEN__SUCCESS,
-  REFRESH_TOKEN__FAILURE,
-  REFRESH_TOKEN__REQUEST,
-  REFRESH_TOKEN_RESET,
-  LOGIN__SUCCESS,
+  EMAIL_CHECK__FAILURE, EMAIL_CHECK__REQUEST,
+  EMAIL_CHECK__RESET, EMAIL_CHECK__SUCCESS,
+  GET_USER__FAILURE,
+  GET_USER__REQUEST,
+  GET_USER__RESET,
+  GET_USER__SUCCESS,
   LOGIN__FAILURE,
   LOGIN__REQUEST,
   LOGIN__RESET,
-  LOGOUT__REQUEST,
-  LOGOUT__SUCCESS,
+  LOGIN__SUCCESS,
   LOGOUT__FAILURE,
+  LOGOUT__REQUEST,
   LOGOUT__RESET,
-  PROFILE_UPDATE__REQUEST,
-  PROFILE_UPDATE__SUCCESS,
+  LOGOUT__SUCCESS,
   PROFILE_UPDATE__FAILURE,
+  PROFILE_UPDATE__REQUEST,
   PROFILE_UPDATE__RESET,
-  GET_USER__REQUEST,
-  GET_USER__SUCCESS,
-  GET_USER__FAILURE,
-  GET_USER__RESET,
-} from '../actions/account';
+  PROFILE_UPDATE__SUCCESS,
+  REFRESH_TOKEN__FAILURE,
+  REFRESH_TOKEN__REQUEST,
+  REFRESH_TOKEN__SUCCESS,
+  REFRESH_TOKEN_RESET,
+  REGISTER__FAILURE, REGISTER__REQUEST,
+  REGISTER__RESET,
+  REGISTER__SUCCESS,
+  RESET_PASSWORD__FAILURE,
+  RESET_PASSWORD__REQUEST,
+  RESET_PASSWORD__RESET,
+  RESET_PASSWORD__SUCCESS,
+} from '../constants/account';
+import { TAccountActions } from '../actions/account';
+
+type TAccountState = {
+  emailCheckRequest: {
+    success: boolean;
+    error: boolean;
+  };
+  passwordResetRequest: {
+    success: boolean;
+    error: boolean;
+  };
+  registerRequest: {
+    success: boolean;
+    error: boolean;
+  };
+  refreshTokenRequest: {
+    success: boolean;
+    error: boolean;
+  };
+  loginRequest: {
+    success: boolean;
+    error: boolean;
+  };
+  logoutRequest: {
+    success: boolean;
+    error: boolean;
+  };
+  profileUpdateRequest: {
+    success: boolean;
+    error: boolean;
+  };
+  getUserRequest: {
+    success: boolean;
+    error: boolean;
+  };
+  user: {
+    name: string;
+    email: string;
+    password?: string;
+  };
+};
 
 const initialState = {
   emailCheckRequest: {
@@ -72,8 +110,11 @@ const initialState = {
   },
 };
 
-// eslint-disable-next-line default-param-last
-const accountReducer = (state = initialState, action) => {
+const accountReducer = (
+  // eslint-disable-next-line default-param-last
+  state: TAccountState = initialState,
+  action: TAccountActions,
+): TAccountState => {
   switch (action.type) {
     case GET_USER__REQUEST: {
       return {
@@ -327,10 +368,6 @@ const accountReducer = (state = initialState, action) => {
           success: true,
           error: false,
         },
-        user: {
-          ...state.user,
-          password: action.payload,
-        },
       };
     }
     case RESET_PASSWORD__FAILURE: {
@@ -388,6 +425,8 @@ const accountReducer = (state = initialState, action) => {
       };
     }
     default: {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-underscore-dangle
+      const _exhaustiveCheck: never = action;
       return state;
     }
   }

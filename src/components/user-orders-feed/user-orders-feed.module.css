@@ -1,0 +1,90 @@
+.modalWidth {
+    width: 32vw;
+}
+
+.imagesContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cardImages {
+    display: flex;
+    width: 64px;
+    height: 64px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 100px;
+    border: 2px solid #801AB2;
+    background: #131316;
+    position: relative; /* Important for z-index to work */
+}
+.card {
+    border-radius: 40px;
+    background: #1C1C21;
+    padding: 24px;
+    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.04), 0 0 2px 0 rgba(0, 0, 0, 0.06), 0 4px 8px 0 rgba(0, 0, 0, 0.04);
+}
+.cardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cardPrice {
+    display: flex;
+    align-items: center;
+}
+.date {
+    color: #8585AD;
+}
+.cardImageWithOpacity {
+    position: relative;
+    margin-left: -15px;
+    z-index: 0;
+}
+.cardImageWithOpacity::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-position: center;
+    background-size: cover;
+    opacity: 0.6;
+    z-index: -1;
+}
+.extraIngredientsTextColor {
+    color: #F2F2F3;
+}
+
+.doneColor {
+    color: #0CC;
+}
+
+.pendingColor,
+.createdColor {
+    color: #F2F2F3;
+}
+
+.ingredientName {
+    display: flex;
+    align-items: center;
+}
+
+.overflow {
+    overflow-y: auto;
+    height: 24vh;
+    padding-right: 24px;
+    margin-bottom: 40px;
+}
+
+.ingredientWidth {
+    width: 16vw
+}

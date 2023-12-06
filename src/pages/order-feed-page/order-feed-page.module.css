@@ -1,0 +1,31 @@
+.app {
+    margin: 0 auto;
+    max-width: 1240px;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabWidth {
+    width: 50%;
+}
+
+.overflow {
+    overflow-y: auto;
+    height: 80vh;
+}
+
+.flex {
+    display: flex;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.spinner {
+    display: flex;
+    height: 80vh;
+    justify-content: center;
+    align-items: center;
+}

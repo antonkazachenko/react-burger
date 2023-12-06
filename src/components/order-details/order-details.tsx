@@ -1,12 +1,11 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { FC } from 'react';
 import MoonLoader from 'react-spinners/MoonLoader';
+import { useSelector } from '../../hooks';
 import styles from './order-details.module.css';
 import { ReactComponent as OrderConfirmationTick } from '../../images/orderConfirmedTick.svg';
 
-function OrderDetails() {
-  // TODO: remove this any
-  const { createdOrder } = useSelector((store: any) => store.ingredientsStore);
+const OrderDetails: FC<object> = () => {
+  const { createdOrder } = useSelector((store) => store.ingredientsStore);
 
   if (!createdOrder) {
     return (
@@ -43,6 +42,6 @@ function OrderDetails() {
       </div>
     </div>
   );
-}
+};
 
 export default OrderDetails;

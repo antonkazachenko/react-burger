@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks';
 import styles from './non-modal-ingredient-page.module.css';
 import TItemType from '../../types/ItemType';
 
-function NonModalIngredientPage() {
+const NonModalIngredientPage: FC<object> = () => {
   const { id } = useParams();
-  const data = useSelector((store: any) => store
+  const data = useSelector((store) => store
   // eslint-disable-next-line no-underscore-dangle
     .ingredientsStore.ingredients.find((item: TItemType) => item._id === id));
+
+  if (!data) {
+    return (
+      <div className="text text_type_main-medium">
+        Ингредиент не найден
+      </div>
+    );
+  }
 
   return (
     <>
@@ -61,6 +69,6 @@ function NonModalIngredientPage() {
       </div>
     </>
   );
-}
+};
 
 export default NonModalIngredientPage;

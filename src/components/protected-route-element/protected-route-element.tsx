@@ -1,6 +1,6 @@
 import React, { FC, ReactElement } from 'react';
-import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
+import { useSelector } from '../../hooks';
 
 type TProtectedRouteElementProps = {
   element: ReactElement;
@@ -8,8 +8,7 @@ type TProtectedRouteElementProps = {
 }
 
 const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({ element, anonymous = false }) => {
-  // TODO: remove this any
-  const name = useSelector((store: any) => store.accountStore.user.name);
+  const name = useSelector((store) => store.accountStore.user.name);
 
   const location = useLocation();
   const from = location.state?.from || '/';

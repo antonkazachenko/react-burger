@@ -1,30 +1,29 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
   Button, Input, PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useForm } from '../../hooks';
 import styles from './reset-password-page.module.css';
 // eslint-disable-next-line import/named
 import { getUserRequest, resetPasswordRequest, resetPasswordReset } from '../../services/actions/account';
-import useForm from '../../hooks/useForm';
 
-function ResetPasswordPage() {
+const ResetPasswordPage: FC<object> = () => {
   const { values, handleChange } = useForm({ password: '', emailCode: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || '/';
-  const { success } = useSelector((store: any) => store.accountStore.passwordResetRequest);
-  const { user } = useSelector((state: any) => state.accountStore);
+  const { success } = useSelector((store) => store.accountStore.passwordResetRequest);
+  const { user } = useSelector((state) => state.accountStore);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
-    dispatch<any>(resetPasswordRequest(values.password, values.emailCode));
+    dispatch(resetPasswordRequest(values.password, values.emailCode));
   };
 
   React.useEffect(() => {
-    dispatch<any>(getUserRequest());
+    dispatch(getUserRequest());
     if (user.name !== '') {
       navigate('/', { replace: true });
     } else if (from !== '/forgot-password') {
@@ -44,7 +43,7 @@ function ResetPasswordPage() {
             name="password"
             placeholder="Введите новый пароль"
             extraClass="ml-1 mt-6"
-          /* eslint-disable-next-line @typescript-eslint/no-empty-function */
+            /* eslint-disable-next-line @typescript-eslint/no-empty-function */
             onChange={handleChange}
           />
           <Input
@@ -78,6 +77,6 @@ function ResetPasswordPage() {
       </div>
     </div>
   );
-}
+};
 
 export default ResetPasswordPage;

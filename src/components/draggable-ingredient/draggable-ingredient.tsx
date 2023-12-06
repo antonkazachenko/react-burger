@@ -1,21 +1,16 @@
 import React, { FC } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch } from '../../hooks';
 import { reorderIngredients } from '../../services/actions/ingredients';
 import styles from './draggable-ingredient.module.css';
 import TItemType from '../../types/ItemType';
+import { TDraggableIngredientItem } from '../../types';
 
 type TDraggableIngredientProp = {
-    ingredient: TItemType;
-    handleIngredientRemoval: (id: string | undefined) => void;
-    index: number;
-}
-
-type TDraggableIngredientItem = {
-  id: string;
+  ingredient: TItemType;
+  handleIngredientRemoval: (id: string | undefined) => void;
   index: number;
-  fromConstructor: boolean;
 }
 
 const DraggableIngredient: FC<TDraggableIngredientProp> = ({

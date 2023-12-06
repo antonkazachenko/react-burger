@@ -1,22 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   BurgerIcon, ListIcon, Logo, ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from '../../hooks';
 import styles from './app-header.module.css';
 import { getUserRequest } from '../../services/actions/account';
 
-function AppHeader() {
-  // TODO: remove this any
-  const { user } = useSelector((store: any) => store.accountStore);
+const AppHeader: FC<object> = () => {
+  const { user } = useSelector((store) => store.accountStore);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleAccountClick = () => {
-    // TODO: remove this ts-ignore
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+  const handleAccountClick = (): void => {
     dispatch(getUserRequest());
     if (user.name === '') {
       navigate('/login');
@@ -26,9 +22,6 @@ function AppHeader() {
   };
 
   useEffect(() => {
-    // TODO: remove this ts-ignore
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     dispatch(getUserRequest());
   }, [dispatch]);
 
@@ -63,14 +56,27 @@ function AppHeader() {
             </div>
             <div className={`${styles.flexCentered} mt-4 mb-4 p-5`}>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a href="#" className={`${styles.navLink} ${styles.secondary}`}>
-                <div className={`${styles.secondary} mr-2`}>
-                  <ListIcon type="secondary" />
-                </div>
-                <p className={`text text_type_main-default ${styles.secondary}`}>
-                  Лента заказов
-                </p>
-              </a>
+              <NavLink to="/feed" replace className={styles.navLink}>
+                {(window.location.pathname === '/feed') ? (
+                  <>
+                    <div className="mr-2">
+                      <ListIcon type="primary" />
+                    </div>
+                    <p className="text text_type_main-default">
+                      Лента заказов
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <div className="mr-2">
+                      <ListIcon type="secondary" />
+                    </div>
+                    <p className={`text text_type_main-default ${styles.secondary}`}>
+                      Лента заказов
+                    </p>
+                  </>
+                )}
+              </NavLink>
             </div>
           </nav>
           <div className={styles.logo}>
@@ -104,6 +110,6 @@ function AppHeader() {
       </div>
     </div>
   );
-}
+};
 
 export default AppHeader;

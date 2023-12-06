@@ -2,9 +2,9 @@ import React, { FC, useEffect, useState } from 'react';
 import {
   Button, ConstructorElement, CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from '../../hooks';
 import styles from './burger-constructor.module.css';
 import OrderDetails from '../order-details/order-details';
 import Modal from '../modal/modal';
@@ -14,7 +14,7 @@ import {
   removeIngredient,
   changeBun,
   setTotalPrice,
-  resetTotalPrice, RESET_CONSTRUCTOR,
+  resetConstructor, TItemTypeWithUniqueId,
 } from '../../services/actions/ingredients';
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 import { WithModalControlsReturn } from '../../hocs/with-modal-control';
@@ -32,33 +32,31 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // TODO: remove these any's
   const {
     constructorIngredients,
     bunData,
-  } = useSelector((store: any) => store.ingredientsStore);
-  const { name } = useSelector((store: any) => store.accountStore.user);
-  const { totalPrice } = useSelector((store: any) => store.ingredientsStore);
+  } = useSelector((store) => store.ingredientsStore);
+  const { name } = useSelector((store) => store.accountStore.user);
+  const { totalPrice } = useSelector((store) => store.ingredientsStore);
 
-  const handleIngredientRemoval = (id: string | undefined) => {
+  const handleIngredientRemoval = (id: string | undefined): void => {
     if (typeof id === 'undefined') { return; }
     // eslint-disable-next-line no-underscore-dangle
     dispatch(removeIngredient(id));
   };
 
-  const handleCloseModalWithReset = () => {
+  const handleCloseModalWithReset = (): void => {
     setIsVisible(false);
     handleCloseModal();
-    dispatch({ type: RESET_CONSTRUCTOR });
+    dispatch(resetConstructor());
   };
 
   const [, dropTarget] = useDrop({
     accept: ['bun', 'sauce'],
     drop(item: TItemType) {
-      if ((bunData.length === 0) && (item.type !== 'bun')) { return; }
       if (item && item.type === 'bun') {
         dispatch(changeBun(item));
-      } else {
+      } else if (bunData !== null) {
         dispatch(addIngredient(item));
       }
     },
@@ -70,45 +68,42 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
       totalPriceValue += bunData.price * 2;
     }
     if (constructorIngredients) {
-      // TODO: remove this any
-      constructorIngredients.forEach((el: any) => {
+      constructorIngredients.forEach((el: { ingredient: TItemTypeWithUniqueId }) => {
         totalPriceValue += el.ingredient.price;
       });
     }
     if (totalPriceValue === 0) {
-      dispatch(resetTotalPrice());
+      dispatch(setTotalPrice(0));
     } else {
       dispatch(setTotalPrice(totalPriceValue));
     }
   }, [bunData, constructorIngredients, dispatch]);
 
-  const createOrder = () => {
+  const createOrder = (): void => {
     if (!name) {
       navigate('/login', { replace: true });
     }
     const ingredientsArray = [];
+    if (!bunData || !name) { return; }
     // eslint-disable-next-line no-underscore-dangle
     ingredientsArray.push(bunData._id);
-    constructorIngredients.forEach((el: TItemType) => {
+    constructorIngredients.forEach((el) => {
       // eslint-disable-next-line no-underscore-dangle
-      ingredientsArray.push(el._id);
+      ingredientsArray.push(el.ingredient._id);
     });
     // eslint-disable-next-line no-underscore-dangle
     ingredientsArray.push(bunData._id);
-    // eslint-disable-next-line no-underscore-dangle
     setIsVisible(true);
-    // TODO: remove this any
-    dispatch<any>(createOrderRequest(ingredientsArray));
+    dispatch(createOrderRequest(ingredientsArray));
     handleModal();
   };
-  if (bunData.length === 0) {
+  if (bunData === null) {
     return (
       <div className={styles.dropZone} ref={dropTarget}>
         <p className="text text_type_main-large mt-10">Перенесите булку в правую часть экрана</p>
       </div>
     );
   }
-  // TODO: remove this any
   return (
     <div className={className} ref={dropTarget}>
 
@@ -124,20 +119,22 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
       {
         constructorIngredients && constructorIngredients.length ? (
           <div className={styles.overflow}>
-            {constructorIngredients.map((el: any, index: number) => {
-              if (el.type !== 'bun') {
-                return (
-                  <DraggableIngredient
+            {constructorIngredients.map(
+              (el, index) => {
+                if (el.ingredient.type !== 'bun') {
+                  return (
+                    <DraggableIngredient
                     /* eslint-disable-next-line no-underscore-dangle */
-                    key={el.ingredient.uniqueId}
-                    ingredient={el.ingredient}
-                    handleIngredientRemoval={handleIngredientRemoval}
-                    index={index}
-                  />
-                );
-              }
-              return null;
-            })}
+                      key={el.ingredient.uniqueId}
+                      ingredient={el.ingredient}
+                      handleIngredientRemoval={handleIngredientRemoval}
+                      index={index}
+                    />
+                  );
+                }
+                return null;
+              },
+            )}
           </div>
         ) : null
       }
@@ -165,9 +162,9 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
         {
           isVisible
           && (
-          <Modal onClose={handleCloseModalWithReset} className={styles.modalWidth}>
-            <OrderDetails />
-          </Modal>
+            <Modal onClose={handleCloseModalWithReset} className={styles.modalWidth} headerClass={`${styles.exitCross} mr-10 mt-15`}>
+              <OrderDetails />
+            </Modal>
           )
         }
       </div>

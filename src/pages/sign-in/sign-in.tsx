@@ -1,30 +1,25 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
   Button, EmailInput, PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useForm } from '../../hooks';
 import styles from './sign-in.module.css';
 import { getUserRequest, loginRequest } from '../../services/actions/account';
-import useForm from '../../hooks/useForm';
 
-function SignIn() {
+const SignIn: FC<object> = () => {
   const { values, handleChange } = useForm({ email: '', password: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // TODO: remove any
-  const { user } = useSelector((store: any) => store.accountStore);
+  const { user } = useSelector((store) => store.accountStore);
 
-  const handleOnSubmit = (e: React.FormEvent) => {
+  const handleOnSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
-    // TODO: remove any
-    dispatch<any>(loginRequest(values.email, values.password));
+    dispatch(loginRequest(values.email, values.password));
   };
 
   React.useEffect(() => {
-    // TODO: remove any
-    dispatch<any>(getUserRequest());
+    dispatch(getUserRequest());
     if (user.name !== '') {
       navigate('/', { replace: true });
     }
@@ -73,6 +68,6 @@ function SignIn() {
       </div>
     </div>
   );
-}
+};
 
 export default SignIn;

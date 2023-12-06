@@ -1,33 +1,32 @@
 import BASE_URL from './constants';
 import { setCookie } from './cookie';
-import store from '../services/store';
-
-type Dispatch = typeof store.dispatch;
+import { AppDispatch } from '../services/store';
 
 type TRequestOptions = {
   method: string,
   headers: {
     'Content-Type': string,
+    Authorization?: string,
     authorization?: string,
   },
   body?: string,
 }
 
-function getErrorMessage(error: unknown) {
+function getErrorMessage(error: unknown): string {
   if (error instanceof Error) return error.message;
   return String(error);
 }
 
-// TODO: remove this any
-interface ApiResponse {
+export interface ApiResponse {
   success: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 
-const checkResponse = (res: Response) => (res.ok ? res.json() : res.json()
+const checkResponse = (res: Response): Promise<ApiResponse> => (res.ok ? res.json() : res.json()
   .then((err: Error) => Promise.reject(err)));
 
-const checkSuccess = (res: ApiResponse) => {
+const checkSuccess = (res: ApiResponse): ApiResponse | Promise<never> => {
   if (res && res.success) {
     return res;
   }
@@ -35,24 +34,35 @@ const checkSuccess = (res: ApiResponse) => {
   return Promise.reject(`Ответ не success: ${res}`);
 };
 
-const request = (endpoint: string, options: TRequestOptions) => fetch(`${BASE_URL}${endpoint}`, options)
+const request = (endpoint: string, options?: TRequestOptions): Promise<ApiResponse> => fetch(`${BASE_URL}${endpoint}`, options)
   .then(checkResponse)
   .then(checkSuccess);
 
+export async function refreshTokenRequest() {
+  return request('/auth/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      token: localStorage.getItem('refreshToken'),
+    }),
+  });
+}
+
+// TODO: test this
 export const fetchWithRefresh = async (
   url: string,
   options: TRequestOptions,
-  refreshToken: string,
-  dispatch: Dispatch,
-) => {
+  refreshToken: () => (dispatch: AppDispatch) => void,
+  dispatch: AppDispatch,
+): Promise<ApiResponse> => {
   try {
     return await request(url, options);
   } catch (err) {
     if (getErrorMessage(err) === 'jwt expired') {
-      // TODO: remove this any
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const refreshData = await dispatch(refreshToken());
+      dispatch(refreshToken());
+      const refreshData = await refreshTokenRequest();
       if (!refreshData.success) {
         await Promise.reject(refreshData);
       }

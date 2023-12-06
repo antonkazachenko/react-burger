@@ -1,26 +1,46 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 // eslint-disable-next-line import/no-extraneous-dependencies
+
 import {
   ADD_INGREDIENT,
   CHANGE_BUN,
   CURRENT_ITEM_CLOSE,
-  CURRENT_ITEM_OPEN,
-  GET_INGREDIENTS__FAILURE,
-  GET_INGREDIENTS__REQUEST,
-  GET_INGREDIENTS__SUCCESS,
+  CURRENT_ITEM_OPEN, GET_INGREDIENTS__FAILURE, GET_INGREDIENTS__REQUEST, GET_INGREDIENTS__SUCCESS,
   POST_ORDER__FAILURE,
   POST_ORDER__REQUEST,
   POST_ORDER__SUCCESS,
   REMOVE_INGREDIENT,
   REORDER_INGREDIENTS,
   RESET_CONSTRUCTOR,
-  RESET_TOTAL_PRICE,
   SET_TOTAL_PRICE,
-} from '../actions/ingredients';
+} from '../constants/ingredients';
+import { TIngredientsActions, TItemTypeWithUniqueId } from '../actions/ingredients';
+import { TItemType } from '../../types';
+
+export type TCreatedOrder = {
+  success: boolean;
+  name: string;
+  order: {
+    number: number;
+  };
+};
+
+type TIngredientsState = {
+  ingredients: Array<TItemType>,
+  bunData: TItemType | null,
+  isLoading: boolean,
+  error: null | Error,
+  constructorIngredients: Array<{ ingredient: TItemTypeWithUniqueId }>,
+  createdOrder: null | TCreatedOrder,
+  currentItem: null | TItemType,
+  totalPrice: number,
+  isLoadingOrder: boolean,
+  orderModalVisible: boolean,
+};
 
 const initialState = {
   ingredients: [],
-  bunData: [],
+  bunData: null,
   isLoading: true,
   error: null,
   constructorIngredients: [],
@@ -31,8 +51,11 @@ const initialState = {
   orderModalVisible: false,
 };
 
-// eslint-disable-next-line default-param-last
-const ingredientsReducer = (state = initialState, action) => {
+const ingredientsReducer = (
+  // eslint-disable-next-line default-param-last
+  state: TIngredientsState = initialState,
+  action: TIngredientsActions,
+): TIngredientsState => {
   switch (action.type) {
     case GET_INGREDIENTS__REQUEST: {
       return {
@@ -44,7 +67,7 @@ const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        ingredients: action.payload.data,
+        ingredients: action.payload,
       };
     }
     case GET_INGREDIENTS__FAILURE: {
@@ -133,22 +156,18 @@ const ingredientsReducer = (state = initialState, action) => {
         totalPrice: action.payload,
       };
     }
-    case RESET_TOTAL_PRICE: {
-      return {
-        ...state,
-        totalPrice: 0,
-      };
-    }
     case RESET_CONSTRUCTOR: {
       return {
         ...state,
-        bunData: [],
+        bunData: null,
         constructorIngredients: [],
         totalPrice: 0,
         createdOrder: null,
       };
     }
     default: {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-underscore-dangle
+      const _exhaustiveCheck: never = action;
       return state;
     }
   }
