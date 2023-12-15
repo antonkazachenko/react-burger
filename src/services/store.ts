@@ -27,7 +27,7 @@ import {
   userOrderFeedError as onErrorUserOrderFeed,
   userOrderFeedMessage as onMessageUserOrderFeed, UserOrderFeedActions,
 } from './actions/user-order-feed';
-import userOrderFeedReducer from './reducers/user_order_feed';
+import userOrderFeedReducer from './reducers/user-order-feed';
 
 const orderFeedWsActions = {
   wsConnect: wsConnectOrderFeed,
