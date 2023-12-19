@@ -32,7 +32,7 @@ const AppHeader: FC<object> = () => {
           <nav className={`${styles.flexCentered} ${styles.navTab}`}>
             <div className={`${styles.flexCentered} mt-4 mb-4 p-5 mr-2`}>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <NavLink to="/" className={styles.navLink}>
+              <NavLink to="/" replace className={styles.navLink}>
                 {(window.location.pathname === '/') ? (
                   <>
                     <div className="mr-2">
