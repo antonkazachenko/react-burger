@@ -25,9 +25,11 @@ const IngredientSection: FC<TIngredientSection> = ({
         {
           items.map((el, index) => (
             <Link
-              className={`${classes[index]} ${styles.navLink}`}
+              /* eslint-disable-next-line no-underscore-dangle */
+              data-cy={`ingredient-${el._id}`}
               /* eslint-disable-next-line no-underscore-dangle */
               key={el._id}
+              className={`${classes[index]} ${styles.navLink}`}
               /* eslint-disable-next-line no-underscore-dangle */
               to={`/ingredients/${el._id}`}
               state={{ backgroundLocation: location }}

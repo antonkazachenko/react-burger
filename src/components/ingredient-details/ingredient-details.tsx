@@ -39,7 +39,7 @@ const IngredientDetails: FC<object> = () => {
     <>
       <div className={styles.image}><img src={data.image_large} alt={data.name} /></div>
       <div className={`${styles.modalContent} mt-4`}>
-        <p className="text text_type_main-medium">{data.name}</p>
+        <p className="text text_type_main-medium" data-cy="modal-name">{data.name}</p>
       </div>
       <div className={`${styles.modalContent} mt-8 mb-15`}>
         <div className={`${styles.textData} mr-5 text text_type_main-default ${styles.flex}`}>

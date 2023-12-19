@@ -41,7 +41,7 @@ const Modal: FC<TModalProp> = ({
     (
       <>
         <ModalOverlay onClose={title ? onClose : handleClose} />
-        <div className={`${styles.modal} ${className}`}>
+        <div className={`${styles.modal} ${className}`} data-cy="modal">
           <div className={headerClass}>
             {
               (!defaultTitle) ? (
@@ -51,7 +51,7 @@ const Modal: FC<TModalProp> = ({
             }
             {/* eslint-disable-next-line max-len */}
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-            <a onClick={handleClose}><CloseIcon type="primary" /></a>
+            <a onClick={handleClose} data-cy="modal-close"><CloseIcon type="primary" /></a>
           </div>
           {children}
         </div>

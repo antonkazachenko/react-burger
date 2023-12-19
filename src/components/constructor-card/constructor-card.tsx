@@ -43,7 +43,7 @@ const ConstructorCard: FC<TConstructorCardProp> = ({
   return (
     // eslint-disable-next-line max-len
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-    <div className={`${styles.card} ${className}`} onClick={customClick} ref={item.type === 'bun' ? dragBunRef : dragSauceRef}>
+    <div className={`${styles.card} ${className}`} data-cy="draggable-ingredient" onClick={customClick} ref={item.type === 'bun' ? dragBunRef : dragSauceRef}>
       <img className="pl-4 pr-4" src={item.image} alt={item.name} />
       <div className={`${styles.flex} mt-1`}>
         <p className="text text_type_digits-default mr-1">
