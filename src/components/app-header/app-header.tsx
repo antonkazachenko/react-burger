@@ -26,7 +26,7 @@ const AppHeader: FC<object> = () => {
   }, [dispatch]);
 
   return (
-    <div className={styles.bg}>
+    <div className={styles.bg} data-cy="header">
       <div className={styles.app}>
         <header className={styles.navBar}>
           <nav className={`${styles.flexCentered} ${styles.navTab}`}>
