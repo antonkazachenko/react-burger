@@ -105,7 +105,7 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
     );
   }
   return (
-    <div className={className} ref={dropTarget}>
+    <div className={className} ref={dropTarget} data-cy="drop-target">
 
       <div className={`${styles.dragElement} ml-8 mb-4`}>
         <ConstructorElement
@@ -154,7 +154,7 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
         </div>
         {/* eslint-disable-next-line max-len */}
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-        <div onClick={createOrder}>
+        <div onClick={createOrder} data-cy="order-button">
           <Button htmlType="button" type="primary" size="large">
             Оформить заказ
           </Button>
