@@ -33,7 +33,7 @@ const AppHeader: FC<object> = () => {
             <div className={`${styles.flexCentered} mt-4 mb-4 p-5 mr-2`}>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <NavLink to="/" replace className={styles.navLink}>
-                {(window.location.pathname === '/') ? (
+                {(window.location.href.slice(-1) === '/') ? (
                   <>
                     <div className="mr-2">
                       <BurgerIcon type="primary" />
@@ -57,7 +57,7 @@ const AppHeader: FC<object> = () => {
             <div className={`${styles.flexCentered} mt-4 mb-4 p-5`}>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <NavLink to="/feed" replace className={styles.navLink}>
-                {(window.location.pathname === '/feed') ? (
+                {(window.location.href.includes('/feed') || window.location.hash.includes('feed')) ? (
                   <>
                     <div className="mr-2">
                       <ListIcon type="primary" />
@@ -86,25 +86,29 @@ const AppHeader: FC<object> = () => {
           </div>
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
           <nav onClick={handleAccountClick} className={`${styles.linkDecoration} ${styles.flexCentered} ${styles.navTab} ${styles.navRight} ${styles.navLink} mt-4 mb-4 p-5`}>
-            {(window.location.href.includes('profile')) ? (
-              <>
-                <div className="mr-2">
-                  <ProfileIcon type="primary" />
-                </div>
-                <p className="text text_type_main-default">
-                  { user.name ? user.name : 'Личный кабинет'}
-                </p>
-              </>
-            ) : (
-              <>
-                <div className="mr-2">
-                  <ProfileIcon type="secondary" />
-                </div>
-                <p className={`text text_type_main-default ${styles.secondary}`}>
-                  { user.name ? user.name : 'Личный кабинет'}
-                </p>
-              </>
-            )}
+            {(window.location.href.includes('profile') || window.location.hash.includes('profile')
+              || window.location.hash.includes('login') || window.location.href.includes('login')
+              || window.location.hash.includes('forgot-password') || window.location.href.includes('forgot-password')
+              || window.location.hash.includes('register') || window.location.href.includes('register')
+              || window.location.hash.includes('reset-password') || window.location.href.includes('reset-password')) ? (
+                <>
+                  <div className="mr-2">
+                    <ProfileIcon type="primary" />
+                  </div>
+                  <p className="text text_type_main-default">
+                    { user.name ? user.name : 'Личный кабинет'}
+                  </p>
+                </>
+              ) : (
+                <>
+                  <div className="mr-2">
+                    <ProfileIcon type="secondary" />
+                  </div>
+                  <p className={`text text_type_main-default ${styles.secondary}`}>
+                    { user.name ? user.name : 'Личный кабинет'}
+                  </p>
+                </>
+              )}
           </nav>
         </header>
       </div>
