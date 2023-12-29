@@ -2,13 +2,14 @@ import { createReducer } from '@reduxjs/toolkit';
 import WebsocketStatus from '../../types/websocket';
 import RequestStatus from '../../types/requestStatus';
 import {
+  getOrderByID,
   orderFeedClose,
   orderFeedConnecting,
   orderFeedError,
   orderFeedMessage,
   orderFeedOpen,
-  getOrderByID,
 } from '../actions/order-feed';
+import translateOrGetRandomName from '../../utils/translateOrGetRandomName';
 
 export type TOrder = {
   ingredients: string[];
@@ -18,6 +19,7 @@ export type TOrder = {
   number: number;
   createdAt: string;
   updatedAt: string;
+  nameEn: string;
 };
 
 export type TOrderFeedState = {
@@ -57,7 +59,10 @@ const orderFeedReducer = createReducer(initialState, (builder) => {
       state.error = action.payload;
     })
     .addCase(orderFeedMessage, (state, action) => {
-      state.orders = action.payload.orders;
+      state.orders = action.payload.orders.map((order) => ({
+        ...order,
+        nameEn: translateOrGetRandomName(order.name),
+      }));
       state.total = action.payload.total;
       state.totalToday = action.payload.totalToday;
     })
@@ -65,7 +70,10 @@ const orderFeedReducer = createReducer(initialState, (builder) => {
       state.orderPageStatus = RequestStatus.LOADING;
     })
     .addCase(getOrderByID.fulfilled, (state, action) => {
-      state.orderPage = action.payload.orders;
+      state.orderPage = action.payload.orders.map((order) => ({
+        ...order,
+        nameEn: translateOrGetRandomName(order.name),
+      }));
       state.orderPageStatus = RequestStatus.SUCCEEDED;
     })
     .addCase(getOrderByID.rejected, (state, action) => {

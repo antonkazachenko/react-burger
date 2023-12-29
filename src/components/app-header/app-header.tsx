@@ -6,9 +6,12 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../hooks';
 import styles from './app-header.module.css';
 import { getUserRequest } from '../../services/actions/account';
+import LanguageSwitcher from '../language-switcher/language-switcher';
+import { useLanguage } from '../../utils/languageContext';
 
 const AppHeader: FC<object> = () => {
   const { user } = useSelector((store) => store.accountStore);
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -39,7 +42,8 @@ const AppHeader: FC<object> = () => {
                       <BurgerIcon type="primary" />
                     </div>
                     <p className="text text_type_main-default">
-                      Конструктор
+                      {/* eslint-disable-next-line react/no-unescaped-entities */}
+                      {t('headerConstructor')}
                     </p>
                   </>
                 ) : (
@@ -48,7 +52,8 @@ const AppHeader: FC<object> = () => {
                       <BurgerIcon type="secondary" />
                     </div>
                     <p className={`text text_type_main-default ${styles.secondary}`}>
-                      Конструктор
+                      {/* eslint-disable-next-line react/no-unescaped-entities */}
+                      {t('headerConstructor')}
                     </p>
                   </>
                 )}
@@ -63,7 +68,7 @@ const AppHeader: FC<object> = () => {
                       <ListIcon type="primary" />
                     </div>
                     <p className="text text_type_main-default">
-                      Лента заказов
+                      {t('headerFeed')}
                     </p>
                   </>
                 ) : (
@@ -72,7 +77,7 @@ const AppHeader: FC<object> = () => {
                       <ListIcon type="secondary" />
                     </div>
                     <p className={`text text_type_main-default ${styles.secondary}`}>
-                      Лента заказов
+                      {t('headerFeed')}
                     </p>
                   </>
                 )}
@@ -96,7 +101,7 @@ const AppHeader: FC<object> = () => {
                     <ProfileIcon type="primary" />
                   </div>
                   <p className="text text_type_main-default">
-                    { user.name ? user.name : 'Личный кабинет'}
+                    { user.name ? user.name : t('headerProfile')}
                   </p>
                 </>
               ) : (
@@ -105,11 +110,12 @@ const AppHeader: FC<object> = () => {
                     <ProfileIcon type="secondary" />
                   </div>
                   <p className={`text text_type_main-default ${styles.secondary}`}>
-                    { user.name ? user.name : 'Личный кабинет'}
+                    { user.name ? user.name : t('headerProfile')}
                   </p>
                 </>
               )}
           </nav>
+          <LanguageSwitcher />
         </header>
       </div>
     </div>

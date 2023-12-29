@@ -2,6 +2,8 @@ import React, { FC, useEffect, useState } from 'react';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './order-feed.module.css';
 import { WithModalControlsReturn } from '../../hocs/with-modal-control';
+import { useLanguage } from '../../utils/languageContext';
+import formatDate from '../../utils/formatDate';
 
 type TOrderFeedProp = {
   handleModal: () => void;
@@ -10,17 +12,20 @@ type TOrderFeedProp = {
   orderPrice: number;
   ingredientImages: string[];
   date: string;
+  orderNameEn: string;
 }
 
 const OrderFeed: FC<TOrderFeedProp & WithModalControlsReturn> = ({
   handleModal,
   orderNumber,
   orderName,
+  orderNameEn,
   orderPrice,
   ingredientImages,
   date,
 }) => {
   const [dynamicBeforeStyle, setDynamicBeforeStyle] = useState('');
+  const { language } = useLanguage();
 
   useEffect(() => {
     if (ingredientImages.length > 5) {
@@ -47,11 +52,11 @@ const OrderFeed: FC<TOrderFeedProp & WithModalControlsReturn> = ({
         <div className={styles.cardHeader}>
           <p className="text text_type_digits-default">{`#${orderNumber}`}</p>
           <p className={`text text_type_main-small ${styles.date}`}>
-            <FormattedDate date={new Date(date)} />
+            {language === 'ru' ? <FormattedDate date={new Date(date)} /> : formatDate(date)}
           </p>
         </div>
         <div className="mt-6 mb-6">
-          <p className="text text_type_main-medium">{orderName}</p>
+          <p className="text text_type_main-medium">{language === 'ru' ? orderName : orderNameEn}</p>
         </div>
         <div className={styles.cardFooter}>
           <div className={styles.imagesContainer}>

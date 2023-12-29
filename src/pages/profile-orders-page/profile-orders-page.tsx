@@ -15,6 +15,7 @@ import {
 } from '../../services/actions/user-order-feed';
 import { TOrder } from '../../services/reducers/order-feed';
 import WebsocketStatus from '../../types/websocket';
+import { useLanguage } from '../../utils/languageContext';
 
 const UserOrdersFeedWithModal = withModalControl(UserOrdersFeed);
 
@@ -24,6 +25,7 @@ const ProfileOrdersPage: FC<object> = () => {
   const { ingredients } = useSelector((store) => store.ingredientsStore);
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useLanguage();
 
   const calculateTotalPrice = (order: TOrder) => {
     // eslint-disable-next-line no-underscore-dangle
@@ -69,7 +71,7 @@ const ProfileOrdersPage: FC<object> = () => {
             >
               {({ isActive }) => (
                 <p className={`text text_type_main-large ${(isActive && !window.location.href.includes('orders')) ? styles.activeColor : 'text_color_inactive'}`}>
-                  Профиль
+                  {t('profile')}
                 </p>
               )}
             </NavLink>
@@ -79,13 +81,13 @@ const ProfileOrdersPage: FC<object> = () => {
             >
               {({ isActive }) => (
                 <p className={`text text_type_main-large ${isActive ? styles.activeColor : 'text_color_inactive'}`}>
-                  История заказов
+                  {t('orderHistory')}
                 </p>
               )}
             </NavLink>
             <Link onClick={handleLogout} className={`${styles.menuTab} ${styles.linkDecoration}`} to="/" replace>
               <p className="text text_type_main-large text_color_inactive">
-                Выйти
+                {t('logout')}
               </p>
             </Link>
           </div>
@@ -113,7 +115,7 @@ const ProfileOrdersPage: FC<object> = () => {
           >
             {({ isActive }) => (
               <p className={`text text_type_main-large ${(isActive && !window.location.href.includes('orders')) ? styles.activeColor : 'text_color_inactive'}`}>
-                Профиль
+                {t('profile')}
               </p>
             )}
           </NavLink>
@@ -123,13 +125,13 @@ const ProfileOrdersPage: FC<object> = () => {
           >
             {({ isActive }) => (
               <p className={`text text_type_main-large ${isActive ? styles.activeColor : 'text_color_inactive'}`}>
-                История заказов
+                {t('orderHistory')}
               </p>
             )}
           </NavLink>
           <Link onClick={handleLogout} className={`${styles.menuTab} ${styles.linkDecoration}`} to="/" replace>
             <p className="text text_type_main-large text_color_inactive">
-              Выйти
+              {t('logout')}
             </p>
           </Link>
         </div>
@@ -142,6 +144,7 @@ const ProfileOrdersPage: FC<object> = () => {
                 key={order._id}
                 orderNumber={order.number}
                 orderName={order.name}
+                orderNameEn={order.nameEn}
                 statusName={order.status}
                 orderPrice={calculateTotalPrice(order)}
                 ingredientImages={findIngredientImages(order)}

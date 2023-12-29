@@ -4,12 +4,14 @@ import { useSelector } from '../../hooks';
 import styles from './burger-ingredients.module.css';
 import IngredientTabs from '../ingredient-tabs/ingredient-tabs';
 import IngredientSection from '../ingredient-section/ingredient-section';
+import { useLanguage } from '../../utils/languageContext';
 
 type TBurgerIngredientsProp = {
   handleModal: () => void;
 }
 
 const BurgerIngredients: FC<TBurgerIngredientsProp> = ({ handleModal }) => {
+  const { t } = useLanguage();
   const { ingredients } = useSelector((store) => store.ingredientsStore);
   const [activeTab, setActiveTab] = React.useState('one');
   const bread = ingredients.filter((el) => el.type === 'bun');
@@ -32,17 +34,17 @@ const BurgerIngredients: FC<TBurgerIngredientsProp> = ({ handleModal }) => {
 
   return (
     <article>
-      <p className="text text_type_main-large mt-10">Соберите бургер</p>
+      <p className="text text_type_main-large mt-10">{t('assembleBurger')}</p>
       <IngredientTabs activeTab={activeTab} onTabChange={setActiveTab} />
       <div className={`${styles.overflow}`}>
         <div ref={breadRef}>
-          <IngredientSection items={bread} title="Булки" classes={breadClasses} handleModal={handleModal} />
+          <IngredientSection items={bread} title={t('buns')} classes={breadClasses} handleModal={handleModal} />
         </div>
         <div className="mt-10" ref={saucesRef}>
-          <IngredientSection items={sauces} title="Соусы" classes={saucesClasses} handleModal={handleModal} />
+          <IngredientSection items={sauces} title={t('sauces')} classes={saucesClasses} handleModal={handleModal} />
         </div>
         <div className="mt-10" ref={mainRef}>
-          <IngredientSection items={main} title="Начинки" classes={mainClasses} handleModal={handleModal} />
+          <IngredientSection items={main} title={t('fillings')} classes={mainClasses} handleModal={handleModal} />
         </div>
 
       </div>

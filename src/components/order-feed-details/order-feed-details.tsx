@@ -5,6 +5,8 @@ import MoonLoader from 'react-spinners/MoonLoader';
 import styles from '../order-feed/order-feed.module.css';
 import { useSelector } from '../../hooks';
 import { TOrder } from '../../services/reducers/order-feed';
+import { useLanguage } from '../../utils/languageContext';
+import formatDate from '../../utils/formatDate';
 
 type TCounterAcc = {
   [key: string]: number;
@@ -14,6 +16,7 @@ const OrderFeedDetails: FC<object> = () => {
   const { number } = useParams();
   const location = useLocation();
   const navigationSource = location.state?.from;
+  const { t, language } = useLanguage();
 
   const orderFeedOrders = useSelector((store) => store.orderFeedStore.orders);
   const userOrderFeedOrders = useSelector((store) => store.userOrderFeedStore.orders);
@@ -31,11 +34,11 @@ const OrderFeedDetails: FC<object> = () => {
   const handleStatus = (status: string) => {
     switch (status) {
       case 'done':
-        return 'Выполнен';
+        return t('done');
       case 'pending':
-        return 'Готовится';
+        return t('pending');
       case 'created':
-        return 'Создан';
+        return t('created');
       default:
         return 'Неизвестно';
     }
@@ -81,7 +84,7 @@ const OrderFeedDetails: FC<object> = () => {
   return (
     <div className="ml-10 mr-10">
       <div className="mt-10 mb-3">
-        <p className="text text_type_main-medium">{orderData.name}</p>
+        <p className="text text_type_main-medium">{language === 'en' ? orderData.nameEn : orderData.name}</p>
       </div>
       <div className="mb-15">
         <p className={`${handleStatusColor(orderData.status)} text text_type_main-default`}>
@@ -89,7 +92,7 @@ const OrderFeedDetails: FC<object> = () => {
         </p>
       </div>
       <div className="mb-6">
-        <p className="text text_type_main-medium">Состав:</p>
+        <p className="text text_type_main-medium">{t('ingredients')}</p>
       </div>
       <div className={styles.overflow}>
         {
@@ -111,7 +114,7 @@ const OrderFeedDetails: FC<object> = () => {
                       backgroundSize: 'cover',
                     }}
                   />
-                  <p className="text text_type_main-default ml-4">{ingredient?.name}</p>
+                  <p className="text text_type_main-default ml-4">{ingredient?.name ? t(ingredient.name) : null}</p>
                 </div>
                 <div className={styles.ingredientName}>
                   <p className="text text_type_digits-medium mr-2 ml-4">
@@ -128,7 +131,7 @@ const OrderFeedDetails: FC<object> = () => {
       <div className={styles.cardFooter}>
         <div>
           <p className="text text_type_main-default text_color_inactive">
-            <FormattedDate date={new Date(orderData.createdAt)} />
+            {language === 'ru' ? <FormattedDate date={new Date(orderData.createdAt)} /> : formatDate(orderData.createdAt)}
           </p>
         </div>
         <div className={`${styles.ingredientName} mb-5`}>

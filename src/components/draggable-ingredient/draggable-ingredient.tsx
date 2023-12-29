@@ -6,6 +6,7 @@ import { reorderIngredients } from '../../services/actions/ingredients';
 import styles from './draggable-ingredient.module.css';
 import TItemType from '../../types/ItemType';
 import { TDraggableIngredientItem } from '../../types';
+import { useLanguage } from '../../utils/languageContext';
 
 type TDraggableIngredientProp = {
   ingredient: TItemType;
@@ -17,6 +18,7 @@ const DraggableIngredient: FC<TDraggableIngredientProp> = ({
   ingredient, handleIngredientRemoval, index,
 }) => {
   const dispatch = useDispatch();
+  const { t } = useLanguage();
 
   const [, refDrag] = useDrag({
     type: 'ingredient',
@@ -49,7 +51,7 @@ const DraggableIngredient: FC<TDraggableIngredientProp> = ({
         <DragIcon type="primary" />
       </div>
       <ConstructorElement
-        text={ingredient.name}
+        text={t(ingredient.name)}
         price={ingredient.price}
         thumbnail={ingredient.image}
         /* eslint-disable-next-line no-underscore-dangle */

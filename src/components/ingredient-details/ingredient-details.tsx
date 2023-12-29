@@ -4,8 +4,10 @@ import MoonLoader from 'react-spinners/MoonLoader';
 import { useSelector } from '../../hooks';
 import styles from '../modal/modal.module.css';
 import { TItemType } from '../../types';
+import { useLanguage } from '../../utils/languageContext';
 
 const IngredientDetails: FC<object> = () => {
+  const { t } = useLanguage();
   const { id } = useParams();
   const data = useSelector((store) => store
     // eslint-disable-next-line no-underscore-dangle
@@ -37,13 +39,13 @@ const IngredientDetails: FC<object> = () => {
 
   return (
     <>
-      <div className={styles.image}><img src={data.image_large} alt={data.name} /></div>
+      <div className={styles.image}><img src={data.image_large} alt={t(data.name)} /></div>
       <div className={`${styles.modalContent} mt-4`}>
-        <p className="text text_type_main-medium" data-cy="modal-name">{data.name}</p>
+        <p className="text text_type_main-medium" data-cy="modal-name">{t(data.name)}</p>
       </div>
       <div className={`${styles.modalContent} mt-8 mb-15`}>
         <div className={`${styles.textData} mr-5 text text_type_main-default ${styles.flex}`}>
-          Калории,ккал
+          {t('calories')}
           <br />
           <span
             className="text text_type_digits-default mt-2"
@@ -52,7 +54,7 @@ const IngredientDetails: FC<object> = () => {
           </span>
         </div>
         <div className={`${styles.textData} mr-5 text text_type_main-default ${styles.flex}`}>
-          Белки, г
+          {t('proteins')}
           <br />
           <span
             className="text text_type_digits-default mt-2"
@@ -61,7 +63,7 @@ const IngredientDetails: FC<object> = () => {
           </span>
         </div>
         <div className={`${styles.textData} mr-5 text text_type_main-default ${styles.flex}`}>
-          Жиры, г
+          {t('fat')}
           <br />
           <span
             className="text text_type_digits-default mt-2"
@@ -70,7 +72,7 @@ const IngredientDetails: FC<object> = () => {
           </span>
         </div>
         <div className={`${styles.textData} text text_type_main-default ${styles.flex}`}>
-          Углеводы, г
+          {t('carbohydrates')}
           <br />
           <span
             className="text text_type_digits-default mt-2"

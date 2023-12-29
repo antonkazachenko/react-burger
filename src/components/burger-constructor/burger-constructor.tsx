@@ -19,6 +19,7 @@ import {
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 import { WithModalControlsReturn } from '../../hocs/with-modal-control';
 import TItemType from '../../types/ItemType';
+import { useLanguage } from '../../utils/languageContext';
 
 type TBurgerConstructorProp = {
   className: string;
@@ -32,6 +33,7 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { language, t } = useLanguage();
   const {
     constructorIngredients,
     bunData,
@@ -104,6 +106,9 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
       </div>
     );
   }
+  const translatedBunNameWithBottom = language === 'en' ? `${t(bunData.name)} (bottom)` : `${bunData.name} (низ)`;
+  const translatedBunNameWithTop = language === 'en' ? `${t(bunData.name)} (top)` : `${bunData.name} (верх)`;
+
   return (
     <div className={className} ref={dropTarget} data-cy="drop-target">
 
@@ -111,7 +116,7 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
         <ConstructorElement
           type="top"
           isLocked
-          text={`${bunData.name} (верх)`}
+          text={`${translatedBunNameWithTop}`}
           price={bunData.price}
           thumbnail={bunData.image}
         />
@@ -142,7 +147,7 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
         <ConstructorElement
           type="bottom"
           isLocked
-          text={`${bunData.name} (низ)`}
+          text={`${translatedBunNameWithBottom}`}
           price={bunData.price}
           thumbnail={bunData.image}
         />
@@ -156,7 +161,7 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
         <div onClick={createOrder} data-cy="order-button">
           <Button htmlType="button" type="primary" size="large">
-            Оформить заказ
+            {t('createOrder')}
           </Button>
         </div>
         {

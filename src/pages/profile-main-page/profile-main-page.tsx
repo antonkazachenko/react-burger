@@ -4,11 +4,13 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector, useForm } from '../../hooks';
 import styles from './profile-main-page.module.css';
 import { logoutRequest } from '../../services/actions/account';
+import { useLanguage } from '../../utils/languageContext';
 
 const ProfileMainPage: FC<object> = () => {
   const { user } = useSelector((store) => store.accountStore);
   const { values, handleChange } = useForm({ name: user.name, email: user.email, password: '' });
   const dispatch = useDispatch();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const handleLogout = (): void => {
     dispatch(logoutRequest());
@@ -25,7 +27,7 @@ const ProfileMainPage: FC<object> = () => {
           >
             {({ isActive }) => (
               <p className={`text text_type_main-large ${(isActive && !window.location.href.includes('orders')) ? styles.activeColor : 'text_color_inactive'}`}>
-                Профиль
+                {t('profile')}
               </p>
             )}
           </NavLink>
@@ -35,20 +37,20 @@ const ProfileMainPage: FC<object> = () => {
           >
             {({ isActive }) => (
               <p className={`text text_type_main-large ${isActive ? styles.activeColor : 'text_color_inactive'}`}>
-                История заказов
+                {t('orderHistory')}
               </p>
             )}
           </NavLink>
           <Link onClick={handleLogout} className={`${styles.menuTab} ${styles.linkDecoration}`} to="/" replace>
             <p className="text text_type_main-large text_color_inactive">
-              Выйти
+              {t('logout')}
             </p>
           </Link>
           <div className="mt-20">
             <p className="text text_type_main-default text_color_inactive">
-              В этом разделе вы можете
+              {t('profilePS1')}
               <br />
-              изменить свои персональные данные
+              {t('profilePS2')}
             </p>
           </div>
         </div>
@@ -56,7 +58,7 @@ const ProfileMainPage: FC<object> = () => {
           <form>
             <Input
               type="text"
-              placeholder="Имя"
+              placeholder={t('name')}
               onChange={handleChange}
               value={values.name}
               name="name"
@@ -73,6 +75,7 @@ const ProfileMainPage: FC<object> = () => {
               extraClass="ml-1 mt-6"
             />
             <PasswordInput
+              placeholder={t('password')}
               value={values.password}
               name="password"
               extraClass="ml-1 mt-6"

@@ -15,6 +15,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import ProtectedRouteElement from '../protected-route-element/protected-route-element';
 import AppHeader from '../app-header/app-header';
 import OrderFeedDetails from '../order-feed-details/order-feed-details';
+import { useLanguage } from '../../utils/languageContext';
 
 const App: FC<object> = () => {
   const { isLoading } = useSelector((state) => state.ingredientsStore);
@@ -25,6 +26,7 @@ const App: FC<object> = () => {
   const profileMatch = useMatch('/profile/orders/:number')?.params.number;
   const feedMatch = useMatch('/feed/:number')?.params.number;
   const orderNumber = profileMatch || feedMatch;
+  const { t } = useLanguage();
 
   const handleCloseModal = (): void => {
     dispatch(setCurrentItemClose());
@@ -108,7 +110,7 @@ const App: FC<object> = () => {
           <Route
             path="/ingredients/:id"
             element={(
-              <Modal onClose={handleCloseModal} defaultTitle title="Детали ингредиента" className={styles.modalWidth} headerClass={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
+              <Modal onClose={handleCloseModal} defaultTitle title={t('ingredientDetails')} className={styles.modalWidth} headerClass={`${styles.modalHeader} mt-10 ml-10 mr-10`}>
                 <IngredientDetails />
               </Modal>
             )}

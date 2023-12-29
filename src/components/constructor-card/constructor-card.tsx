@@ -5,6 +5,7 @@ import { useSelector } from '../../hooks';
 import styles from './constructor-card.module.css';
 import TItemType from '../../types/ItemType';
 import { TItemTypeWithUniqueId } from '../../services/actions/ingredients';
+import { useLanguage } from '../../utils/languageContext';
 
 type TConstructorCardProp = {
   item: TItemType;
@@ -16,6 +17,7 @@ type TConstructorCardProp = {
 const ConstructorCard: FC<TConstructorCardProp> = ({
   item, className, price, onClick,
 }) => {
+  const { t } = useLanguage();
   const ingredientCount = useSelector((store) => {
     if (item.type !== 'bun') {
       return store.ingredientsStore.constructorIngredients
@@ -52,7 +54,7 @@ const ConstructorCard: FC<TConstructorCardProp> = ({
         <CurrencyIcon type="primary" />
       </div>
       <p className={`text text_type_main-default mt-1 ${styles.textCenter}`}>
-        {item.name}
+        {t(item.name)}
       </p>
       { ingredientCount > 0 ? <Counter count={ingredientCount} size="default" extraClass="m-1" /> : null }
     </div>

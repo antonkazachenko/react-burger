@@ -11,6 +11,7 @@ import {
   userOrderFeedMessage,
   userOrderFeedOpen,
 } from '../actions/user-order-feed';
+import translateOrGetRandomName from '../../utils/translateOrGetRandomName';
 
 const initialState: TOrderFeedState &
 { refreshTokenStatus: RequestStatus; userModalNumber: number; } = {
@@ -47,7 +48,10 @@ const userOrderFeedReducer = createReducer(initialState, (builder) => {
       state.status = WebsocketStatus.OFFLINE;
     })
     .addCase(userOrderFeedMessage, (state, action) => {
-      state.orders = action.payload.orders;
+      state.orders = action.payload.orders.map((order) => ({
+        ...order,
+        nameEn: translateOrGetRandomName(order.name),
+      }));
       state.total = action.payload.total;
       state.totalToday = action.payload.totalToday;
     });

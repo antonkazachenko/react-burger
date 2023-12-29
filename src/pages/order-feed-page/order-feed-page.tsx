@@ -10,10 +10,12 @@ import { orderFeedConnect, orderFeedDisconnect } from '../../services/actions/or
 import { useSelector } from '../../hooks';
 import { TOrder } from '../../services/reducers/order-feed';
 import WebsocketStatus from '../../types/websocket';
+import { useLanguage } from '../../utils/languageContext';
 
 const OrderFeedWithModalControl = withModalControl(OrderFeed);
 
 const OrderFeedPage: FC = () => {
+  const { t } = useLanguage();
   const dispatch = useDispatch();
   const { orders, status } = useSelector((store) => store.orderFeedStore);
   const { ingredients } = useSelector((store) => store.ingredientsStore);
@@ -59,7 +61,7 @@ const OrderFeedPage: FC = () => {
   return (
     <main className={styles.app}>
       <div className="mt-10">
-        <p className="text text_type_main-large">Лента заказов</p>
+        <p className="text text_type_main-large">{t('headerFeed')}</p>
       </div>
       <div className={styles.flex}>
         <div className={`${styles.tabWidth} ${styles.overflow}`}>
@@ -74,6 +76,7 @@ const OrderFeedPage: FC = () => {
                 orderPrice={calculateTotalPrice(order)}
                 ingredientImages={findIngredientImages(order)}
                 date={order.createdAt}
+                orderNameEn={order.nameEn}
               />
             </Link>
           ))}

@@ -2,10 +2,13 @@ import React, { FC, useEffect, useState } from 'react';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './user-orders-feed.module.css';
 import { WithModalControlsReturn } from '../../hocs/with-modal-control';
+import { useLanguage } from '../../utils/languageContext';
+import formatDate from '../../utils/formatDate';
 
 type TUserOrdersFeedProps = {
   orderNumber: number;
   orderName: string;
+  orderNameEn: string;
   orderPrice: number;
   ingredientImages: string[];
   statusName: string;
@@ -16,13 +19,14 @@ const UserOrdersFeed: FC<TUserOrdersFeedProps & WithModalControlsReturn> = ({
   handleModal,
   orderNumber,
   orderName,
+  orderNameEn,
   orderPrice,
   statusName,
   ingredientImages,
   date,
 }) => {
   const [dynamicBeforeStyle, setDynamicBeforeStyle] = useState('');
-
+  const { t, language } = useLanguage();
   useEffect(() => {
     if (ingredientImages.length > 5) {
       const randomUrl = ingredientImages.slice(5)[0];
@@ -42,11 +46,11 @@ const UserOrdersFeed: FC<TUserOrdersFeedProps & WithModalControlsReturn> = ({
   const handleStatus = (status: string) => {
     switch (status) {
       case 'done':
-        return 'Выполнен';
+        return t('done');
       case 'pending':
-        return 'Готовится';
+        return t('pending');
       case 'created':
-        return 'Создан';
+        return t('created');
       default:
         return 'Неизвестно';
     }
@@ -74,11 +78,11 @@ const UserOrdersFeed: FC<TUserOrdersFeedProps & WithModalControlsReturn> = ({
         <div className={styles.cardHeader}>
           <p className="text text_type_digits-default">{`#${orderNumber}`}</p>
           <p className={`text text_type_main-small ${styles.date}`}>
-            <FormattedDate date={new Date(date)} />
+            {language === 'ru' ? <FormattedDate date={new Date(date)} /> : formatDate(date)}
           </p>
         </div>
         <div className="mt-6 mb-2">
-          <p className="text text_type_main-medium">{orderName}</p>
+          <p className="text text_type_main-medium">{language === 'ru' ? orderName : orderNameEn}</p>
         </div>
         <div className="mb-6">
           <p className={`${handleStatusColor(statusName)} text text_type_main-default`}>

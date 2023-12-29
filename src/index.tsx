@@ -6,17 +6,20 @@ import { HashRouter } from 'react-router-dom';
 import App from './components/app/App';
 import reportWebVitals from './reportWebVitals';
 import store from './services/store';
+import { LanguageProvider } from './utils/languageContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <HashRouter>
-        <App />
-      </HashRouter>
-    </Provider>
+    <LanguageProvider>
+      <Provider store={store}>
+        <HashRouter>
+          <App />
+        </HashRouter>
+      </Provider>
+    </LanguageProvider>
   </React.StrictMode>,
 );
 
