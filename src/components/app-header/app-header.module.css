@@ -3,6 +3,10 @@
     align-items: center;
 }
 
+.flex {
+    display: flex;
+}
+
 .navLink {
     display: flex;
     color: inherit;
@@ -20,17 +24,29 @@
     fill: rgb(242, 242, 243);
 }
 
-.navBar {
-    background-color: #1C1C21;
-    composes: flexCentered;
-    justify-content: space-between;
+.navSide {
+    flex: 1; /* Makes left and right sides take up equal space */
+    display: flex;
+    justify-content: center; /* Center aligns the content of left and right nav */
 }
 
-.navTab {
-    flex: 1;
+.navLeft {
+    justify-content: flex-start; /* Aligns content to the left end */
 }
 
 .navRight {
+    justify-content: flex-end; /* Aligns content to the right end */
+}
+
+.navBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1C1C21;
+}
+
+.navRight {
+    display: flex;
     justify-content: end;
 }
 
@@ -48,5 +64,7 @@
 }
 
 .logo {
-    margin-left: 2%;
+    /* Center the logo */
+    flex-grow: 0; /* Prevents the logo from growing and ensures it stays centered */
+    margin: 0 20px; /* Adjust the margin to your preference */
 }

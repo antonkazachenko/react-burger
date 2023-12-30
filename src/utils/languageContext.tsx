@@ -337,6 +337,22 @@ const translations: Translations = {
     en: 'change your personal information',
     ru: 'изменить свои персональные данные',
   },
+  orderNumber: {
+    en: 'order number',
+    ru: 'идентификатор заказа',
+  },
+  orderStarted: {
+    en: 'Your order has started being prepared',
+    ru: 'Ваш заказ начали готовить',
+  },
+  waitForReady: {
+    en: 'Wait for your order to be ready at the orbital station',
+    ru: 'Дождитесь готовности на орбитальной станции',
+  },
+  moveTheBun: {
+    en: 'Move the bun to the right side of the screen',
+    ru: 'Перенесите булку в правую часть экрана',
+  },
 };
 
 interface LanguageContextType {

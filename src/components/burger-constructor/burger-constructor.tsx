@@ -102,7 +102,7 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
   if (bunData === null) {
     return (
       <div className={styles.dropZone} ref={dropTarget} data-cy="drop-zone">
-        <p className="text text_type_main-large mt-10">Перенесите булку в правую часть экрана</p>
+        <p className="text text_type_main-large mt-10">{t('moveTheBun')}</p>
       </div>
     );
   }
