@@ -33,6 +33,8 @@ import {
   RESET_PASSWORD__REQUEST,
   RESET_PASSWORD__RESET,
   RESET_PASSWORD__SUCCESS,
+  MOBILE_MENU__OPEN,
+  MOBILE_MENU__CLOSE,
 } from '../constants/account';
 import { AppDispatch } from '../store';
 
@@ -42,6 +44,14 @@ export type TRefreshToken = {
 };
 
 export type TRefreshTokenResponse = { success: boolean } & TRefreshToken;
+
+export interface IMobileMenuOpenAction {
+  readonly type: typeof MOBILE_MENU__OPEN;
+}
+
+export interface IMobileMenuCloseAction {
+  readonly type: typeof MOBILE_MENU__CLOSE;
+}
 
 export interface ILoginRequestAction {
   readonly type: typeof LOGIN__REQUEST;
@@ -208,7 +218,9 @@ export type TAccountActions =
     | IProfileUpdateRequestAction
     | IProfileUpdateSuccessAction
     | IProfileUpdateFailureAction
-    | IProfileUpdateResetAction;
+    | IProfileUpdateResetAction
+    | IMobileMenuOpenAction
+    | IMobileMenuCloseAction;
 
 export function resetPasswordReset(): IResetPasswordResetAction {
   return {
@@ -368,6 +380,24 @@ export function registerSuccessAction(data: ApiResponse): IRegisterSuccessAction
 export function registerFailureAction(): IRegisterFailureAction {
   return {
     type: REGISTER__FAILURE,
+  };
+}
+
+export function registerResetAction(): IRegisterResetAction {
+  return {
+    type: REGISTER__RESET,
+  };
+}
+
+export function mobileMenuOpenAction(): IMobileMenuOpenAction {
+  return {
+    type: MOBILE_MENU__OPEN,
+  };
+}
+
+export function mobileMenuCloseAction(): IMobileMenuCloseAction {
+  return {
+    type: MOBILE_MENU__CLOSE,
   };
 }
 

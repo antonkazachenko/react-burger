@@ -68,3 +68,33 @@
     flex-grow: 0; /* Prevents the logo from growing and ensures it stays centered */
     margin: 0 20px; /* Adjust the margin to your preference */
 }
+
+.mobileLogo {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .flexCentered {
+        display: none;
+    }
+    .logo {
+        display: none;
+    }
+
+    .navRight, .navLeft {
+        display: none;
+    }
+
+    .mobileLogo {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 8px;
+    }
+    /* other styles for tablets */
+
+    .motionCross {
+        height: 24px;
+    }
+}

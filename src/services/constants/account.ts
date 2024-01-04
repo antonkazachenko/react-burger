@@ -30,3 +30,6 @@ export const PROFILE_UPDATE__REQUEST = 'PROFILE_UPDATE__REQUEST' as const;
 export const PROFILE_UPDATE__SUCCESS = 'PROFILE_UPDATE__SUCCESS' as const;
 export const PROFILE_UPDATE__FAILURE = 'PROFILE_UPDATE__FAILURE' as const;
 export const PROFILE_UPDATE__RESET = 'PROFILE_UPDATE__RESET' as const;
+
+export const MOBILE_MENU__OPEN = 'MOBILE_MENU__OPEN' as const;
+export const MOBILE_MENU__CLOSE = 'MOBILE_MENU__CLOSE' as const;

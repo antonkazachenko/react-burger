@@ -12,7 +12,7 @@ import {
   LOGOUT__FAILURE,
   LOGOUT__REQUEST,
   LOGOUT__RESET,
-  LOGOUT__SUCCESS,
+  LOGOUT__SUCCESS, MOBILE_MENU__CLOSE, MOBILE_MENU__OPEN,
   PROFILE_UPDATE__FAILURE,
   PROFILE_UPDATE__REQUEST,
   PROFILE_UPDATE__RESET,
@@ -69,9 +69,10 @@ type TAccountState = {
     email: string;
     password?: string;
   };
+  mobileMenu: 'open' | 'close';
 };
 
-const initialState = {
+const initialState: TAccountState = {
   emailCheckRequest: {
     success: false,
     error: false,
@@ -108,6 +109,7 @@ const initialState = {
     name: '',
     email: '',
   },
+  mobileMenu: 'close',
 };
 
 const accountReducer = (
@@ -422,6 +424,18 @@ const accountReducer = (
           success: false,
           error: false,
         },
+      };
+    }
+    case MOBILE_MENU__OPEN: {
+      return {
+        ...state,
+        mobileMenu: 'open',
+      };
+    }
+    case MOBILE_MENU__CLOSE: {
+      return {
+        ...state,
+        mobileMenu: 'close',
       };
     }
     default: {
