@@ -15,12 +15,21 @@
     .mobileTab {
         text-align: center;
         display: flex;
+        width: 33vw;
         justify-content: center;
+    }
+
+    .mobileTab > * {
+        min-width: 33vw !important;
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .flex {
         flex-wrap: nowrap;
     }
 
-;
+    .tab {
+        min-width: 33vw;
+    }
 }

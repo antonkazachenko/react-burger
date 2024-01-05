@@ -22,9 +22,9 @@ const BurgerIngredients: FC<TBurgerIngredientsProp> = ({ handleModal }) => {
   const [saucesRef, saucesInView] = useInView({ threshold: 0.33 });
   const [mainRef, mainInView] = useInView({ threshold: 0.65 });
 
-  const breadClasses = [`ml-4 ${styles.relative}`, 'ml-6'];
-  const saucesClasses = ['ml-4', 'ml-6', 'ml-4 mt-8', 'ml-6 mt-8'];
-  const mainClasses = ['ml-4', 'ml-6', 'ml-4 mt-8', 'ml-6 mt-8', 'ml-4 mt-8', 'ml-6 mt-8', 'ml-4 mt-8', 'ml-6 mt-8', 'ml-4 mt-8'];
+  const breadClasses = [`ml-4 ${styles.relative} ${styles.noMobileLeft}`, `ml-6 ${styles.mobileLeft}`];
+  const saucesClasses = [`ml-4 ${styles.noMobileLeft}`, `ml-6 ${styles.mobileLeft}`, `ml-4 mt-8 ${styles.noMobileLeft}`, `ml-6 mt-8 ${styles.mobileLeft}`];
+  const mainClasses = [`ml-4 ${styles.noMobileLeft}`, `ml-6 ${styles.mobileLeft}`, `ml-4 mt-8 ${styles.noMobileLeft}`, `ml-6 mt-8 ${styles.mobileLeft}`, `ml-4 mt-8 ${styles.noMobileLeft}`, `ml-6 mt-8 ${styles.mobileLeft}`, `ml-4 mt-8 ${styles.noMobileLeft}`, `ml-6 mt-8 ${styles.mobileLeft}`, `ml-4 mt-8 ${styles.noMobileLeft}`];
 
   React.useEffect(() => {
     if (breadInView) setActiveTab('one');

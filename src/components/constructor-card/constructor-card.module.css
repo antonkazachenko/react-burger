@@ -13,3 +13,25 @@
 .textCenter {
     text-align: center;
 }
+
+.mobileImg {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .cardText {
+        font-size: 14px;
+    }
+
+    .desktopImg {
+        display: none;
+    }
+
+    .mobileImg {
+        display: block;
+    }
+
+    .priceSize {
+        font-size: 22px;
+    }
+}

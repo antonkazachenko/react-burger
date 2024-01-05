@@ -46,14 +46,15 @@ const ConstructorCard: FC<TConstructorCardProp> = ({
     // eslint-disable-next-line max-len
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
     <div className={`${styles.card} ${className}`} data-cy="draggable-ingredient" onClick={customClick} ref={item.type === 'bun' ? dragBunRef : dragSauceRef}>
-      <img className="pl-4 pr-4" src={item.image} alt={item.name} />
+      <img className={`pl-4 pr-4 ${styles.desktopImg}`} src={item.image} alt={item.name} />
+      <img className={`pl-4 pr-4 ${styles.mobileImg}`} src={item.image_mobile} alt={item.name} />
       <div className={`${styles.flex} mt-1`}>
-        <p className="text text_type_digits-default mr-1">
+        <p className={`text text_type_digits-default mr-1 ${styles.priceSize}`}>
           {price}
         </p>
         <CurrencyIcon type="primary" />
       </div>
-      <p className={`text text_type_main-default mt-1 ${styles.textCenter}`}>
+      <p className={`text text_type_main-default mt-1 ${styles.textCenter} ${styles.cardText}`}>
         {t(item.name)}
       </p>
       { ingredientCount > 0 ? <Counter count={ingredientCount} size="default" extraClass="m-1" /> : null }

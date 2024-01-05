@@ -46,9 +46,9 @@ const IngredientSection: FC<TIngredientSection> = ({
         }
         {
           items.length % 2 !== 0
-          && (
-            <div className={`${classes[classes.length - 2]} ${styles.lastOdd}`} />
-          )
+            && (
+              <div className={`${classes[classes.length - 2]} ${styles.lastOdd}`} />
+            )
         }
       </article>
     </>

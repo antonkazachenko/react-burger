@@ -41,4 +41,16 @@
         text-align: center;
         font-size: 28px;
     }
+
+    .overflow {
+        overflow-y: unset;
+    }
+
+    .noMobileLeft {
+        margin-left: 0;
+    }
+
+    .mobileLeft {
+        margin-left: 8px;
+    }
 }

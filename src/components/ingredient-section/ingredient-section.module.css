@@ -13,3 +13,26 @@
     color: inherit;
     text-decoration: none;
 }
+
+.mobileVisibility {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .desktopVisibility {
+        display: none;
+    }
+
+    .navLink {
+        display: flex;
+        flex: 1 1;
+        width: 144px;
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .flex {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+}
