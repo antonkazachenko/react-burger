@@ -18,7 +18,7 @@ const MainPage: FC<object> = () => (
           <div className={styles.tabWidth}>
             <BurgerIngredientsWithModal />
           </div>
-          <div className={styles.tabWidth}>
+          <div className={`${styles.tabWidth} ${styles.mobileNone}`}>
             <BurgerConstructorWithModal
               className={`mt-25 ml-10 ${styles.flexColumn}`}
             />

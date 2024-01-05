@@ -33,4 +33,12 @@
     .modalSize {
         width: 45%;
     }
+
+}
+
+@media screen and (max-width: 768px) {
+    .mobileCreateBurgerText {
+        text-align: center;
+        font-size: 28px;
+    }
 }

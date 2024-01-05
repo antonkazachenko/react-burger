@@ -34,7 +34,7 @@ const BurgerIngredients: FC<TBurgerIngredientsProp> = ({ handleModal }) => {
 
   return (
     <article>
-      <p className="text text_type_main-large mt-10">{t('assembleBurger')}</p>
+      <p className={`text text_type_main-large mt-10 ${styles.mobileCreateBurgerText}`}>{t('assembleBurger')}</p>
       <IngredientTabs activeTab={activeTab} onTabChange={setActiveTab} />
       <div className={`${styles.overflow}`}>
         <div ref={breadRef}>

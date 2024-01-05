@@ -159,19 +159,24 @@ const AppHeader: FC<object> = () => {
           </header>
         </div>
       </div>
-      <div>
-        <ul>
-          <li>
-            <p className="text text_type_main-small">Личный кабинет</p>
-          </li>
-          <li>
-            <p className="text text_type_main-small">Конструктор бургеров</p>
-          </li>
-          <li>
-            <p className="text text_type_main-small">Лента заказов</p>
-          </li>
-        </ul>
-      </div>
+      {
+        mobileMenu === 'open' ? (
+          <div>
+            <ul>
+              <li>
+                <p className="text text_type_main-small">Личный кабинет</p>
+              </li>
+              <li>
+                <p className="text text_type_main-small">Конструктор бургеров</p>
+              </li>
+              <li>
+                <p className="text text_type_main-small">Лента заказов</p>
+              </li>
+            </ul>
+          </div>
+        ) : null
+
+      }
     </>
   );
 };

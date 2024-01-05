@@ -16,3 +16,13 @@ main {
     margin: 0 auto;
     max-width: 1240px;
 }
+
+@media screen and (max-width: 768px) {
+    .mobileNone {
+        display: none;
+    }
+
+    .tabWidth {
+        width: 100%;
+    }
+}

@@ -24,19 +24,23 @@ const IngredientTabs: FC<TIngredientTabsProp> = ({ activeTab, onTabChange }) => 
     }];
 
   return (
-    <nav className={`${styles.justifyCenter} ${styles.flex} mt-5 mb-10`}>
+    <nav className={`${styles.justifyCenter} ${styles.flex} ${styles.tabsWidth} mt-5 mb-10`}>
       {
         tabs.map((el) => (
-          <Tab
-            value={el.index}
-            active={activeTab === el.index}
+          <div
+            className={styles.mobileTab}
             key={el.index}
-            onClick={() => {
-              onTabChange(el.index);
-            }}
           >
-            {el.name}
-          </Tab>
+            <Tab
+              value={el.index}
+              active={activeTab === el.index}
+              onClick={() => {
+                onTabChange(el.index);
+              }}
+            >
+              {el.name}
+            </Tab>
+          </div>
         ))
       }
     </nav>

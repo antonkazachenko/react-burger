@@ -6,3 +6,21 @@
 .justifyCenter {
     justify-content: center;
 }
+
+@media screen and (max-width: 768px) {
+    .tabsWidth {
+        width: 100vw;
+    }
+
+    .mobileTab {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    .flex {
+        flex-wrap: nowrap;
+    }
+
+;
+}
