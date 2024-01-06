@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from '../../hooks';
 import styles from './burger-ingredients.module.css';
 import IngredientTabs from '../ingredient-tabs/ingredient-tabs';
@@ -12,7 +13,7 @@ type TBurgerIngredientsProp = {
 
 const BurgerIngredients: FC<TBurgerIngredientsProp> = ({ handleModal }) => {
   const { t } = useLanguage();
-  const { ingredients } = useSelector((store) => store.ingredientsStore);
+  const { ingredients, totalPrice } = useSelector((store) => store.ingredientsStore);
   const [activeTab, setActiveTab] = React.useState('one');
   const bread = ingredients.filter((el) => el.type === 'bun');
   const sauces = ingredients.filter((el) => el.type === 'sauce');
@@ -23,8 +24,8 @@ const BurgerIngredients: FC<TBurgerIngredientsProp> = ({ handleModal }) => {
   const [mainRef, mainInView] = useInView({ threshold: 0.65 });
 
   const breadClasses = [`ml-4 ${styles.relative} ${styles.noMobileLeft}`, `ml-6 ${styles.mobileLeft}`];
-  const saucesClasses = [`ml-4 ${styles.noMobileLeft}`, `ml-6 ${styles.mobileLeft}`, `ml-4 mt-8 ${styles.noMobileLeft}`, `ml-6 mt-8 ${styles.mobileLeft}`];
-  const mainClasses = [`ml-4 ${styles.noMobileLeft}`, `ml-6 ${styles.mobileLeft}`, `ml-4 mt-8 ${styles.noMobileLeft}`, `ml-6 mt-8 ${styles.mobileLeft}`, `ml-4 mt-8 ${styles.noMobileLeft}`, `ml-6 mt-8 ${styles.mobileLeft}`, `ml-4 mt-8 ${styles.noMobileLeft}`, `ml-6 mt-8 ${styles.mobileLeft}`, `ml-4 mt-8 ${styles.noMobileLeft}`];
+  const saucesClasses = [`ml-4 ${styles.noMobileLeft}`, `ml-6 ${styles.mobileLeft}`, `ml-4 ${styles.noMobileLeft}`, `ml-6 ${styles.mobileLeft}`];
+  const mainClasses = [`ml-4 ${styles.noMobileLeft}`, `ml-6 ${styles.mobileLeft}`, `ml-4 ${styles.noMobileLeft}`, `ml-6 ${styles.mobileLeft}`, `ml-4 ${styles.noMobileLeft}`, `ml-6 ${styles.mobileLeft}`, `ml-4 ${styles.noMobileLeft}`, `ml-6 ${styles.mobileLeft}`, `ml-4 ${styles.noMobileLeft}`];
 
   React.useEffect(() => {
     if (breadInView) setActiveTab('one');
@@ -46,7 +47,15 @@ const BurgerIngredients: FC<TBurgerIngredientsProp> = ({ handleModal }) => {
         <div className="mt-10" ref={mainRef}>
           <IngredientSection items={main} title={t('fillings')} classes={mainClasses} handleModal={handleModal} />
         </div>
-
+      </div>
+      <div className={`${styles.mobile} ${styles.footerFlex}`}>
+        <div className={styles.priceFlex}>
+          <p className="text text_type_digits-medium">{totalPrice}</p>
+          <CurrencyIcon type="primary" />
+        </div>
+        <Button htmlType="button" type="primary" size="medium">
+          {t('seeOrder')}
+        </Button>
       </div>
     </article>
   );

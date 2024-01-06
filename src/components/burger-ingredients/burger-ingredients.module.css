@@ -6,7 +6,6 @@
     overflow-y: auto;
     height: 60vh;
 }
-
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
 * {
@@ -29,6 +28,10 @@
     border: 0 solid #ffffff;
 }
 
+.mobile {
+    display: none;
+}
+
 @media screen and (max-width: 1440px) {
     .modalSize {
         width: 45%;
@@ -44,6 +47,8 @@
 
     .overflow {
         overflow-y: unset;
+        height: unset;
+        margin-bottom: 17vh;
     }
 
     .noMobileLeft {
@@ -52,5 +57,33 @@
 
     .mobileLeft {
         margin-left: 8px;
+    }
+
+    .mobile {
+        display: block;
+        position: fixed; /* Fix position relative to the viewport */
+        left: 0; /* Align to the left edge of the viewport */
+        bottom: 0; /* Align to the bottom edge of the viewport */
+        width: 100%; /* Ensure it spans the full width of the viewport */
+        z-index: 3; /* Optional: ensures the footer is above other content */
+        box-sizing: border-box;
+    }
+
+    .priceFlex {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 8px;
+        flex: 1 0 0;
+    }
+
+    .footerFlex {
+        display: flex;
+        padding: 16px 8px;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 16px;
+        border-radius: 15px 15px 0 0;
+        background: #1C1C21;
     }
 }

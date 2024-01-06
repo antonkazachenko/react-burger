@@ -19,8 +19,10 @@
 }
 
 @media screen and (max-width: 768px) {
+
     .cardText {
         font-size: 14px;
+        height: 60px;
     }
 
     .desktopImg {
@@ -29,6 +31,7 @@
 
     .mobileImg {
         display: block;
+        padding: 0 0;
     }
 
     .priceSize {

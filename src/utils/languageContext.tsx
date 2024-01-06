@@ -90,7 +90,7 @@ const translations: Translations = {
     ru: 'Филе Люминесцентного тетраодонтимформа',
   },
   'Мясо бессмертных моллюсков Protostomia': {
-    en: 'Meat of Immortal Protostomia Molluscs',
+    en: 'Meat of Immortal Molluscs',
     ru: 'Мясо бессмертных моллюсков Protostomia',
   },
   'Говяжий метеорит (отбивная)': {
@@ -106,7 +106,7 @@ const translations: Translations = {
     ru: 'Плоды Фалленианского дерева',
   },
   'Кристаллы марсианских альфа-сахаридов': {
-    en: 'Crystals of Martian Alpha-Saccharides',
+    en: 'Martian Alpha-Saccharides Crystals',
     ru: 'Кристаллы марсианских альфа-сахаридов',
   },
   'Мини-салат Экзо-Плантаго': {
@@ -352,6 +352,14 @@ const translations: Translations = {
   moveTheBun: {
     en: 'Move the bun to the right side of the screen',
     ru: 'Перенесите булку в правую часть экрана',
+  },
+  addIngredientMobile: {
+    en: 'Add ingredient',
+    ru: 'Добавить',
+  },
+  seeOrder: {
+    en: 'View order',
+    ru: 'Посмотреть заказ',
   },
 };
 
