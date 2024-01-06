@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import styles from './ingredient-section.module.css';
 import ConstructorCard from '../constructor-card/constructor-card';
 import TItemType from '../../types/ItemType';
-import { addIngredient } from '../../services/actions/ingredients';
+import { addIngredient, changeBun } from '../../services/actions/ingredients';
 import { useLanguage } from '../../utils/languageContext';
 
 type TIngredientSection = {
@@ -23,7 +23,11 @@ const IngredientSection: FC<TIngredientSection> = ({
   const { t } = useLanguage();
 
   const mobileAddIngredient = (item: TItemType) => {
-    dispatch(addIngredient(item));
+    if (item.type === 'bun') {
+      dispatch(changeBun(item));
+    } else {
+      dispatch(addIngredient(item));
+    }
   };
 
   return (
