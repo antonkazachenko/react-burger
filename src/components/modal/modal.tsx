@@ -47,7 +47,7 @@ const Modal: FC<TModalProp> = ({
               (!defaultTitle) ? (
                 <h2 className="text text_type_digits-default">{title}</h2>
               )
-                : <h2 className="text text_type_main-large">{title}</h2>
+                : <h2 className={`text text_type_main-large ${styles.mobileHeader}`}>{title}</h2>
             }
             {/* eslint-disable-next-line max-len */}
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}

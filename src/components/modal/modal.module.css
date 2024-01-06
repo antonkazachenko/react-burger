@@ -67,3 +67,27 @@
     flex-direction: column;
     align-items: center;
 }
+
+.mobileText {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .modal {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .mobileText {
+        display: block;
+        text-align: center;
+    }
+
+    .mobileHeader {
+        display: none
+    }
+
+    .image {
+        margin-top: 16px;
+    }
+}
