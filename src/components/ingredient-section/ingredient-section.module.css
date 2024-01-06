@@ -68,4 +68,9 @@
         width: 144px;
         align-items: center;
     }
+
+    .lastOdd {
+        width: 144px;
+        flex: unset;
+    }
 }

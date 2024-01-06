@@ -1,6 +1,6 @@
 import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import React, { FC } from 'react';
+import ModifiedBackend from '../../utils/DndContext';
 import styles from './main-page.module.css';
 import withModalControl from '../../hocs/with-modal-control';
 import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients';
@@ -13,7 +13,7 @@ const MainPage: FC<object> = () => (
   <>
     { /* eslint-disable-next-line react/jsx-no-constructed-context-values */ }
     <div className={styles.app}>
-      <DndProvider backend={HTML5Backend}>
+      <DndProvider backend={ModifiedBackend}>
         <main>
           <div className={styles.tabWidth}>
             <BurgerIngredientsWithModal />
