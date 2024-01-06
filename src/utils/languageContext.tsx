@@ -205,9 +205,30 @@ const translations: Translations = {
     en: 'Alpha-Saccharide Fluorescent Space Burger',
     ru: 'Альфа-сахаридный флюоресцентный space бургер',
   },
+  'Альфа-сахаридный флюоресцентный space бургер text': {
+    en: 'Exceptional Martian Alpha-Saccharides Crystals, '
+      + 'a revolutionary ingredient for premium space burgers, are '
+      + 'gaining universal popularity. These crystals, sourced from the '
+      + 'depths of Martian terrain, add an otherworldly sweetness and '
+      + 'texture that elevate the culinary experience to new cosmic heights.',
+    ru: 'Исключительные кристаллы марсианских альфа-сахаридов, революционный '
+      + 'ингредиент для премиальных космических бургеров, набирают популярность во всей вселенной. '
+      + 'Эти кристаллы, добываемые из глубин марсианской поверхности, добавляют неземную сладость и '
+      + 'текстуру, поднимая кулинарный опыт на новые космические высоты.',
+  },
   'Антарианский флюоресцентный space бургер': {
     en: 'Antarian Fluorescent Space Burger',
     ru: 'Антарианский флюоресцентный space бургер',
+  },
+  'Антарианский флюоресцентный space бургер text': {
+    en: 'The Antarian Fluorescent Space Burger is a cosmic delight, rapidly gaining fame across the galaxy. '
+      + 'Infused with the luminescent essence of Antarian ingredients, this burger not only tantalizes the taste '
+      + 'buds but also offers a visual feast with its radiant glow. A favorite among space travelers and gourmet '
+      + 'aficionados, it\'s a true culinary masterpiece from another world.',
+    ru: 'Антарианский флюоресцентный space бургер - это космическое удовольствие, быстро набирающее славу по всей галактике.'
+      + ' Пропитанный светящейся сущностью антарианских ингредиентов, этот бургер не только ласкает вкусовые рецепторы, '
+      + 'но и предлагает визуальное наслаждение своим сияющим светом. Являясь любимым блюдом космических путешественников и '
+      + 'гурманов, он представляет собой настоящий кулинарный шедевр из другого мира.',
   },
   'Люминесцентный метеоритный бургер': {
     en: 'Luminescent Meteorite Burger',
@@ -217,21 +238,81 @@ const translations: Translations = {
     en: 'Asteroid Space Burger',
     ru: 'Астероидный space бургер',
   },
+  'Астероидный space бургер text': {
+    en: 'The Asteroid Space Burger is an out-of-this-world culinary experience, capturing the essence of the '
+      + 'cosmos in every bite. Inspired by the rugged, mysterious nature of asteroids, this burger is known for '
+      + 'its rich, robust flavors and unique texture. Its ingredients, sourced from asteroid-like environments, '
+      + 'bring a sense of cosmic adventure to the dining table. The Asteroid Space Burger is not just a meal, but'
+      + ' a journey through the stars, offering a taste of the universe in a truly innovative way.',
+    ru: 'Астероидный space бургер - это космический кулинарный опыт, улавливающий суть космоса в каждом укусе. '
+      + 'Вдохновленный суровой, таинственной природой астероидов, этот бургер известен своими богатыми, насыщенными'
+      + ' вкусами и уникальной текстурой. Его ингредиенты, добываемые в условиях, напоминающих астероиды, приносят '
+      + 'ощущение космического приключения на обеденный стол. Астероидный space бургер - это не просто еда, '
+      + 'это путешествие по звездам, предлагающее попробовать вкус вселенной по-настоящему новаторским способом.',
+  },
   'Традиционный-галактический флюоресцентный space бургер': {
     en: 'Traditional Galactic Fluorescent Space Burger',
     ru: 'Традиционный-галактический флюоресцентный space бургер',
+  },
+  'Традиционный-галактический флюоресцентный space бургер text': {
+    en: 'The Traditional Galactic Fluorescent Space Burger blends age-old culinary traditions with the mystique '
+      + 'of the cosmos. It\'s a classic burger reinvented with a space-age twist, featuring a fluorescent glow that'
+      + ' adds an extraordinary visual appeal. This burger combines familiar, comforting flavors with a hint of galactic'
+      + ' wonder, making it a hit among both traditionalists and futuristic foodies. It\'s where tradition meets '
+      + 'innovation in a dazzling interstellar culinary creation.',
+    ru: 'Традиционный-галактический флюоресцентный space бургер сочетает в себе вековые кулинарные традиции'
+      + ' и таинственность космоса. Это классический бургер, переосмысленный в космическом стиле, с флюоресцентным'
+      + ' свечением, добавляющим необыкновенную визуальную привлекательность. Этот бургер сочетает в себе знакомые,'
+      + ' утешительные вкусы с намеком на галактическое чудо, делая его популярным как среди консерваторов,'
+      + ' так и среди поклонников футуристической еды. Здесь традиция встречается с инновациями в захватывающем'
+      + ' межзвездном кулинарном творении.',
   },
   'Флюоресцентный space бургер': {
     en: 'Fluorescent Space Burger',
     ru: 'Флюоресцентный space бургер',
   },
+  'Флюоресцентный space бургер text': {
+    en: 'The Fluorescent Space Burger is a cosmic culinary creation that glows with an otherworldly charm. This burger,'
+      + ' illuminated with a fluorescent hue, offers a unique visual and taste experience. Infused with ingredients that '
+      + 'radiate light, it\'s a favorite among adventurous diners seeking a meal that\'s as visually stunning as it is '
+      + 'delicious. The Fluorescent Space Burger is more than just food; it\'s an interstellar spectacle on a plate.',
+    ru: 'Флюоресцентный space бургер - это космическое кулинарное творение, сияющее неземным очарованием.'
+      + ' Этот бургер, озаренный флюоресцентным оттенком, предлагает уникальный визуальный и вкусовой опыт. '
+      + 'Пропитанный ингредиентами, излучающими свет, он является фаворитом среди авантюрных гурманов, ищущих '
+      + 'блюдо, которое так же визуально поразительно, как и вкусно. Флюоресцентный space бургер - это не просто'
+      + ' еда; это межзвездное зрелище на тарелке.',
+  },
   'Краторный space бургер': {
     en: 'Crater Space Burger',
     ru: 'Краторный space бургер',
   },
+  'Краторный space бургер text': {
+    en: 'The Crater Space Burger is an intergalactic sensation, renowned for its bold flavors and extraterrestrial '
+      + 'origins. Crafted from ingredients harvested from lunar craters, this burger offers a taste that\'s truly out '
+      + 'of this world. Its unique texture and rich, savory profile make it a must-try for culinary explorers and space '
+      + 'food enthusiasts alike. The Crater Space Burger is not just a meal, it\'s an experience that takes your taste '
+      + 'buds on a journey through the cosmos.',
+    ru: 'Краторный space бургер - это межгалактическое сенсационное блюдо, известное своими смелыми вкусами и '
+      + 'внеземным происхождением. Сделанный из ингредиентов, собранных в лунных кратерах, этот бургер предлагает '
+      + 'вкус, действительно не с этого мира. Его уникальная текстура и богатый, ароматный профиль делают его '
+      + 'обязательным к пробованию для кулинарных исследователей и любителей космической еды. Краторный space '
+      + 'бургер - это не просто еда, это опыт, который уносит ваши вкусовые рецепторы в путешествие по космосу.',
+  },
   'Space астероидный альфа-сахаридный бессмертный флюоресцентный бургер': {
     en: 'Space Asteroid Alpha-Saccharide Immortal Fluorescent Burger',
     ru: 'Space астероидный альфа-сахаридный бессмертный флюоресцентный бургер',
+  },
+  'Space астероидный альфа-сахаридный бессмертный флюоресцентный бургер text': {
+    en: 'The Space Asteroid Alpha-Saccharide Immortal Fluorescent Burger is a gastronomic marvel of the cosmos.'
+      + ' This extraordinary burger blends the mystical qualities of asteroid-derived alpha-saccharides with a timeless,'
+      + ' fluorescent charm. Its unique composition guarantees an unforgettable taste experience, captivating food lovers'
+      + ' who crave interstellar adventures. The luminous and enduring flavors make it a sought-after delicacy'
+      + ' among star-bound epicureans.',
+    ru: 'Space астероидный альфа-сахаридный бессмертный флюоресцентный бургер - это кулинарное чудо космоса. '
+      + 'Этот выдающийся бургер сочетает в себе мистические качества альфа-сахаридов, полученных из астероидов, с'
+      + ' вечным флюоресцентным очарованием. Его уникальный состав гарантирует незабываемый вкусовой опыт,'
+      + ' пленяющий любителей еды, жаждущих межзвездных приключений. Сияющие и долговечные вкусы делают его '
+      + 'вожделенной деликатесностью среди эпикурейцев, стремящихся к звездам.',
   },
   done: {
     en: 'Done',

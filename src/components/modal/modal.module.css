@@ -90,4 +90,22 @@
     .image {
         margin-top: 16px;
     }
+
+    .flex {
+        width: 50%;
+    }
+
+    .modalContent {
+        flex-wrap: wrap;
+        text-align: center;
+        row-gap: 32px;
+    }
+
+    .textData {
+        margin-right: 0;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
 }
