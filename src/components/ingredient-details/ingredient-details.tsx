@@ -45,8 +45,7 @@ const IngredientDetails: FC<object> = () => {
       </div>
       <div className={`${styles.modalContent} ${styles.mobileText} mt-4 pl-2 pr-2`}>
         <p className="text text_type_main-small">
-          Превосходные котлеты из марсианской Магнолии для фирменных космических бургеров,
-          набирающих популярность по всей вселенной.
+          {t(`${data.name} text`)}
         </p>
       </div>
       <div className={`${styles.modalContent} mt-8 mb-15`}>

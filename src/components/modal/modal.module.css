@@ -99,6 +99,7 @@
         flex-wrap: wrap;
         text-align: center;
         row-gap: 32px;
+        padding: 0 8px;
     }
 
     .textData {
