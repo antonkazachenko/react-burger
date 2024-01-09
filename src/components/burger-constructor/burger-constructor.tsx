@@ -210,16 +210,14 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
           <p className="text text_type_main-large">{t('order')}</p>
           <CloseIcon type="primary" onClick={mobileSwitch} />
         </div>
-        <div>
-          <div className={styles.draggableIngredientMobile}>
-            <DragIcon type="primary" />
-            <div className={styles.ingredientDataMobile}>
-              <img className={styles.mobileImg} src={bunData.image_mobile} alt={bunData.name} />
-              <p className="text text_type_main-small mt-1">{translatedBunNameWithTop}</p>
-              <div className={styles.mobilePrice}>
-                <p className="text text_type_digits-default">{bunData.price}</p>
-                <CurrencyIcon type="primary" />
-              </div>
+        <div className={styles.draggableIngredientMobile}>
+          <DragIcon type="primary" />
+          <div className={styles.ingredientDataMobile}>
+            <img className={styles.mobileImg} src={bunData.image_mobile} alt={bunData.name} />
+            <p className={`text text_type_main-small mt-1 ${styles.mobileConstructorText}`}>{translatedBunNameWithTop}</p>
+            <div className={styles.mobilePrice}>
+              <p className="text text_type_digits-default">{bunData.price}</p>
+              <CurrencyIcon type="primary" />
             </div>
           </div>
         </div>
@@ -227,7 +225,7 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
           <DragIcon type="primary" />
           <div className={styles.ingredientDataMobile}>
             <img className={styles.mobileImg} src={bunData.image_mobile} alt={bunData.name} />
-            <p className="text text_type_main-small mt-1">{translatedBunNameWithBottom}</p>
+            <p className={`text text_type_main-small mt-1 ${styles.mobileConstructorText}`}>{translatedBunNameWithBottom}</p>
             <div className={styles.mobilePrice}>
               <p className="text text_type_digits-default">{bunData.price}</p>
               <CurrencyIcon type="primary" />

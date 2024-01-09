@@ -97,8 +97,9 @@
     .ingredientDataMobile {
         display: flex;
         padding: 16px 8px 16px 0;
-        justify-content: flex-end;
+        justify-content: space-between;
         align-items: center;
+        width: 100%;
         gap: 8px;
     }
 
@@ -112,6 +113,7 @@
     }
 
     .mobileLogo {
+        margin-top: 24vh;
         margin-bottom: 15px
     }
 
@@ -143,5 +145,11 @@
         gap: 16px;
         border-radius: 15px 15px 0 0;
         background: #1C1C21;
+    }
+
+    .mobileConstructorText {
+        font-size: 14px;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
