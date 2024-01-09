@@ -204,7 +204,7 @@ const translations: Translations = {
     ru: 'Жиры, г',
   },
   carbohydrates: {
-    en: 'Carbohydrates, g',
+    en: 'Carbs, g',
     ru: 'Углеводы, г',
   },
   ingredientDetails: {

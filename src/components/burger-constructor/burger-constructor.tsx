@@ -20,6 +20,7 @@ import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 import { WithModalControlsReturn } from '../../hocs/with-modal-control';
 import TItemType from '../../types/ItemType';
 import { useLanguage } from '../../utils/languageContext';
+import { ReactComponent as MobileLogo } from '../../images/bigMobileLogo.svg';
 
 type TBurgerConstructorProp = {
   className: string;
@@ -109,12 +110,28 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
         <div className={styles.dropZone} ref={dropTarget} data-cy="drop-zone">
           <p className="text text_type_main-large mt-10">{t('moveTheBun')}</p>
         </div>
-        <div>
+        <div className={styles.parentContainer}>
           <div className={styles.mobileHeader}>
             <p className="text text_type_main-large">{t('order')}</p>
             <CloseIcon type="primary" onClick={mobileSwitch} />
           </div>
-          <p className={`text text_type_main-medium mt-10 pl-2 pr-2 ${styles.defaultText}`}>{t('noIngredientsSelected')}</p>
+          <div className={styles.noIngredientBlock}>
+            <MobileLogo className={styles.mobileLogo} />
+            <p
+              className={`text text_type_main-small ${styles.defaultText}`}
+            >
+              {t('noIngredientsSelected')}
+            </p>
+          </div>
+          <div className={`${styles.mobile} ${styles.footerFlex}`}>
+            <div className={styles.priceFlex}>
+              <p className="text text_type_digits-medium">{totalPrice}</p>
+              <CurrencyIcon type="primary" />
+            </div>
+            <Button htmlType="button" type="primary" size="medium" onClick={mobileSwitch}>
+              {t('seeOrder')}
+            </Button>
+          </div>
         </div>
       </>
     );

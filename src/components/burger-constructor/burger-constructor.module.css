@@ -54,6 +54,14 @@
     display: none;
 }
 
+.defaultText {
+    display: none;
+}
+
+.noIngredientBlock {
+    display: none;
+}
+
 @media screen and (max-width: 768px) {
     .dropZone {
         display: none;
@@ -75,6 +83,7 @@
     }
 
     .defaultText {
+        display: block;
         text-align: center;
     }
 
@@ -100,5 +109,39 @@
     .mobilePrice {
         display: flex;
         gap: 8px;
+    }
+
+    .mobileLogo {
+        margin-bottom: 15px
+    }
+
+    .noIngredientBlock {
+        flex-grow: 1;
+        display: block;
+        text-align: center;
+    }
+
+    .parentContainer {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+
+    .priceFlex {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 8px;
+        flex: 1 0 0;
+    }
+
+    .footerFlex {
+        display: flex;
+        padding: 16px 8px;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 16px;
+        border-radius: 15px 15px 0 0;
+        background: #1C1C21;
     }
 }
