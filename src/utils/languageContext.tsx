@@ -628,6 +628,14 @@ const translations: Translations = {
     en: 'View order',
     ru: 'Посмотреть заказ',
   },
+  order: {
+    en: 'Order',
+    ru: 'Заказ',
+  },
+  noIngredientsSelected: {
+    en: 'No ingredients were selected',
+    ru: 'Не выбраны ингредиенты',
+  },
 };
 
 interface LanguageContextType {

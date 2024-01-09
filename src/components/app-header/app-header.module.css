@@ -81,6 +81,10 @@
         display: none;
     }
 
+    .mobileNone {
+        display: none;
+    }
+
     .navRight, .navLeft {
         display: none;
     }

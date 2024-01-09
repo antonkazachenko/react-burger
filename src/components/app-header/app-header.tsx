@@ -13,6 +13,7 @@ import { ReactComponent as MobileLogo } from '../../images/mobileLogo.svg';
 
 const AppHeader: FC<object> = () => {
   const { user } = useSelector((store) => store.accountStore);
+  const { onConstructorMobile } = useSelector((store) => store.ingredientsStore);
   const { t } = useLanguage();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ const AppHeader: FC<object> = () => {
 
   return (
     <>
-      <div className={styles.bg} data-cy="header">
+      <div className={`${styles.bg} ${onConstructorMobile ? styles.mobileNone : null}`} data-cy="header">
         <div className={styles.app}>
           <header className={styles.navBar}>
             <div className={`${styles.flex} ${styles.navSide} ${styles.navLeft}`}>

@@ -1,6 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-// eslint-disable-next-line import/no-extraneous-dependencies
-
 import {
   ADD_INGREDIENT,
   CHANGE_BUN,
@@ -13,6 +10,7 @@ import {
   REORDER_INGREDIENTS,
   RESET_CONSTRUCTOR,
   SET_TOTAL_PRICE,
+  ON_CONSTRUCTOR_MOBILE,
 } from '../constants/ingredients';
 import { TIngredientsActions, TItemTypeWithUniqueId } from '../actions/ingredients';
 import { TItemType } from '../../types';
@@ -36,6 +34,7 @@ type TIngredientsState = {
   totalPrice: number,
   isLoadingOrder: boolean,
   orderModalVisible: boolean,
+  onConstructorMobile: boolean,
 };
 
 const initialState = {
@@ -49,6 +48,7 @@ const initialState = {
   totalPrice: 0,
   isLoadingOrder: false,
   orderModalVisible: false,
+  onConstructorMobile: false,
 };
 
 const ingredientsReducer = (
@@ -163,6 +163,12 @@ const ingredientsReducer = (
         constructorIngredients: [],
         totalPrice: 0,
         createdOrder: null,
+      };
+    }
+    case ON_CONSTRUCTOR_MOBILE: {
+      return {
+        ...state,
+        onConstructorMobile: action.payload,
       };
     }
     default: {

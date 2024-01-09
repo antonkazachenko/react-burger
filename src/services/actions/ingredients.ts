@@ -17,6 +17,7 @@ import {
   REORDER_INGREDIENTS,
   RESET_CONSTRUCTOR,
   SET_TOTAL_PRICE,
+  ON_CONSTRUCTOR_MOBILE,
 } from '../constants/ingredients';
 import { AppDispatch, AppThunk } from '../store';
 import { getCookie } from '../../utils/cookie';
@@ -31,6 +32,11 @@ export type TIngredientIndexes = {
 export interface IAddIngredientAction {
   readonly type: typeof ADD_INGREDIENT;
   readonly payload: TItemTypeWithUniqueId;
+}
+
+export interface IOnConstructorMobileAction {
+  readonly type: typeof ON_CONSTRUCTOR_MOBILE;
+  readonly payload: boolean;
 }
 
 export interface IRemoveIngredientAction {
@@ -147,7 +153,15 @@ export type TIngredientsActions =
     | IPostOrderRequestAction
     | IPostOrderSuccessAction
     | IPostOrderFailureAction
-    | IResetConstructorAction;
+    | IResetConstructorAction
+    | ICreatedOrderRequestAction
+    | ICreatedOrderSuccessAction
+    | IOnConstructorMobileAction;
+
+export const onConstructorMobileSwitch = (payload: boolean): IOnConstructorMobileAction => ({
+  type: ON_CONSTRUCTOR_MOBILE,
+  payload,
+});
 
 export const resetConstructor = (): IResetConstructorAction => ({
   type: RESET_CONSTRUCTOR,

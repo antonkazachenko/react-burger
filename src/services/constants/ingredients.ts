@@ -12,3 +12,5 @@ export const CURRENT_ITEM_OPEN = 'CURRENT_ITEM_OPEN' as const;
 export const CURRENT_ITEM_CLOSE = 'CURRENT_ITEM_CLOSE' as const;
 export const SET_TOTAL_PRICE = 'INCREASE_TOTAL_PRICE' as const;
 export const RESET_CONSTRUCTOR = 'RESET_CONSTRUCTOR' as const;
+
+export const ON_CONSTRUCTOR_MOBILE = 'ON_CONSTRUCTOR_MOBILE' as const;

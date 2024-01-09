@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import {
-  Button, ConstructorElement, CurrencyIcon,
+  Button, CloseIcon, ConstructorElement, CurrencyIcon, DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrop } from 'react-dnd';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +14,7 @@ import {
   removeIngredient,
   changeBun,
   setTotalPrice,
-  resetConstructor, TItemTypeWithUniqueId,
+  resetConstructor, TItemTypeWithUniqueId, onConstructorMobileSwitch,
 } from '../../services/actions/ingredients';
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 import { WithModalControlsReturn } from '../../hocs/with-modal-control';
@@ -39,12 +39,16 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
     bunData,
   } = useSelector((store) => store.ingredientsStore);
   const { name } = useSelector((store) => store.accountStore.user);
-  const { totalPrice } = useSelector((store) => store.ingredientsStore);
+  const { totalPrice, onConstructorMobile } = useSelector((store) => store.ingredientsStore);
 
   const handleIngredientRemoval = (id: string | undefined): void => {
     if (typeof id === 'undefined') { return; }
     // eslint-disable-next-line no-underscore-dangle
     dispatch(removeIngredient(id));
+  };
+
+  const mobileSwitch = () => {
+    dispatch(onConstructorMobileSwitch(!onConstructorMobile));
   };
 
   const handleCloseModalWithReset = (): void => {
@@ -101,79 +105,120 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
   };
   if (bunData === null) {
     return (
-      <div className={styles.dropZone} ref={dropTarget} data-cy="drop-zone">
-        <p className="text text_type_main-large mt-10">{t('moveTheBun')}</p>
-      </div>
+      <>
+        <div className={styles.dropZone} ref={dropTarget} data-cy="drop-zone">
+          <p className="text text_type_main-large mt-10">{t('moveTheBun')}</p>
+        </div>
+        <div>
+          <div className={styles.mobileHeader}>
+            <p className="text text_type_main-large">{t('order')}</p>
+            <CloseIcon type="primary" onClick={mobileSwitch} />
+          </div>
+          <p className={`text text_type_main-medium mt-10 pl-2 pr-2 ${styles.defaultText}`}>{t('noIngredientsSelected')}</p>
+        </div>
+      </>
     );
   }
   const translatedBunNameWithBottom = language === 'en' ? `${t(bunData.name)} (bottom)` : `${bunData.name} (низ)`;
   const translatedBunNameWithTop = language === 'en' ? `${t(bunData.name)} (top)` : `${bunData.name} (верх)`;
 
   return (
-    <div className={className} ref={dropTarget} data-cy="drop-target">
+    <>
+      <div className={`${className} ${styles.desktop}`} ref={dropTarget} data-cy="drop-target">
 
-      <div className={`${styles.dragElement} ml-8 mb-4`}>
-        <ConstructorElement
-          type="top"
-          isLocked
-          text={`${translatedBunNameWithTop}`}
-          price={bunData.price}
-          thumbnail={bunData.image}
-        />
-      </div>
-      {
-        constructorIngredients && constructorIngredients.length ? (
-          <div className={styles.overflow}>
-            {constructorIngredients.map(
-              (el, index) => {
-                if (el.ingredient.type !== 'bun') {
-                  return (
-                    <DraggableIngredient
-                    /* eslint-disable-next-line no-underscore-dangle */
-                      key={el.ingredient.uniqueId}
-                      ingredient={el.ingredient}
-                      handleIngredientRemoval={handleIngredientRemoval}
-                      index={index}
-                    />
-                  );
-                }
-                return null;
-              },
-            )}
-          </div>
-        ) : null
-      }
-      <div className={`${styles.dragElement} ml-8`}>
-        <ConstructorElement
-          type="bottom"
-          isLocked
-          text={`${translatedBunNameWithBottom}`}
-          price={bunData.price}
-          thumbnail={bunData.image}
-        />
-      </div>
-      <div className={`${styles.dragElement} mr-4 mt-6 mt-10`}>
-        <p className="text text_type_digits-medium mr-1">{Number.isNaN(totalPrice) ? 0 : totalPrice}</p>
-        <div className="mr-10">
-          <CurrencyIcon type="primary" />
-        </div>
-        {/* eslint-disable-next-line max-len */}
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-        <div onClick={createOrder} data-cy="order-button">
-          <Button htmlType="button" type="primary" size="large">
-            {t('createOrder')}
-          </Button>
+        <div className={`${styles.dragElement} ml-8 mb-4`}>
+          <ConstructorElement
+            type="top"
+            isLocked
+            text={`${translatedBunNameWithTop}`}
+            price={bunData.price}
+            thumbnail={bunData.image}
+          />
         </div>
         {
-          isVisible
-          && (
-            <Modal onClose={handleCloseModalWithReset} className={styles.modalWidth} headerClass={`${styles.exitCross} mr-10 mt-15`}>
-              <OrderDetails />
-            </Modal>
-          )
+          constructorIngredients && constructorIngredients.length ? (
+            <div className={styles.overflow}>
+              {constructorIngredients.map(
+                (el, index) => {
+                  if (el.ingredient.type !== 'bun') {
+                    return (
+                      <DraggableIngredient
+                        /* eslint-disable-next-line no-underscore-dangle */
+                        key={el.ingredient.uniqueId}
+                        ingredient={el.ingredient}
+                        handleIngredientRemoval={handleIngredientRemoval}
+                        index={index}
+                      />
+                    );
+                  }
+                  return null;
+                },
+              )}
+            </div>
+          ) : null
         }
+        <div className={`${styles.dragElement} ml-8`}>
+          <ConstructorElement
+            type="bottom"
+            isLocked
+            text={`${translatedBunNameWithBottom}`}
+            price={bunData.price}
+            thumbnail={bunData.image}
+          />
+        </div>
+        <div className={`${styles.dragElement} mr-4 mt-6 mt-10`}>
+          <p className="text text_type_digits-medium mr-1">{Number.isNaN(totalPrice) ? 0 : totalPrice}</p>
+          <div className="mr-10">
+            <CurrencyIcon type="primary" />
+          </div>
+          {/* eslint-disable-next-line max-len */}
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+          <div onClick={createOrder} data-cy="order-button">
+            <Button htmlType="button" type="primary" size="large">
+              {t('createOrder')}
+            </Button>
+          </div>
+          {
+            isVisible
+            && (
+              <Modal onClose={handleCloseModalWithReset} className={styles.modalWidth} headerClass={`${styles.exitCross} mr-10 mt-15`}>
+                <OrderDetails />
+              </Modal>
+            )
+          }
+        </div>
       </div>
-    </div>
+      <div className={styles.mobile}>
+        <div className={styles.mobileHeader}>
+          <p className="text text_type_main-large">{t('order')}</p>
+          <CloseIcon type="primary" onClick={mobileSwitch} />
+        </div>
+        <div>
+          <div className={styles.draggableIngredientMobile}>
+            <DragIcon type="primary" />
+            <div className={styles.ingredientDataMobile}>
+              <img className={styles.mobileImg} src={bunData.image_mobile} alt={bunData.name} />
+              <p className="text text_type_main-small mt-1">{translatedBunNameWithTop}</p>
+              <div className={styles.mobilePrice}>
+                <p className="text text_type_digits-default">{bunData.price}</p>
+                <CurrencyIcon type="primary" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={styles.draggableIngredientMobile}>
+          <DragIcon type="primary" />
+          <div className={styles.ingredientDataMobile}>
+            <img className={styles.mobileImg} src={bunData.image_mobile} alt={bunData.name} />
+            <p className="text text_type_main-small mt-1">{translatedBunNameWithBottom}</p>
+            <div className={styles.mobilePrice}>
+              <p className="text text_type_digits-default">{bunData.price}</p>
+              <CurrencyIcon type="primary" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
