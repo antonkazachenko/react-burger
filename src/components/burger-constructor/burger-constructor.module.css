@@ -127,6 +127,7 @@
         display: flex;
         flex-direction: column;
         height: 100vh;
+        justify-content: space-between;
     }
 
     .priceFlex {
@@ -145,11 +146,18 @@
         gap: 16px;
         border-radius: 15px 15px 0 0;
         background: #1C1C21;
+        flex-direction: row;
+    }
+
+    .constructorData {
+        height: 100%;
+        overflow: auto;
     }
 
     .mobileConstructorText {
         font-size: 14px;
         overflow: hidden;
         text-overflow: ellipsis;
+        width: 100%;
     }
 }

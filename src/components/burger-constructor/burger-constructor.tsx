@@ -21,6 +21,7 @@ import { WithModalControlsReturn } from '../../hocs/with-modal-control';
 import TItemType from '../../types/ItemType';
 import { useLanguage } from '../../utils/languageContext';
 import { ReactComponent as MobileLogo } from '../../images/bigMobileLogo.svg';
+import MobileDraggableIngredient from '../mobile-draggable-ingredient/mobile-draggable-ingredient';
 
 type TBurgerConstructorProp = {
   className: string;
@@ -205,32 +206,64 @@ const BurgerConstructor: FC<TBurgerConstructorProp & WithModalControlsReturn> = 
           }
         </div>
       </div>
-      <div className={styles.mobile}>
+      <div className={`${styles.mobile} ${styles.parentContainer}`}>
         <div className={styles.mobileHeader}>
           <p className="text text_type_main-large">{t('order')}</p>
           <CloseIcon type="primary" onClick={mobileSwitch} />
         </div>
-        <div className={styles.draggableIngredientMobile}>
-          <DragIcon type="primary" />
-          <div className={styles.ingredientDataMobile}>
-            <img className={styles.mobileImg} src={bunData.image_mobile} alt={bunData.name} />
-            <p className={`text text_type_main-small mt-1 ${styles.mobileConstructorText}`}>{translatedBunNameWithTop}</p>
-            <div className={styles.mobilePrice}>
-              <p className="text text_type_digits-default">{bunData.price}</p>
-              <CurrencyIcon type="primary" />
+        <div className={styles.constructorData}>
+          <div className={styles.draggableIngredientMobile}>
+            <DragIcon type="primary" />
+            <div className={styles.ingredientDataMobile}>
+              <img className={styles.mobileImg} src={bunData.image_mobile} alt={bunData.name} />
+              <p
+                className={`text text_type_main-small mt-1 ${styles.mobileConstructorText}`}
+              >
+                {translatedBunNameWithTop}
+              </p>
+              <div className={styles.mobilePrice}>
+                <p className="text text_type_digits-default">{bunData.price}</p>
+                <CurrencyIcon type="primary" />
+              </div>
+            </div>
+          </div>
+          {constructorIngredients.map((el, index) => {
+            if (el.ingredient.type !== 'bun') {
+              return (
+                <MobileDraggableIngredient
+                  /* eslint-disable-next-line no-underscore-dangle */
+                  key={el.ingredient.uniqueId}
+                  ingredient={el.ingredient}
+                  index={index}
+                />
+              );
+            }
+            return null;
+          })}
+          <div className={styles.draggableIngredientMobile}>
+            <DragIcon type="primary" />
+            <div className={styles.ingredientDataMobile}>
+              <img className={styles.mobileImg} src={bunData.image_mobile} alt={bunData.name} />
+              <p
+                className={`text text_type_main-small mt-1 ${styles.mobileConstructorText}`}
+              >
+                {translatedBunNameWithBottom}
+              </p>
+              <div className={styles.mobilePrice}>
+                <p className="text text_type_digits-default">{bunData.price}</p>
+                <CurrencyIcon type="primary" />
+              </div>
             </div>
           </div>
         </div>
-        <div className={styles.draggableIngredientMobile}>
-          <DragIcon type="primary" />
-          <div className={styles.ingredientDataMobile}>
-            <img className={styles.mobileImg} src={bunData.image_mobile} alt={bunData.name} />
-            <p className={`text text_type_main-small mt-1 ${styles.mobileConstructorText}`}>{translatedBunNameWithBottom}</p>
-            <div className={styles.mobilePrice}>
-              <p className="text text_type_digits-default">{bunData.price}</p>
-              <CurrencyIcon type="primary" />
-            </div>
+        <div className={`${styles.mobile} ${styles.footerFlex}`}>
+          <div className={styles.priceFlex}>
+            <p className="text text_type_digits-medium">{totalPrice}</p>
+            <CurrencyIcon type="primary" />
           </div>
+          <Button htmlType="button" type="primary" size="medium" onClick={mobileSwitch}>
+            {t('seeOrder')}
+          </Button>
         </div>
       </div>
     </>

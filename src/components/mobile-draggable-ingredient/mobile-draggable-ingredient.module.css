@@ -1,0 +1,33 @@
+@media screen and (max-width: 768px) {
+    .draggableIngredientMobile {
+        display: flex;
+        padding-left: 8px;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .ingredientDataMobile {
+        display: flex;
+        padding: 16px 8px 16px 0;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .mobileImg {
+        height: 40px;
+    }
+
+    .mobileConstructorText {
+        font-size: 14px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+    }
+
+    .mobilePrice {
+        display: flex;
+        gap: 8px;
+    }
+}
