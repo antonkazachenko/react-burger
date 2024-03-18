@@ -4,6 +4,8 @@
 
 React Burger is a dynamic and interactive web application that allows users to build their custom burger by dragging and dropping ingredients. The project is crafted using a modern tech stack, emphasizing React, TypeScript, and Redux, providing a robust and maintainable codebase.
 
+**Check out the live version here: [React Burger](https://creamlaflare.github.io/react-burger).**
+
 ## Key Features
 
 - **Drag and Drop Interface**: Utilize React DnD to offer an intuitive interface for constructing burgers.
@@ -54,8 +56,6 @@ To open Cypress for functional testing:
 ```bash
 npm run cypress
 ```
-## Deployment
-The application is deployed using GitHub Pages. Check out the live version here: [React Burger](https://creamlaflare.github.io/react-burger).
 
 ## Contributing
 Contributions are welcome! Please read the contributing guidelines before submitting pull requests.
