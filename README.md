@@ -65,7 +65,7 @@ npm run cypress
 ```
 
 ## Contributing
-Contributions are welcome! Please read the contributing guidelines before submitting pull requests.
+Contributions are welcome! Feel free to open a pull request.
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
