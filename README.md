@@ -19,7 +19,7 @@ React Burger is a dynamic and interactive web application that allows users to b
 - **Routing**: Employ React Router for seamless navigation across different components and pages.
 - **State Management**: Redux and @reduxjs/toolkit are at the core, ensuring predictable state management.
 - **Functional Testing**: Cypress is integrated to conduct end-to-end functional tests, ensuring the application's reliability.
-- **Unit Testing**: Jest, along with React Testing Library, is used for unit testing, promoting code quality and bug-free releases.
+- **Unit Testing**: Jest is used for unit testing, promoting code quality and bug-free releases.
 - **Language Translation**: Leverage the Context API for implementing language translation, enhancing accessibility and user experience.
 - **Authentication**: Implement JWT tokens for authorization, with tokens securely stored in localStorage.
 - **WebSockets**: Two types of WebSocket implementations for real-time order feeds, one public and one private, demonstrating efficient real-time data handling.
@@ -33,7 +33,7 @@ React Burger is a dynamic and interactive web application that allows users to b
 - React Router DOM 6.17.0
 - React DnD 16.0.1
 - Cypress 13.6.1
-- Jest 27.5.1 & @testing-library/react 13.4.0
+- Jest 27.5.1
 - Context API for state management
 - JWT for authorization
 
