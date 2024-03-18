@@ -55,7 +55,7 @@ To open Cypress for functional testing:
 npm run cypress
 ```
 ## Deployment
-The application is deployed using GitHub Pages. Check out the live version here: React Burger[https://creamlaflare.github.io/react-burger/].
+The application is deployed using GitHub Pages. Check out the live version here: [React Burger](https://creamlaflare.github.io/react-burger).
 
 ## Contributing
 Contributions are welcome! Please read the contributing guidelines before submitting pull requests.
