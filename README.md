@@ -1,6 +1,6 @@
 # React Burger Project
 
-English | [Russian](README.ru.md)
+English | [Русский](README.ru.md)
 
 [![GitHub Pages Deployment](https://img.shields.io/badge/deploy-GitHub%20Pages-green.svg)](https://creamlaflare.github.io/react-burger)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://creamlaflare.github.io/react-burger)
