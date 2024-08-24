@@ -1,6 +1,6 @@
 # React Burger Project
 
-[English](README.md) | Русский
+[English](README.md) | [Français](README.fr.md) | Русский
 
 [![GitHub Pages Deployment](https://img.shields.io/badge/deploy-GitHub%20Pages-green.svg)](https://antonkazachenko.github.io/react-burger)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://antonkazachenko.github.io/react-burger)
