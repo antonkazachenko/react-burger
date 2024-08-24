@@ -2,14 +2,14 @@
 
 [English](README.md) | Русский
 
-[![GitHub Pages Deployment](https://img.shields.io/badge/deploy-GitHub%20Pages-green.svg)](https://creamlaflare.github.io/react-burger)
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://creamlaflare.github.io/react-burger)
+[![GitHub Pages Deployment](https://img.shields.io/badge/deploy-GitHub%20Pages-green.svg)](https://antonkazachenko.github.io/react-burger)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://antonkazachenko.github.io/react-burger)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![React Version](https://img.shields.io/badge/react-18.2.0-blue.svg)](https://reactjs.org/)
 [![TypeScript Version](https://img.shields.io/badge/typescript-4.9.5-blue.svg)](https://www.typescriptlang.org/)
 [![Redux Version](https://img.shields.io/badge/redux-4.2.1-blue.svg)](https://redux.js.org/)
 
-Посмотрите актуальную версию здесь: [React Burger](https://creamlaflare.github.io/react-burger).
+Посмотрите актуальную версию здесь: [React Burger](https://antonkazachenko.github.io/react-burger).
 
 ## Введение
 
