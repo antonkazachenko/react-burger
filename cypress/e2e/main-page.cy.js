@@ -2,7 +2,7 @@ describe('Main page', () => {
   beforeEach(() => {
     cy.visit('/');
     // Mock the GET /auth/user request
-    cy.intercept('GET', 'https://norma.nomoreparties.space/api/auth/user', {
+    cy.intercept('GET', 'https://norma.education-services.ru/api/auth/user', {
       statusCode: 200,
       body: {
         success: true,
@@ -12,7 +12,7 @@ describe('Main page', () => {
         }
       }
     }).as('getUser');
-    cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
+    cy.intercept('GET', 'https://norma.education-services.ru/api/ingredients', {
       statusCode: 200,
       body: {
         success: true,

@@ -48,7 +48,7 @@ const ProfileOrdersPage: FC<object> = () => {
     }
 
     const token = accessToken.replace(/^Bearer\s/, '');
-    dispatch(userOrderFeedConnect(`wss://norma.nomoreparties.space/orders?token=${token}`));
+    dispatch(userOrderFeedConnect(`wss://norma.education-services.ru/orders?token=${token}`));
 
     // eslint-disable-next-line consistent-return
     return () => {

@@ -38,7 +38,7 @@ const OrderFeedPage: FC = () => {
   });
 
   useEffect(() => {
-    dispatch(orderFeedConnect('wss://norma.nomoreparties.space/orders/all'));
+    dispatch(orderFeedConnect('wss://norma.education-services.ru/orders/all'));
     return () => {
       dispatch(orderFeedDisconnect());
     };

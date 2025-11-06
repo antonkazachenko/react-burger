@@ -1,3 +1,3 @@
-const BASE_URL = 'https://norma.nomoreparties.space/api';
+const BASE_URL = 'https://norma.education-services.ru/api';
 
 export default BASE_URL;
